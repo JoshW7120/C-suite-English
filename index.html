@@ -269,6 +269,8 @@
             <option value="brief_mna">1. M&A Strategy & Post-Merger Synergies</option>
             <option value="brief_earnings">2. Q3 Earnings Call & Margin Compression</option>
             <option value="brief_tech">3. Tech Scaling & Legacy Modernization</option>
+            <option value="brief_omnichannel">4. Omnichannel Retail vs Marketplaces (Datart)</option>
+            <option value="brief_consolidation">5. Retail Logistics & SKU Rationalization</option>
           </select>
         </div>
       </div>
@@ -503,6 +505,8 @@
             <option value="cfo_budget">1. Defending OPEX Budget Cuts with CFO Mark</option>
             <option value="board_disagree">2. Diplomatic Disagreement with Non-Exec Director</option>
             <option value="pitch_hostile">3. Handling Aggressive Q&A During Strategy Pitch</option>
+            <option value="vendor_rebate_dispute">4. Annual Vendor Rebate Negotiation (Supplier)</option>
+            <option value="marketplace_expansion">5. Marketplace Channel Strategy (Internal Board)</option>
           </select>
         </div>
       </div>
@@ -1014,7 +1018,33 @@ I will now open the floor for any strategic or operational questions.</textarea>
           "bottleneck": { czech: "Úzké hrdlo", phonetic: "/ˈbɒt.əl.nek/", trap: "Saying 'slow point'", example: "Eliminate the testing bottleneck." },
           "decommissioning": { czech: "Vyřazení z provozu", phonetic: "/ˌdiː.kəˈmɪʃ.ən.ɪŋ/", trap: "Saying 'shutting down old things'", example: "Decommissioning redundant mainframes." }
         }
-      }
+      },
+        brief_omnichannel: {
+  title: "Omnichannel Defense: Competing with Cross-Border Marketplaces",
+  domain: "E-Commerce Strategy & Retail",
+  text: "As international marketplaces intensify price competition across the Czech digital landscape, domestic electronics retailers like HP TRONIC and Datart must leverage their physical retail footprint as a strategic moat. Pure-play e-commerce platforms struggle with last-mile economics on large domestic appliances. By integrating automated central distribution with same-day store pickup and white-glove installation services, traditional retail leaders can defend customer lifetime value and insulate gross margins from aggressive cross-border discounting.",
+  glossary: {
+    "footprint": { czech: "Síť poboček / fyzická přítomnost", phonetic: "/ˈfʊt.prɪnt/", trap: "Saying 'all our shops'", example: "Expanding our urban store footprint." },
+    "moat": { czech: "Konkurenční výhoda / ochranný val", phonetic: "/məʊt/", trap: "Saying 'our big wall against competitors'", example: "Our store network serves as a defensible moat." },
+    "pure-play": { czech: "Čistě online prodejce bez prodejen", phonetic: "/pjʊə pleɪ/", trap: "Saying 'only internet shop'", example: "Pure-play competitors face high delivery churn." },
+    "last-mile": { czech: "Doručení na poslední míli ke koncovému zákazníkovi", phonetic: "/lɑːst maɪl/", trap: "Saying 'end transport'", example: "Optimizing last-mile freight costs." },
+    "white-glove": { czech: "Prémiová služba s výnosem do patra a instalací", phonetic: "/waɪt ɡlʌv/", trap: "Saying 'service with gloves'", example: "White-glove appliance installation drives repeat orders." },
+    "insulate": { czech: "Ochránit / izolovat od negativních vlivů", phonetic: "/ˈɪn.sjə.leɪt/", trap: "Saying 'make safe from'", example: "Insulate margins from price drops." }
+  }
+},
+brief_consolidation: {
+  title: "Post-Merger Logistics Consolidation in Central Europe",
+  domain: "Supply Chain & Operations",
+  text: "Consolidating major electronics retail operations requires rigorous alignment between procurement teams and automated fulfillment centers. Redundant SKU overlap across acquired banners must be rationalized to prevent working capital from stagnating in slow-moving inventory. When scaling warehouse capacity in logistical hubs, operations directors must safeguard delivery SLAs while negotiating volume rebates with multinational consumer electronics brands.",
+  glossary: {
+    "consolidation": { czech: "Konsolidace / sloučení provozů", phonetic: "/kənˌsɒl.ɪˈdeɪ.ʃən/", trap: "Saying 'putting together'", example: "Post-merger warehouse consolidation." },
+    "procurement": { czech: "Nákupní oddělení / strategický nákup", phonetic: "/prəˈkjʊə.mənt/", trap: "Saying 'buying department'", example: "Procurement negotiated better vendor terms." },
+    "sku": { czech: "Skladová položka / artikl", phonetic: "/ˌes.keɪˈjuː/", trap: "Saying 'product number'", example: "Rationalizing 15,000 slow-moving SKUs." },
+    "overlap": { czech: "Překryv / duplicita v nabídce", phonetic: "/ˈəʊ.və.læp/", trap: "Saying 'having same things twice'", example: "Eliminating brand catalog overlap." },
+    "stagnating": { czech: "Zadržování / váznutí kapitálu", phonetic: "/stæɡˈneɪ.tɪŋ/", trap: "Saying 'money staying in boxes'", example: "Prevent working capital from stagnating." },
+    "rebates": { czech: "Zpětné bonusy / objemové slevy od dodavatelů", phonetic: "/ˈriː.beɪts/", trap: "Saying 'money back from producers'", example: "Securing quarterly volume rebates from Samsung." }
+  }
+},
     };
 
     const SCENARIOS = {
@@ -1041,7 +1071,23 @@ I will now open the floor for any strategic or operational questions.</textarea>
         avatar: 'DV',
         initialMessage: "Your unit economics look attractive on slide 3, but Central European tech founders frequently underestimate international enterprise CAC. What gives you the conviction you can scale into the DACH region?",
         czechTip: "Acknowledge the DACH sales cycle reality with gravitas: 'That is a pertinent critique. However, our initial pilot conversion in Munich demonstrates...'"
-      }
+      },
+      vendor_rebate_dispute: {
+          name: 'Christoph Becker',
+          role: 'Commercial VP - Consumer Tech (Vienna)',
+          mood: 'Tough supplier, resistant to giving discounts',
+          avatar: 'CB',
+          initialMessage: "Good morning. I've analyzed your sell-out numbers across the Czech and Slovak networks for our premium OLED TVs. Your volumes are down 8% compared to target, yet your buying team is demanding the full 5% back-end rebate. Why should we grant full rebates when your store network missed the target?",
+          czechTip: "Do not blame inflation or consumer mood. Reframe around your promotional spend, front-row store placement in Datart, and your defense against gray imports."
+      },
+        marketplace_expansion: {
+          name: 'Karolína Dvořáková',
+          role: 'Chief Commercial Officer',
+          mood: 'Data-driven, concerned about brand dilution',
+          avatar: 'KD',
+          initialMessage: "Our board is pressing us to open an official storefront on foreign digital marketplaces like Allegro and Amazon. I'm worried we'll cannabilize our own direct-to-consumer traffic and destroy our premium service positioning. How do you propose we approach this channel without triggering a pricing war with our own e-shop?",
+          czechTip: "Acknowledge the cannibalization risk immediately ('That is a valid apprehension...'). Suggest listing only high-turnover refurbished items or specific private-label SKUs (e.g., ETA products) while ring-fencing core premium lines for your own domain."
+},
     };
 
     const QUIZ_QUESTIONS = [
