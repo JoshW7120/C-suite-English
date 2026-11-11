@@ -1,1676 +1,241 @@
-<!DOCTYPE html>
-<html lang="en" class="h-full bg-slate-950 text-slate-100">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ExecuSpeak CZ | Corporate English for Czech Executives</title>
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Lucide Icons -->
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            brand: {
-              50: '#eef2ff',
-              100: '#e0e7ff',
-              500: '#6366f1',
-              600: '#4f46e5',
-              700: '#4338ca',
-              gold: '#f59e0b',
-              goldLight: '#fbbf24'
-            }
-          },
-          fontFamily: {
-            sans: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
-          }
-        }
-      }
-    }
-  </script>
-  <style>
-    /* Custom Scrollbar */
-    ::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #0f172a;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #334155;
-      border-radius: 4px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #475569;
-    }
-    .card-flip {
-      perspective: 1000px;
-    }
-    .card-inner {
-      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-      transform-style: preserve-3d;
-    }
-    .card-inner.flipped {
-      transform: rotateY(180deg);
-    }
-    .card-front, .card-back {
-      backface-visibility: hidden;
-      -webkit-backface-visibility: hidden;
-    }
-    .card-back {
-      transform: rotateY(180deg);
-    }
-    @keyframes pulse-subtle {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.7; }
-    }
-    .recording-pulse {
-      animation: pulse-subtle 1.5s infinite;
-    }
-  </style>
-</head>
-<body class="h-full flex flex-col font-sans selection:bg-indigo-600 selection:text-white bg-slate-950 text-slate-100 antialiased">
-
-  <!-- Top Executive Navigation Bar -->
-  <header class="border-b border-slate-800 bg-slate-900/90 backdrop-blur sticky top-0 z-40">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      <!-- Brand Logo -->
-      <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('dashboard')">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-amber-500 flex items-center justify-center shadow-lg shadow-indigo-500/20">
-          <i data-lucide="briefcase" class="w-5 h-5 text-white"></i>
-        </div>
-        <div>
-          <div class="flex items-center space-x-2">
-            <span class="font-bold tracking-tight text-lg text-white">ExecuSpeak</span>
-            <span class="text-xs font-semibold px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20">CZ • C-SUITE</span>
-          </div>
-          <p class="text-[10px] text-slate-400 font-medium tracking-wide">PROFESSIONAL SPOKEN ENGLISH</p>
-        </div>
-      </div>
-
-      <!-- Navigation Tabs -->
-      <nav class="hidden md:flex space-x-1 lg:space-x-2">
-        <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-btn px-3.5 py-2 rounded-lg text-xs font-medium transition flex items-center space-x-2 text-indigo-400 bg-indigo-500/10 border border-indigo-500/20">
-          <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
-          <span>Dashboard</span>
-        </button>
-        <button onclick="switchTab('reading')" id="nav-reading" class="nav-btn px-3.5 py-2 rounded-lg text-xs font-medium transition flex items-center space-x-2 text-slate-400 hover:text-white hover:bg-slate-800">
-          <i data-lucide="book-open" class="w-4 h-4"></i>
-          <span>Executive Briefings</span>
-        </button>
-        <button onclick="switchTab('roleplay')" id="nav-roleplay" class="nav-btn px-3.5 py-2 rounded-lg text-xs font-medium transition flex items-center space-x-2 text-slate-400 hover:text-white hover:bg-slate-800">
-          <i data-lucide="mic" class="w-4 h-4"></i>
-          <span>Speaking Simulator</span>
-        </button>
-        <button onclick="switchTab('teleprompter')" id="nav-teleprompter" class="nav-btn px-3.5 py-2 rounded-lg text-xs font-medium transition flex items-center space-x-2 text-slate-400 hover:text-white hover:bg-slate-800">
-          <i data-lucide="presentation" class="w-4 h-4"></i>
-          <span>Pitch & Prompter</span>
-        </button>
-        <button onclick="switchTab('vocab')" id="nav-vocab" class="nav-btn px-3.5 py-2 rounded-lg text-xs font-medium transition flex items-center space-x-2 text-slate-400 hover:text-white hover:bg-slate-800">
-          <i data-lucide="layers" class="w-4 h-4"></i>
-          <span>Word Bank (<span id="nav-bank-count">0</span>)</span>
-        </button>
-        <button onclick="switchTab('workshop')" id="nav-workshop" class="nav-btn px-3.5 py-2 rounded-lg text-xs font-medium transition flex items-center space-x-2 text-slate-400 hover:text-white hover:bg-slate-800">
-          <i data-lucide="users" class="w-4 h-4"></i>
-          <span>In-Class Workshop</span>
-        </button>
-      </nav>
-
-      <!-- Right Profile Pill -->
-      <div class="flex items-center space-x-3">
-        <div id="user-profile-badge" class="flex items-center space-x-2 px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800">
-          <div class="w-7 h-7 rounded-full bg-gradient-to-tr from-indigo-600 to-amber-500 flex items-center justify-center text-xs font-bold text-white shadow" id="auth-avatar">
-            EX
-          </div>
-          <div class="text-left hidden sm:block">
-            <div class="text-xs font-semibold text-white leading-tight" id="auth-name">Executive Learner</div>
-            <div class="text-[10px] text-slate-400" id="auth-email">executive@company.cz</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <!-- Mobile Navigation Bar -->
-  <div class="md:hidden flex overflow-x-auto bg-slate-900 border-b border-slate-800 px-2 py-2 space-x-1 text-xs">
-    <button onclick="switchTab('dashboard')" class="px-2.5 py-1.5 rounded bg-indigo-600/20 text-indigo-300 whitespace-nowrap">Dashboard</button>
-    <button onclick="switchTab('reading')" class="px-2.5 py-1.5 rounded text-slate-400 whitespace-nowrap">Briefings</button>
-    <button onclick="switchTab('roleplay')" class="px-2.5 py-1.5 rounded text-slate-400 whitespace-nowrap">Speaking Simulator</button>
-    <button onclick="switchTab('teleprompter')" class="px-2.5 py-1.5 rounded text-slate-400 whitespace-nowrap">Pitch Prompter</button>
-    <button onclick="switchTab('vocab')" class="px-2.5 py-1.5 rounded text-slate-400 whitespace-nowrap">Word Bank</button>
-    <button onclick="switchTab('workshop')" class="px-2.5 py-1.5 rounded text-slate-400 whitespace-nowrap">In-Class</button>
-  </div>
-
-  <!-- Main View Container -->
-  <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full overflow-y-auto">
-
-    <!-- ==================== TAB 0: DASHBOARD ==================== -->
-    <div id="tab-dashboard" class="space-y-6">
-      <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 p-6 sm:p-8 border border-indigo-500/20 shadow-2xl">
-        <div class="relative z-10 max-w-3xl">
-          <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 text-xs font-semibold mb-3">
-            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span>Spoken Executive Fluency • Active Audio & Real-World Scenarios</span>
-          </div>
-          <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight text-white">
-            Speak with Authority in the Boardroom. <br class="hidden sm:inline" />
-            <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-amber-300">Read executive briefings, practice speaking aloud, bank every key phrase.</span>
-          </h1>
-          <p class="mt-2 text-sm sm:text-base text-slate-300">
-            A standalone speech accelerator for Czech executives and professionals. Read authentic C-level dossiers, click any unfamiliar word to save it, and practice verbal simulations under realistic pressure.
-          </p>
-          <div class="mt-6 flex flex-wrap gap-3">
-            <button onclick="switchTab('reading')" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-medium text-sm flex items-center space-x-2 shadow-lg shadow-indigo-600/30 transition">
-              <i data-lucide="book-open" class="w-4 h-4"></i>
-              <span>Read & Bank Executive Phrases</span>
-            </button>
-            <button onclick="switchTab('roleplay')" class="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 font-medium text-sm flex items-center space-x-2 transition">
-              <i data-lucide="mic" class="w-4 h-4"></i>
-              <span>Start Speaking Roleplay</span>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Quick Metrics Grid -->
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div class="bg-slate-900/90 border border-slate-800 p-4 rounded-xl flex items-center space-x-3.5">
-          <div class="p-3 bg-indigo-500/10 text-indigo-400 rounded-lg">
-            <i data-lucide="bookmark-check" class="w-6 h-6"></i>
-          </div>
-          <div>
-            <div class="text-2xl font-bold text-white" id="stat-mastered">0</div>
-            <div class="text-xs text-slate-400 font-medium">Banked Phrases Available</div>
-          </div>
-        </div>
-        <div class="bg-slate-900/90 border border-slate-800 p-4 rounded-xl flex items-center space-x-3.5">
-          <div class="p-3 bg-amber-500/10 text-amber-400 rounded-lg">
-            <i data-lucide="book-open" class="w-6 h-6"></i>
-          </div>
-          <div>
-            <div class="text-2xl font-bold text-white">3 Modules</div>
-            <div class="text-xs text-slate-400 font-medium">Executive Case Studies</div>
-          </div>
-        </div>
-        <div class="bg-slate-900/90 border border-slate-800 p-4 rounded-xl flex items-center space-x-3.5">
-          <div class="p-3 bg-emerald-500/10 text-emerald-400 rounded-lg">
-            <i data-lucide="mic" class="w-6 h-6"></i>
-          </div>
-          <div>
-            <div class="text-2xl font-bold text-white">Active</div>
-            <div class="text-xs text-slate-400 font-medium">Interactive Speech Engine</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Feature Jump Cards -->
-      <div class="grid md:grid-cols-3 gap-6">
-        <div onclick="switchTab('reading')" class="group cursor-pointer bg-slate-900 border border-slate-800 hover:border-indigo-500/50 p-5 rounded-xl transition duration-200">
-          <div class="w-10 h-10 rounded-lg bg-indigo-500/10 text-indigo-400 flex items-center justify-center mb-4 group-hover:scale-110 transition">
-            <i data-lucide="book-open" class="w-5 h-5"></i>
-          </div>
-          <h3 class="font-semibold text-white group-hover:text-indigo-400 transition flex items-center justify-between">
-            <span>Executive Reading & Word Bank</span>
-            <i data-lucide="arrow-right" class="w-4 h-4 opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition"></i>
-          </h3>
-          <p class="text-xs text-slate-400 mt-2 leading-relaxed">
-            Read real-world briefings aloud. Click any word or expression to inspect its pronunciation, meaning, and add it directly to your bank.
-          </p>
-        </div>
-
-        <div onclick="switchTab('roleplay')" class="group cursor-pointer bg-slate-900 border border-slate-800 hover:border-amber-500/50 p-5 rounded-xl transition duration-200">
-          <div class="w-10 h-10 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center mb-4 group-hover:scale-110 transition">
-            <i data-lucide="mic" class="w-5 h-5"></i>
-          </div>
-          <h3 class="font-semibold text-white group-hover:text-amber-400 transition flex items-center justify-between">
-            <span>Spoken Roleplay Simulator</span>
-            <i data-lucide="arrow-right" class="w-4 h-4 opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition"></i>
-          </h3>
-          <p class="text-xs text-slate-400 mt-2 leading-relaxed">
-            Practice speaking into your microphone against a demanding CFO, board director, or investor with natural turn-taking audio.
-          </p>
-        </div>
-
-        <div onclick="switchTab('teleprompter')" class="group cursor-pointer bg-slate-900 border border-slate-800 hover:border-emerald-500/50 p-5 rounded-xl transition duration-200">
-          <div class="w-10 h-10 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center mb-4 group-hover:scale-110 transition">
-            <i data-lucide="presentation" class="w-5 h-5"></i>
-          </div>
-          <h3 class="font-semibold text-white group-hover:text-emerald-400 transition flex items-center justify-between">
-            <span>Pitch & Prompter Studio</span>
-            <i data-lucide="arrow-right" class="w-4 h-4 opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition"></i>
-          </h3>
-          <p class="text-xs text-slate-400 mt-2 leading-relaxed">
-            Master executive signposting. Deliver pitches using an auto-scrolling teleprompter and record your voice to refine cadence.
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <!-- ==================== TAB 1: EXECUTIVE BRIEFINGS ==================== -->
-    <div id="tab-reading" class="hidden space-y-6">
-      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
-        <div>
-          <h2 class="text-xl font-bold text-white flex items-center space-x-2">
-            <span>Executive Reading & Spoken Delivery Studio</span>
-            <span class="text-xs px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">Interactive Dossiers</span>
-          </h2>
-          <p class="text-xs text-slate-400 mt-0.5">
-            Read authentic corporate briefings. <strong class="text-amber-400">Click any word or highlighted phrase</strong> to hear pronunciation and add it directly to your Word Bank.
-          </p>
-        </div>
-
-        <div class="flex items-center space-x-2">
-          <label for="briefing-select" class="text-xs text-slate-400">Select Dossier:</label>
-          <select id="briefing-select" onchange="loadBriefing()" class="bg-slate-900 border border-slate-700 text-white text-xs rounded-xl px-3 py-2 focus:outline-none focus:border-indigo-500">
-            <option value="brief_mna">1. M&A Strategy & Post-Merger Synergies</option>
-            <option value="brief_earnings">2. Q3 Earnings Call & Margin Compression</option>
-            <option value="brief_tech">3. Tech Scaling & Legacy Modernization</option>
-            <option value="brief_omnichannel">4. Omnichannel Retail vs Marketplaces (Datart)</option>
-            <option value="brief_consolidation">5. Retail Logistics & SKU Rationalization</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="grid lg:grid-cols-12 gap-6">
-        <div class="lg:col-span-8 space-y-4">
-          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
-            <div class="flex items-center justify-between border-b border-slate-800 pb-3">
-              <div class="flex items-center space-x-3">
-                <span class="px-2.5 py-1 rounded-md text-[11px] font-bold uppercase tracking-wider bg-indigo-500/10 text-indigo-400 border border-indigo-500/20" id="briefing-domain">Corporate Strategy</span>
-                <span class="text-xs text-slate-400" id="briefing-target-read">Target Pace: 130 WPM</span>
-              </div>
-              <div class="flex items-center space-x-2">
-                <button onclick="readBriefingAloud()" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-indigo-400 flex items-center space-x-1.5 transition">
-                  <i data-lucide="volume-2" class="w-3.5 h-3.5"></i>
-                  <span>Listen to Model</span>
-                </button>
-                <button onclick="toggleBriefingSpeechRecord()" id="briefing-speech-btn" class="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-xs font-semibold text-white flex items-center space-x-1.5 transition">
-                  <i data-lucide="mic" class="w-3.5 h-3.5"></i>
-                  <span id="briefing-rec-label">Read Aloud (Voice Check)</span>
-                </button>
-              </div>
-            </div>
-
-            <h3 class="text-lg sm:text-xl font-extrabold text-white" id="briefing-title">Navigating Cross-Border M&A and Retaining Executive Buy-in</h3>
-
-            <div class="p-5 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 text-sm sm:text-base leading-relaxed tracking-wide min-h-[260px] select-text" id="interactive-text-container"></div>
-
-            <div id="reading-speech-status" class="hidden p-3 rounded-xl bg-slate-950 border border-indigo-500/30 flex items-center justify-between text-xs">
-              <div class="flex items-center space-x-2 text-indigo-300">
-                <span class="w-2.5 h-2.5 rounded-full bg-rose-500 animate-ping"></span>
-                <span>Listening to your speech... Speak the text smoothly and authoritatively.</span>
-              </div>
-              <span class="font-mono text-amber-400 font-bold" id="reading-match-score">Match: 0%</span>
-            </div>
-
-            <div class="flex items-center justify-between text-xs text-slate-500 pt-1">
-              <span>💡 Tip: Click any word to hear how an executive pronounces it.</span>
-              <span class="text-indigo-400 cursor-pointer hover:underline" onclick="switchTab('vocab')">View Word Bank &rarr;</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="lg:col-span-4 space-y-4">
-          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4 sticky top-20 shadow-xl" id="word-inspector-card">
-            <div class="flex items-center justify-between">
-              <span class="text-xs font-bold uppercase tracking-wider text-amber-400 flex items-center space-x-1.5">
-                <i data-lucide="search" class="w-4 h-4"></i>
-                <span>Word Inspector</span>
-              </span>
-              <span class="text-[10px] px-2 py-0.5 rounded bg-slate-800 text-slate-400 font-mono" id="inspect-level">B2–C1</span>
-            </div>
-
-            <div>
-              <div class="flex items-center justify-between">
-                <h4 class="text-xl font-bold text-white tracking-tight" id="inspect-phrase">bottleneck</h4>
-                <button onclick="speakText(document.getElementById('inspect-phrase').innerText)" class="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-indigo-400 transition" title="Listen Audio">
-                  <i data-lucide="volume-2" class="w-4 h-4"></i>
-                </button>
-              </div>
-              <div class="text-xs font-mono text-slate-400 mt-0.5" id="inspect-phonetic">/ˈbɒt.əl.nek/</div>
-            </div>
-
-            <div class="space-y-3 pt-2 border-t border-slate-800 text-xs">
-              <div>
-                <span class="text-[10px] font-bold uppercase text-slate-500">Czech Meaning</span>
-                <p class="text-amber-300 font-medium text-sm mt-0.5" id="inspect-czech">Úzké hrdlo / překážka zpomalující celý proces</p>
-              </div>
-
-              <div>
-                <span class="text-[10px] font-bold uppercase text-rose-400">Czenglish Caution</span>
-                <p class="text-slate-300 bg-rose-950/20 border border-rose-900/30 p-2.5 rounded-lg mt-0.5" id="inspect-trap">Avoid literal translation: "We have big problem with speed."</p>
-              </div>
-
-              <div>
-                <span class="text-[10px] font-bold uppercase text-indigo-400">Executive Context</span>
-                <p class="text-slate-300 bg-slate-950 border border-slate-800 p-2.5 rounded-lg mt-0.5 italic" id="inspect-example">"We need to eliminate this bottleneck before ramping up DACH distribution."</p>
-              </div>
-            </div>
-
-            <button onclick="saveInspectedWordToBank()" id="inspect-save-btn" class="w-full py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs flex items-center justify-center space-x-2 transition shadow-lg shadow-indigo-600/30">
-              <i data-lucide="bookmark-plus" class="w-4 h-4"></i>
-              <span>Save to Word Bank</span>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ==================== TAB 2: BOARDROOM WORD BANK ==================== -->
-    <div id="tab-vocab" class="hidden space-y-6">
-      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
-        <div>
-          <h2 class="text-xl font-bold text-white flex items-center space-x-2">
-            <span>Executive Word Bank & Practice</span>
-            <span class="text-xs px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-400 border border-indigo-500/30">Active Lexicon</span>
-          </h2>
-          <p class="text-xs text-slate-400 mt-0.5">Review terms saved from briefings, roleplays, and lessons with voice drills.</p>
-        </div>
-
-        <div class="flex items-center space-x-2 bg-slate-900 p-1 rounded-xl border border-slate-800">
-          <button id="vocab-view-flashcards" onclick="setVocabMode('flashcards')" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-white bg-indigo-600 transition">Flashcards</button>
-          <button id="vocab-view-quiz" onclick="setVocabMode('quiz')" class="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:text-white transition">Quick Recall Test</button>
-          <button id="vocab-view-list" onclick="setVocabMode('list')" class="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:text-white transition">All Terms (<span id="total-vocab-count">0</span>)</button>
-        </div>
-      </div>
-
-      <!-- Flashcards View -->
-      <div id="vocab-flashcards-subview" class="max-w-xl mx-auto space-y-5">
-        <div class="flex items-center justify-between text-xs text-slate-400 px-1">
-          <span>Card <span id="card-current-idx" class="font-bold text-white">1</span> of <span id="card-total-idx" class="font-bold text-white">8</span></span>
-          <span id="card-deck-name" class="font-medium text-indigo-400">Boardroom Rhetoric & Collocations</span>
-        </div>
-
-        <div class="card-flip w-full h-[360px] cursor-pointer" onclick="toggleCardFlip()">
-          <div id="flashcard-inner" class="card-inner relative w-full h-full rounded-2xl shadow-xl">
-            <div class="card-front absolute inset-0 w-full h-full rounded-2xl bg-slate-900 border border-slate-800 p-7 flex flex-col justify-between shadow-2xl">
-              <div class="flex items-center justify-between">
-                <span class="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded bg-indigo-500/10 text-indigo-400 border border-indigo-500/20" id="card-category">Strategic Pivot</span>
-                <button type="button" onclick="event.stopPropagation(); speakCurrentCard();" class="p-2 rounded-lg bg-slate-800 hover:bg-indigo-600/30 text-indigo-400 transition" title="Listen Pronunciation">
-                  <i data-lucide="volume-2" class="w-5 h-5"></i>
-                </button>
-              </div>
-
-              <div class="text-center my-auto">
-                <div class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight" id="card-phrase">Pivot the business model</div>
-                <div class="text-xs text-slate-400 mt-2 font-mono" id="card-phonetic">/ˈpɪv.ət/</div>
-                <div class="mt-4 text-xs font-medium text-indigo-300/80 bg-indigo-950/40 py-1.5 px-3 rounded-full inline-block">
-                  Click anywhere to reveal Czech equivalent & Czenglish comparison
-                </div>
-              </div>
-
-              <div class="flex items-center justify-between text-xs text-slate-500 border-t border-slate-800/80 pt-3">
-                <span>Level: <span class="text-amber-400 font-semibold" id="card-level">B2–C1</span></span>
-                <span class="flex items-center gap-1"><i data-lucide="rotate-3d" class="w-3.5 h-3.5"></i> Click to flip</span>
-              </div>
-            </div>
-
-            <div class="card-back absolute inset-0 w-full h-full rounded-2xl bg-slate-900 border border-slate-700 p-7 flex flex-col justify-between shadow-2xl">
-              <div>
-                <div class="flex items-center justify-between mb-2">
-                  <span class="text-xs font-semibold text-amber-400">Czech Meaning (Význam v češtině)</span>
-                  <button type="button" onclick="event.stopPropagation(); speakCurrentCard();" class="p-1.5 rounded-lg bg-slate-800 text-indigo-400 hover:text-white">
-                    <i data-lucide="volume-2" class="w-4 h-4"></i>
-                  </button>
-                </div>
-                <div class="text-lg font-bold text-white mb-3" id="card-czech">Změnit směr / strategii obchodního modelu</div>
-
-                <div class="p-2.5 rounded-lg bg-rose-950/30 border border-rose-900/40 mb-3 text-xs">
-                  <span class="font-bold text-rose-400">Czenglish trap:</span> 
-                  <span class="text-slate-300" id="card-trap">"We must totally change our company direction."</span>
-                </div>
-
-                <div class="text-xs text-slate-300 bg-slate-800/80 p-3 rounded-lg border border-slate-700">
-                  <span class="font-bold text-indigo-400 block mb-1">Boardroom context:</span>
-                  <span id="card-example" class="italic">"Given our Q2 burn rate, we need to pivot our core offering toward enterprise SaaS."</span>
-                </div>
-              </div>
-
-              <div class="text-center text-xs text-slate-500 pt-2 border-t border-slate-800">
-                Card Study Navigation
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="flex items-center gap-3">
-          <button onclick="handleCardNav(-1)" class="flex-1 py-3 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 font-semibold text-xs flex items-center justify-center space-x-2 transition">
-            <i data-lucide="chevron-left" class="w-4 h-4"></i>
-            <span>Previous Card</span>
-          </button>
-          <button onclick="handleCardNav(1)" class="flex-1 py-3 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs flex items-center justify-center space-x-2 shadow-lg shadow-indigo-600/20 transition">
-            <span>Next Card</span>
-            <i data-lucide="chevron-right" class="w-4 h-4"></i>
-          </button>
-        </div>
-      </div>
-
-      <!-- Recall Quiz -->
-      <div id="vocab-quiz-subview" class="hidden max-w-xl mx-auto space-y-5">
-        <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl space-y-5 shadow-xl">
-          <div class="flex items-center justify-between text-xs text-slate-400 border-b border-slate-800 pb-3">
-            <span class="font-semibold text-amber-400 flex items-center space-x-1.5">
-              <i data-lucide="sparkles" class="w-4 h-4"></i>
-              <span>C-Level Instant Recall Test</span>
-            </span>
-            <span>Question <span id="quiz-question-num" class="text-white font-bold">1</span>/3</span>
-          </div>
-
-          <div>
-            <div class="text-xs font-semibold text-slate-400 uppercase tracking-wide">Select the best executive phrasing:</div>
-            <div class="text-base font-bold text-white mt-1" id="quiz-prompt">Jak nejlépe nahradit: "I don't agree with you at all"?</div>
-          </div>
-
-          <div class="space-y-2.5" id="quiz-options-container"></div>
-          <div id="quiz-feedback-box" class="hidden p-3.5 rounded-xl text-xs"></div>
-
-          <div class="flex justify-end pt-2">
-            <button id="quiz-next-btn" onclick="nextQuizQuestion()" class="hidden px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold flex items-center space-x-2 transition">
-              <span>Next Scenario</span>
-              <i data-lucide="arrow-right" class="w-4 h-4"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Saved Terms List -->
-      <div id="vocab-list-subview" class="hidden space-y-4">
-        <div class="relative max-w-md">
-          <i data-lucide="search" class="w-4 h-4 absolute left-3 top-3 text-slate-500"></i>
-          <input type="text" id="vocab-search-input" oninput="filterVocabList()" placeholder="Search terms, Czech translation, or domain..." class="w-full bg-slate-900 border border-slate-800 rounded-xl pl-9 pr-4 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500">
-        </div>
-
-        <div class="grid md:grid-cols-2 gap-3" id="vocab-terms-grid"></div>
-      </div>
-    </div>
-
-    <!-- ==================== TAB 3: EXECUTIVE ROLEPLAY ==================== -->
-    <div id="tab-roleplay" class="hidden space-y-6">
-      <div class="border-b border-slate-800 pb-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-        <div>
-          <h2 class="text-xl font-bold text-white flex items-center space-x-2">
-            <span>Executive Boardroom Simulator</span>
-            <span class="text-xs px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">Live Speech Partner</span>
-          </h2>
-          <p class="text-xs text-slate-400">Simulate tough conversations with international stakeholders. Practice spoken responses with clear phrasing.</p>
-        </div>
-
-        <div class="flex items-center space-x-2">
-          <label for="scenario-select" class="text-xs text-slate-400">Select Scenario:</label>
-          <select id="scenario-select" onchange="changeScenario()" class="bg-slate-900 border border-slate-700 text-white text-xs rounded-xl px-3 py-2 focus:outline-none focus:border-indigo-500">
-            <option value="cfo_budget">1. Defending OPEX Budget Cuts with CFO Mark</option>
-            <option value="board_disagree">2. Diplomatic Disagreement with Non-Exec Director</option>
-            <option value="pitch_hostile">3. Handling Aggressive Q&A During Strategy Pitch</option>
-            <option value="vendor_rebate_dispute">4. Annual Vendor Rebate Negotiation (Supplier)</option>
-            <option value="marketplace_expansion">5. Marketplace Channel Strategy (Internal Board)</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="grid lg:grid-cols-3 gap-6">
-        <div class="lg:col-span-2 bg-slate-900 border border-slate-800 rounded-2xl flex flex-col h-[520px] shadow-2xl">
-          <div class="px-5 py-3.5 border-b border-slate-800 bg-slate-900/80 rounded-t-2xl flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-              <div class="w-9 h-9 rounded-full bg-gradient-to-br from-indigo-500 to-indigo-800 flex items-center justify-center font-bold text-xs text-white ring-2 ring-indigo-500/30" id="persona-avatar">
-                MF
-              </div>
-              <div>
-                <div class="text-sm font-semibold text-white flex items-center space-x-2">
-                  <span id="persona-name">Mark Foster</span>
-                  <span class="text-[10px] px-1.5 py-0.2 rounded bg-slate-800 text-slate-300 font-normal" id="persona-role">Group CFO (London)</span>
-                </div>
-                <div class="text-[11px] text-slate-400" id="persona-mood">Mood: Demanding, numbers-oriented, time-sensitive</div>
-              </div>
-            </div>
-
-            <button onclick="restartRoleplay()" class="text-xs text-slate-400 hover:text-white flex items-center space-x-1 p-1.5 rounded-lg hover:bg-slate-800 transition">
-              <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
-              <span>Reset</span>
-            </button>
-          </div>
-
-          <div id="chat-messages" class="flex-1 overflow-y-auto p-5 space-y-4 text-xs"></div>
-
-          <div class="p-3.5 border-t border-slate-800 bg-slate-900/60 rounded-b-2xl">
-            <div class="mb-2 flex items-center space-x-2 overflow-x-auto text-[11px] pb-1">
-              <span class="text-slate-500 font-medium whitespace-nowrap">Suggested Openers:</span>
-              <button onclick="insertPrompt('I see the merit in your numbers, however, cutting R&D now jeopardizes Q4 deliverables.')" class="px-2 py-1 rounded-md bg-slate-800 hover:bg-slate-700 text-slate-300 whitespace-nowrap border border-slate-700">"I see the merit, however..."</button>
-              <button onclick="insertPrompt('If we look at the unit economics, this investment achieves payback in 6 months.')" class="px-2 py-1 rounded-md bg-slate-800 hover:bg-slate-700 text-slate-300 whitespace-nowrap border border-slate-700">"If we look at unit economics..."</button>
-            </div>
-
-            <div class="flex items-center space-x-2">
-              <button id="voice-record-btn" onclick="toggleSpeechRecognition()" class="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-indigo-400 hover:text-indigo-300 border border-slate-700 transition" title="Hold/Click to Speak (Web Speech)">
-                <i data-lucide="mic" class="w-5 h-5"></i>
-              </button>
-
-              <input type="text" id="roleplay-input" onkeydown="if(event.key==='Enter') sendUserMessage()" placeholder="Type your response or click the microphone to speak..." class="flex-1 bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none">
-
-              <button onclick="sendUserMessage()" class="p-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold transition flex items-center justify-center shadow-lg shadow-indigo-600/20">
-                <i data-lucide="send" class="w-4 h-4"></i>
-              </button>
-            </div>
-            <div id="recording-status" class="hidden text-[10px] text-amber-400 mt-1 flex items-center space-x-1 font-medium">
-              <span class="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span>
-              <span>Listening to speech... Speak clearly in English</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="space-y-4">
-          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-3">
-            <div class="font-bold text-white text-sm flex items-center space-x-2">
-              <i data-lucide="info" class="w-4 h-4 text-indigo-400"></i>
-              <span>Czech Speaker Guidance</span>
-            </div>
-            <p class="text-xs text-slate-300 leading-relaxed" id="scenario-tip">
-              In London or US boardroom culture, opening with pure disagreement sounds confrontational. Always acknowledge the CFO's fiduciary duty before presenting counter-data.
-            </p>
-          </div>
-
-          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-3">
-            <div class="font-bold text-white text-sm flex items-center space-x-2">
-              <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400"></i>
-              <span>Executive Speech Rules</span>
-            </div>
-            <ul class="text-xs text-slate-400 space-y-2 list-disc list-inside">
-              <li>Acknowledge first: <em class="text-slate-200">"That is a fair pushback..."</em></li>
-              <li>Avoid literal Czech translations like <em class="text-rose-400">"We must solve"</em> or <em class="text-rose-400">"You must understand"</em>.</li>
-              <li>Anchor arguments with financial collocations: <em class="text-slate-200">mitigate risk, unit economics, payback runway</em>.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ==================== TAB 4: PITCH BUILDER & TELEPROMPTER ==================== -->
-    <div id="tab-teleprompter" class="hidden space-y-6">
-      <div class="border-b border-slate-800 pb-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-        <div>
-          <h2 class="text-xl font-bold text-white flex items-center space-x-2">
-            <span>Executive Pitch Studio & Teleprompter</span>
-            <span class="text-xs px-2 py-0.5 rounded bg-amber-500/20 text-amber-400 border border-amber-500/30">Signposting Pro</span>
-          </h2>
-          <p class="text-xs text-slate-400">Structure your presentation with boardroom signposts, practice with the teleprompter, and record your voice.</p>
-        </div>
-
-        <div class="flex items-center space-x-2">
-          <span class="text-xs text-slate-400">Insert Template:</span>
-          <select id="template-select" onchange="loadPitchTemplate()" class="bg-slate-900 border border-slate-700 text-white text-xs rounded-xl px-3 py-1.5 focus:outline-none">
-            <option value="board_update">Quarterly Board Performance Review</option>
-            <option value="pitch_deck">Series A / Growth Funding Pitch</option>
-            <option value="bad_news">Delivering Restructuring / Missed Targets</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="grid lg:grid-cols-12 gap-6">
-        <div class="lg:col-span-4 space-y-4">
-          <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl space-y-3">
-            <h3 class="text-xs font-bold uppercase tracking-wider text-indigo-400 flex items-center space-x-1.5">
-              <i data-lucide="bookmark" class="w-4 h-4"></i>
-              <span>C-Level Signposting Palette</span>
-            </h3>
-            <p class="text-[11px] text-slate-400">Click any phrase to insert it directly into your speech script:</p>
-
-            <div class="space-y-2 max-h-[420px] overflow-y-auto pr-1">
-              <div>
-                <span class="text-[10px] font-bold text-slate-500 uppercase">1. Opening & Purpose</span>
-                <div class="space-y-1 mt-1">
-                  <button onclick="insertSignpost('The objective of today\'s briefing is to walk you through our operational turnaround.')" class="w-full text-left p-2 rounded-lg bg-slate-800/80 hover:bg-indigo-600/20 text-slate-200 text-xs transition border border-slate-700/60">
-                    "The objective of today's briefing is to..."
-                  </button>
-                  <button onclick="insertSignpost('To put this into perspective, we have outperformed our baseline by 18%.')" class="w-full text-left p-2 rounded-lg bg-slate-800/80 hover:bg-indigo-600/20 text-slate-200 text-xs transition border border-slate-700/60">
-                    "To put this into perspective..."
-                  </button>
-                </div>
-              </div>
-
-              <div>
-                <span class="text-[10px] font-bold text-slate-500 uppercase">2. Highlighting Data & Metrics</span>
-                <div class="space-y-1 mt-1">
-                  <button onclick="insertSignpost('If you direct your attention to slide 4, you will notice the hockey-stick inflection.')" class="w-full text-left p-2 rounded-lg bg-slate-800/80 hover:bg-indigo-600/20 text-slate-200 text-xs transition border border-slate-700/60">
-                    "If you direct your attention to slide..."
-                  </button>
-                  <button onclick="insertSignpost('This spike is largely attributable to our improved enterprise retention.')" class="w-full text-left p-2 rounded-lg bg-slate-800/80 hover:bg-indigo-600/20 text-slate-200 text-xs transition border border-slate-700/60">
-                    "This is largely attributable to..."
-                  </button>
-                </div>
-              </div>
-
-              <div>
-                <span class="text-[10px] font-bold text-slate-500 uppercase">3. Softening Bad News</span>
-                <div class="space-y-1 mt-1">
-                  <button onclick="insertSignpost('While we encountered headwinds in Q2, our fundamentals remain robust.')" class="w-full text-left p-2 rounded-lg bg-slate-800/80 hover:bg-indigo-600/20 text-slate-200 text-xs transition border border-slate-700/60">
-                    "While we encountered headwinds..."
-                  </button>
-                  <button onclick="insertSignpost('We are actively executing mitigation measures to safeguard gross margin.')" class="w-full text-left p-2 rounded-lg bg-slate-800/80 hover:bg-indigo-600/20 text-slate-200 text-xs transition border border-slate-700/60">
-                    "We are actively executing mitigation measures..."
-                  </button>
-                </div>
-              </div>
-
-              <div>
-                <span class="text-[10px] font-bold text-slate-500 uppercase">4. Handling Q&A & Wrap-Up</span>
-                <div class="space-y-1 mt-1">
-                  <button onclick="insertSignpost('I will now open the floor for any strategic or operational questions.')" class="w-full text-left p-2 rounded-lg bg-slate-800/80 hover:bg-indigo-600/20 text-slate-200 text-xs transition border border-slate-700/60">
-                    "I will now open the floor for..."
-                  </button>
-                  <button onclick="insertSignpost('That is a fair pushback. Let me address the unit economics behind that assumption.')" class="w-full text-left p-2 rounded-lg bg-slate-800/80 hover:bg-indigo-600/20 text-slate-200 text-xs transition border border-slate-700/60">
-                    "That is a fair pushback. Let me..."
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="lg:col-span-8 space-y-4">
-          <div class="bg-slate-900 border border-slate-800 p-3 rounded-2xl flex flex-wrap items-center justify-between gap-3 text-xs">
-            <div class="flex items-center space-x-2">
-              <button id="prompter-play-btn" onclick="togglePrompterScroll()" class="px-3.5 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-semibold flex items-center space-x-1.5 transition">
-                <i data-lucide="play" class="w-4 h-4" id="prompter-play-icon"></i>
-                <span id="prompter-play-text">Start Teleprompter</span>
-              </button>
-              <button onclick="resetPrompterScroll()" class="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300" title="Rewind to Top">
-                <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
-              </button>
-            </div>
-
-            <div class="flex items-center space-x-2">
-              <span class="text-slate-400">Scroll Speed:</span>
-              <input type="range" id="prompter-speed" min="1" max="5" value="2" class="w-24 accent-indigo-500">
-            </div>
-
-            <div class="flex items-center space-x-2">
-              <button id="audio-rec-btn" onclick="togglePitchRecording()" class="px-3 py-1.5 rounded-lg bg-rose-600/20 hover:bg-rose-600/30 text-rose-300 border border-rose-500/30 font-medium flex items-center space-x-1.5 transition">
-                <i data-lucide="circle" class="w-3.5 h-3.5 fill-rose-500 text-rose-500" id="rec-dot"></i>
-                <span id="rec-btn-text">Record Voice</span>
-              </button>
-              <audio id="recorded-audio" controls class="hidden h-8 w-44 rounded bg-slate-800"></audio>
-            </div>
-          </div>
-
-          <div id="prompter-screen" class="relative bg-slate-950 border border-slate-800 rounded-2xl h-[380px] p-6 overflow-y-auto shadow-inner text-slate-200">
-            <div class="sticky top-20 left-0 right-0 h-10 border-y border-amber-500/20 bg-amber-500/5 pointer-events-none rounded flex items-center justify-end px-3">
-              <span class="text-[10px] text-amber-400/60 font-mono tracking-wider">EYE-LINE FOCUS</span>
-            </div>
-
-            <textarea id="pitch-text-editor" class="w-full bg-transparent border-0 text-white font-sans text-lg sm:text-xl leading-relaxed focus:outline-none resize-none min-h-[300px]" placeholder="Type or paste your executive presentation script here, or click the signposts on the left...">The objective of today's briefing is to walk you through our strategic pivot and Q3 performance.
-
-To put this into perspective, despite macroeconomic headwinds, our enterprise contract value expanded by 24% quarter-over-quarter.
-
-If you direct your attention to slide 4, our customer acquisition cost dropped significantly, largely attributable to automated onboarding and direct executive referrals.
-
-While we encountered supply chain friction earlier this year, our core unit economics remain exceptionally robust.
-
-I will now open the floor for any strategic or operational questions.</textarea>
-          </div>
-
-          <div class="flex items-center justify-between text-xs text-slate-400 px-1">
-            <div class="flex space-x-4">
-              <span>Words: <strong id="word-count" class="text-white">68</strong></span>
-              <span>Estimated Delivery: <strong id="time-estimate" class="text-white">0m 32s</strong> (at 130 WPM)</span>
-            </div>
-            <button onclick="speakText(document.getElementById('pitch-text-editor').value)" class="text-indigo-400 hover:text-indigo-300 font-medium flex items-center space-x-1">
-              <i data-lucide="volume-2" class="w-3.5 h-3.5"></i>
-              <span>Listen to Model Delivery</span>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ==================== TAB 5: IN-CLASS WORKSHOP & ROUTINES ==================== -->
-    <div id="tab-workshop" class="hidden space-y-6">
-      <div class="border-b border-slate-800 pb-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-        <div>
-          <h2 class="text-xl font-bold text-white flex items-center space-x-2">
-            <span>In-Class Workshop & Daily Practice</span>
-            <span class="text-xs px-2 py-0.5 rounded bg-purple-500/20 text-purple-400 border border-purple-500/30">Speaking Exercises</span>
-          </h2>
-          <p class="text-xs text-slate-400">Timed classroom team debates and personal spoken practice routines.</p>
-        </div>
-
-        <div class="flex items-center space-x-1 bg-slate-900 p-1 rounded-xl border border-slate-800">
-          <button id="toggle-inclass" onclick="switchWorkshopMode('class')" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-white bg-indigo-600 transition">In-Class Activity</button>
-          <button id="toggle-selfstudy" onclick="switchWorkshopMode('self')" class="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:text-white transition">Self-Study Checklist</button>
-        </div>
-      </div>
-
-      <!-- Workshop Mode: IN-CLASS -->
-      <div id="workshop-class-view" class="space-y-6">
-        <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl space-y-4">
-          <div class="flex items-center justify-between">
-            <div class="flex items-center space-x-2">
-              <span class="p-2 rounded-lg bg-indigo-500/10 text-indigo-400"><i data-lucide="timer" class="w-5 h-5"></i></span>
-              <h3 class="text-base font-bold text-white">5-Minute Executive Debate Battle (Team vs Team)</h3>
-            </div>
-            <div class="flex items-center space-x-3">
-              <div class="text-xl font-mono font-bold text-amber-400 bg-slate-950 px-3 py-1 rounded-lg border border-slate-800" id="debate-timer-display">05:00</div>
-              <button onclick="toggleDebateTimer()" id="timer-toggle-btn" class="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-xs font-semibold text-white transition">Start Timer</button>
-              <button onclick="resetDebateTimer()" class="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400"><i data-lucide="rotate-ccw" class="w-4 h-4"></i></button>
-            </div>
-          </div>
-
-          <div class="p-4 rounded-xl bg-slate-950 border border-slate-800">
-            <div class="text-[10px] uppercase font-bold tracking-wider text-slate-500 mb-1">Debate Topic For Czech Executives:</div>
-            <div class="text-lg font-bold text-white" id="debate-prompt-text">
-              "Should Czech engineering firms offshore all software testing to Asia, or keep 100% in-house to protect IP?"
-            </div>
-            <div class="mt-3 flex flex-wrap gap-4 text-xs">
-              <div class="text-indigo-400 font-medium">Team A: Defend aggressive cost reduction (Offshore)</div>
-              <div class="text-amber-400 font-medium">Team B: Defend brand value and engineering control (In-house)</div>
-            </div>
-          </div>
-
-          <div class="flex justify-between items-center pt-2">
-            <span class="text-xs text-slate-400">Rule: Each speaker must open with a diplomatic softening phrase before making their point.</span>
-            <button onclick="nextDebatePrompt()" class="text-xs text-indigo-400 hover:text-indigo-300 font-semibold flex items-center space-x-1">
-              <span>Next Topic</span>
-              <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
-            </button>
-          </div>
-        </div>
-
-        <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl space-y-4">
-          <div class="flex items-center justify-between">
-            <div class="flex items-center space-x-2">
-              <span class="p-2 rounded-lg bg-amber-500/10 text-amber-400"><i data-lucide="zap" class="w-5 h-5"></i></span>
-              <h3 class="text-base font-bold text-white">Rapid Executive Shootout (Teacher vs Student or Peer vs Peer)</h3>
-            </div>
-            <button onclick="drawShootoutCard()" class="px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition">Draw Random Card</button>
-          </div>
-
-          <div class="grid md:grid-cols-2 gap-4">
-            <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 flex flex-col justify-between">
-              <div>
-                <span class="text-[10px] uppercase font-bold text-rose-400">Translate to C-Level English:</span>
-                <p class="text-sm font-semibold text-white mt-1" id="shootout-czech">"Nemůžeme to stihnout včas, protože dodavatel má zpoždění."</p>
-              </div>
-              <button onclick="toggleShootoutAnswer()" class="mt-4 text-left text-xs text-indigo-400 hover:underline">Reveal Executive Solution &rarr;</button>
-            </div>
-            <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 flex flex-col justify-between">
-              <div>
-                <span class="text-[10px] uppercase font-bold text-emerald-400">Boardroom Answer:</span>
-                <p class="text-sm font-semibold text-emerald-200 mt-1 hidden" id="shootout-answer">"We are facing timeline constraints due to upstream vendor slippage, so we need to adjust milestones."</p>
-                <p class="text-xs text-slate-500 mt-1 italic" id="shootout-placeholder">Click 'Reveal Executive Solution' to check...</p>
-              </div>
-              <button onclick="speakText(document.getElementById('shootout-answer').innerText)" class="mt-4 text-xs text-slate-400 hover:text-white flex items-center space-x-1">
-                <i data-lucide="volume-2" class="w-3.5 h-3.5"></i>
-                <span>Hear Pronunciation</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Workshop Mode: SELF-STUDY -->
-      <div id="workshop-self-view" class="hidden space-y-6">
-        <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl space-y-5">
-          <div>
-            <h3 class="text-base font-bold text-white">Spoken Executive Routine Checklist</h3>
-            <p class="text-xs text-slate-400">Recommended 10-minute daily practice structure for speaking retention.</p>
-          </div>
-
-          <div class="space-y-3">
-            <label class="flex items-start space-x-3 p-3.5 rounded-xl bg-slate-950 border border-slate-800 hover:border-slate-700 cursor-pointer transition">
-              <input type="checkbox" id="habit-vocab" class="mt-1 w-4 h-4 rounded text-indigo-600 bg-slate-800 border-slate-700 focus:ring-0">
-              <div class="flex-1 text-xs">
-                <div class="font-bold text-white">1. Complete 10 Spaced Flashcards in Boardroom Drill</div>
-                <div class="text-slate-400 mt-0.5">Focus on collocations instead of isolated words. Listen and repeat aloud.</div>
-              </div>
-            </label>
-
-            <label class="flex items-start space-x-3 p-3.5 rounded-xl bg-slate-950 border border-slate-800 hover:border-slate-700 cursor-pointer transition">
-              <input type="checkbox" id="habit-roleplay" class="mt-1 w-4 h-4 rounded text-indigo-600 bg-slate-800 border-slate-700 focus:ring-0">
-              <div class="flex-1 text-xs">
-                <div class="font-bold text-white">2. Hold a 3-Turn Voice Exchange in Executive Roleplay</div>
-                <div class="text-slate-400 mt-0.5">Defend your position aloud using the microphone. Practice natural intonation.</div>
-              </div>
-            </label>
-
-            <label class="flex items-start space-x-3 p-3.5 rounded-xl bg-slate-950 border border-slate-800 hover:border-slate-700 cursor-pointer transition">
-              <input type="checkbox" id="habit-pitch" class="mt-1 w-4 h-4 rounded text-indigo-600 bg-slate-800 border-slate-700 focus:ring-0">
-              <div class="flex-1 text-xs">
-                <div class="font-bold text-white">3. Rehearse 1 Pitch Slide on the Teleprompter with Audio Recording</div>
-                <div class="text-slate-400 mt-0.5">Listen to your recorded audio. Aim for a steady 120-135 words per minute.</div>
-              </div>
-            </label>
-          </div>
-        </div>
-      </div>
-    </div>
-  </main>
-
-  <!-- Notification Toast -->
-  <div id="toast" class="fixed bottom-5 right-5 max-w-sm bg-slate-900 border border-indigo-500/40 text-white px-4 py-3 rounded-xl shadow-2xl transition transform translate-y-24 opacity-0 pointer-events-none z-50 flex items-center space-x-3">
-    <div id="toast-icon" class="text-indigo-400"><i data-lucide="check-circle" class="w-5 h-5"></i></div>
-    <div class="text-xs">
-      <div id="toast-title" class="font-bold">Notification</div>
-      <div id="toast-body" class="text-slate-400">Action completed successfully.</div>
-    </div>
-  </div>
-
-  <!-- APPLICATION LOGIC SCRIPT -->
-  <script>
-    /* ========================================================
-       1. DATA STRUCTURES (EDIT DIRECTLY HERE IN GITHUB)
-       ======================================================== */
-    const VOCAB_DATABASE = [
-      {
-        id: '1',
-        phrase: 'Address the bottleneck',
-        phonetic: '/əˈdres ðə ˈbɒt.əl.nek/',
-        category: 'Operations',
-        level: 'B2–C1',
-        czech: 'Vyřešit úzké hrdlo / překážku v procesu',
-        czenglishTrap: 'Saying "We must solve this heavy problem"',
-        example: 'Before expanding manufacturing, we have to address the supply chain bottleneck.'
-      },
-      {
-        id: '2',
-        phrase: 'Align on deliverables',
-        phonetic: '/əˈlaɪn ɒn dɪˈlɪv.ər.ə.bəlz/',
-        category: 'Alignment',
-        level: 'B2',
-        czech: 'Sjednotit se na konkrétních výstupech / cílech',
-        czenglishTrap: 'Saying "Make sure what we want to make"',
-        example: 'Let us align on key deliverables before signing off on the Q3 sprint.'
-      },
-      {
-        id: '3',
-        phrase: 'Mitigate risk exposure',
-        phonetic: '/ˈmɪt.ɪ.ɡeɪt rɪsk ɪkˈspəʊ.ʒər/',
-        category: 'Risk Management',
-        level: 'C1',
-        czech: 'Zmírnit vystavení se rizikům',
-        czenglishTrap: 'Saying "Decrease danger"',
-        example: 'We hedged our foreign exchange contracts to mitigate risk exposure in Central Europe.'
-      },
-      {
-        id: '4',
-        phrase: 'Streamline operational overhead',
-        phonetic: '/ˈstriːm.laɪn ˌɒp.ərˈeɪ.ʃən.əl ˈəʊ.və.hed/',
-        category: 'Finance & OPEX',
-        level: 'C1',
-        czech: 'Zefektivnit a snížit provozní režijní náklady',
-        czenglishTrap: 'Saying "Make costs smaller"',
-        example: 'By consolidating our Brno and Prague warehouses, we can streamline operational overhead by 12%.'
-      },
-      {
-        id: '5',
-        phrase: 'Gain stakeholder buy-in',
-        phonetic: '/ɡeɪn ˈsteɪkˌhəʊl.dər baɪ-ɪn/',
-        category: 'Governance',
-        level: 'B2–C1',
-        czech: 'Získat podporu / souhlas klíčových partnerů a akcionářů',
-        czenglishTrap: 'Saying "Agree everyone"',
-        example: 'We cannot present this acquisition without gaining early stakeholder buy-in.'
-      },
-      {
-        id: '6',
-        phrase: 'Bandwidth is fully allocated',
-        phonetic: '/ˈbænd.wɪtθ ɪz ˈfʊl.i ˈæl.ə.keɪ.tɪd/',
-        category: 'Executive Presence',
-        level: 'C1',
-        czech: 'Kapacita / čas je plně vyčerpán (diplomatické odmítnutí)',
-        czenglishTrap: 'Saying "I do not have time for this now"',
-        example: 'Our engineering bandwidth is fully allocated toward the enterprise rollout this month.'
-      },
-      {
-        id: '7',
-        phrase: 'To put this into perspective',
-        phonetic: '/tuː pʊt ðɪs ˈɪn.tuː pəˈspek.tɪv/',
-        category: 'Signposting',
-        level: 'B2–C1',
-        czech: 'Abychom to uvedli do širších souvislostí / reality',
-        czenglishTrap: 'Saying "For your better understanding..."',
-        example: 'To put this into perspective, our ARR growth is outpacing the regional industry standard by 3x.'
-      },
-      {
-        id: '8',
-        phrase: 'Pivot the go-to-market strategy',
-        phonetic: '/ˈpɪv.ət ðə ɡəʊ-tuː-ˈmɑː.kɪt ˈstræt.ə.dʒi/',
-        category: 'Strategy',
-        level: 'C1',
-        czech: 'Strategicky změnit přístup vstupu na trh',
-        czenglishTrap: 'Saying "Change how we sell things completely"',
-        example: 'We decided to pivot the go-to-market strategy toward mid-market industrial clients.'
-      },
-        {
-  id: 'term_ecom_1',
-  phrase: 'Drive omnichannel synergies',
-  phonetic: '/draɪv ˈɒm.nɪˌtʃæn.əl ˈsɪn.ə.dʒiz/',
-  category: 'Omnichannel Retail',
-  level: 'C1',
-  czech: 'Vytěžit synergie z propojení e-shopu a kamenných prodejen',
-  czenglishTrap: 'Saying "Connect shops with internet store"',
-  example: 'Our Click & Collect network in Datart stores enables us to drive omnichannel synergies that pure-play e-shops cannot match.'
-},
-{
-  id: 'term_ecom_2',
-  phrase: 'Protect margin against marketplace price erosion',
-  phonetic: '/prəˈtekt ˈmɑː.dʒɪn əˈɡenst ˈmɑː.kɪt.pleɪs praɪs ɪˈrəʊ.ʒən/',
-  category: 'Pricing Strategy',
-  level: 'C1',
-  czech: 'Chránit marži před cenovou erozí / podbízením na online tržištích',
-  czenglishTrap: 'Saying "Keep our margin when Allegro sells cheap"',
-  example: 'Instead of engaging in a race to the bottom on price, we bundle premium delivery and installation to protect margin against marketplace price erosion.'
-},
-{
-  id: 'term_ecom_3',
-  phrase: 'Optimize warehouse pick-and-pack throughput',
-  phonetic: '/ˈɒp.tɪ.maɪz ˈweə.haʊs pɪk-ænd-pæk ˈθruː.pʊt/',
-  category: 'Supply Chain & Logistics',
-  level: 'B2–C1',
-  czech: 'Optimalizovat průchodnost / kapacitu vychystávání v logistickém centru',
-  czenglishTrap: 'Saying "Make packaging faster in our Jirny hall"',
-  example: 'Automated sorting lines in our central fulfillment center allow us to optimize warehouse pick-and-pack throughput ahead of Black Friday.'
-},
-    ];
-
-    const EXECUTIVE_BRIEFINGS = {
-      brief_mna: {
-        title: "Navigating Cross-Border M&A and Retaining Executive Buy-in",
-        domain: "Corporate Governance & M&A",
-        text: "When executing cross-border acquisitions across Central and Eastern Europe, the priority is to streamline operational overhead while actively mitigating risk exposure. Many executives mistakenly assume cost synergies will materialize automatically. To gain stakeholder buy-in, leadership must align on deliverables during initial due diligence and ring-fence legacy liabilities before closing the transaction.",
-        glossary: {
-          "acquisitions": { czech: "Akvizice / nákup firem", phonetic: "/ˌæk.wɪˈzɪʃ.ənz/", trap: "Saying 'company buying'", example: "The syndicate completed two strategic acquisitions in Munich." },
-          "streamline": { czech: "Zjednodušit / zefektivnit", phonetic: "/ˈstriːm.laɪn/", trap: "Saying 'make smaller'", example: "We will streamline management layers." },
-          "overhead": { czech: "Režijní náklady", phonetic: "/ˈəʊ.və.hed/", trap: "Saying 'normal spending'", example: "Reducing operational overhead is vital." },
-          "mitigating": { czech: "Zmírňování rizik", phonetic: "/ˈmɪt.ɪ.ɡeɪ.tɪŋ/", trap: "Saying 'decreasing danger'", example: "Mitigating supply chain delays." },
-          "synergies": { czech: "Synergie / vzájemný přínos", phonetic: "/ˈsɪn.ə.dʒiz/", trap: "Saying 'benefits of working together'", example: "We expect high revenue synergies." },
-          "stakeholder": { czech: "Zainteresovaná strana / partner", phonetic: "/ˈsteɪkˌhəʊl.dər/", trap: "Saying 'all people in project'", example: "Consult with each strategic stakeholder." },
-          "buy-in": { czech: "Podpora / souhlas", phonetic: "/ˈbaɪ.ɪn/", trap: "Saying 'agreement buy'", example: "Secure board buy-in early." },
-          "deliverables": { czech: "Konkrétní výstupy projektu", phonetic: "/dɪˈlɪv.ər.ə.bəlz/", trap: "Saying 'things we must give'", example: "Align on Q4 deliverables." },
-          "diligence": { czech: "Prověrka společnosti", phonetic: "/ˈdɪl.ɪ.dʒəns/", trap: "Saying 'company check'", example: "Legal is finalizing due diligence." },
-          "ring-fence": { czech: "Oddělit a právně chránit", phonetic: "/rɪŋ fens/", trap: "Saying 'put wall around'", example: "We will ring-fence this budget." }
-        }
-      },
-      brief_earnings: {
-        title: "Q3 Earnings Call: Defending Margins Under Headwinds",
-        domain: "Investor Relations & Finance",
-        text: "The objective of today's briefing is to address our margin compression with complete transparency. While we encountered macroeconomic headwinds across DACH distribution channels, our underlying customer retention remains resilient. We have initiated proactive cost-containment measures to safeguard gross margin, and our operational bandwidth is now fully focused on high-margin enterprise accounts.",
-        glossary: {
-          "objective": { czech: "Cíl jednání / záměr", phonetic: "/əbˈdʒek.tɪv/", trap: "Saying 'what we want today'", example: "The primary objective is clear." },
-          "compression": { czech: "Tlak na pokles / stlačení marží", phonetic: "/kəmˈpreʃ.ən/", trap: "Saying 'margin falling down'", example: "We face severe margin compression." },
-          "transparency": { czech: "Otevřenost / transparentnost", phonetic: "/trænˈspær.ən.si/", trap: "Saying 'clear speaking'", example: "We address investors with transparency." },
-          "headwinds": { czech: "Protivítr / nepříznivé vnější vlivy", phonetic: "/ˈhed.wɪndz/", trap: "Saying 'bad weather in economy'", example: "Navigating international currency headwinds." },
-          "resilient": { czech: "Odolný / pružný", phonetic: "/rɪˈzɪl.i.ənt/", trap: "Saying 'holding strong'", example: "Our unit economics remain resilient." },
-          "cost-containment": { czech: "Kontrola a omezení nákladů", phonetic: "/kɒst kənˈteɪn.mənt/", trap: "Saying 'stop spending money'", example: "Immediate cost-containment directives." },
-          "bandwidth": { czech: "Kapacita / čas týmu", phonetic: "/ˈbænd.wɪtθ/", trap: "Saying 'time we have to work'", example: "Our engineering bandwidth is committed." }
-        }
-      },
-      brief_tech: {
-        title: "Modernizing Core Banking: Deprecating Legacy Systems",
-        domain: "Enterprise Tech & Operations",
-        text: "Maintaining legacy architecture generates immense technical debt and slows our deployment velocity. To protect compliance and ensure backward compatibility, we are structuring a phased migration. Our engineering leads must address the data pipeline bottleneck before decommissioning on-premise infrastructure.",
-        glossary: {
-          "legacy": { czech: "Zastaralý / zděděný systém", phonetic: "/ˈleɡ.ə.si/", trap: "Saying 'old software'", example: "Phasing out legacy ERP servers." },
-          "architecture": { czech: "Systémová architektura", phonetic: "/ˈɑː.kɪ.tek.tʃər/", trap: "Saying 'structure'", example: "Cloud-native microservice architecture." },
-          "debt": { czech: "Technologický dluh", phonetic: "/det/", trap: "Saying 'technical money minus'", example: "Refactoring code reduces technical debt." },
-          "velocity": { czech: "Rychlost dodávání / vývoje", phonetic: "/vəˈlɒs.ə.ti/", trap: "Saying 'development speed'", example: "Sprint velocity improved by 20%." },
-          "backward": { czech: "Zpětná kompatibilita", phonetic: "/ˈbæk.wəd/", trap: "Saying 'working with old'", example: "Strict backward compatibility tests." },
-          "bottleneck": { czech: "Úzké hrdlo", phonetic: "/ˈbɒt.əl.nek/", trap: "Saying 'slow point'", example: "Eliminate the testing bottleneck." },
-          "decommissioning": { czech: "Vyřazení z provozu", phonetic: "/ˌdiː.kəˈmɪʃ.ən.ɪŋ/", trap: "Saying 'shutting down old things'", example: "Decommissioning redundant mainframes." }
-        }
-      },
-        brief_omnichannel: {
-  title: "Omnichannel Defense: Competing with Cross-Border Marketplaces",
-  domain: "E-Commerce Strategy & Retail",
-  text: "As international marketplaces intensify price competition across the Czech digital landscape, domestic electronics retailers like HP TRONIC and Datart must leverage their physical retail footprint as a strategic moat. Pure-play e-commerce platforms struggle with last-mile economics on large domestic appliances. By integrating automated central distribution with same-day store pickup and white-glove installation services, traditional retail leaders can defend customer lifetime value and insulate gross margins from aggressive cross-border discounting.",
-  glossary: {
-    "footprint": { czech: "Síť poboček / fyzická přítomnost", phonetic: "/ˈfʊt.prɪnt/", trap: "Saying 'all our shops'", example: "Expanding our urban store footprint." },
-    "moat": { czech: "Konkurenční výhoda / ochranný val", phonetic: "/məʊt/", trap: "Saying 'our big wall against competitors'", example: "Our store network serves as a defensible moat." },
-    "pure-play": { czech: "Čistě online prodejce bez prodejen", phonetic: "/pjʊə pleɪ/", trap: "Saying 'only internet shop'", example: "Pure-play competitors face high delivery churn." },
-    "last-mile": { czech: "Doručení na poslední míli ke koncovému zákazníkovi", phonetic: "/lɑːst maɪl/", trap: "Saying 'end transport'", example: "Optimizing last-mile freight costs." },
-    "white-glove": { czech: "Prémiová služba s výnosem do patra a instalací", phonetic: "/waɪt ɡlʌv/", trap: "Saying 'service with gloves'", example: "White-glove appliance installation drives repeat orders." },
-    "insulate": { czech: "Ochránit / izolovat od negativních vlivů", phonetic: "/ˈɪn.sjə.leɪt/", trap: "Saying 'make safe from'", example: "Insulate margins from price drops." }
+/* ========================================================
+   1. DATA STRUCTURES (COPY & PASTE ENTIRE BLOCK TO GITHUB)
+   ======================================================== */
+const VOCAB_DATABASE = [
+  {
+    id: '1',
+    phrase: 'Address the bottleneck',
+    phonetic: '/əˈdres ðə ˈbɒt.əl.nek/',
+    category: 'Operations',
+    level: 'B2–C1',
+    czech: 'Vyřešit úzké hrdlo / překážku v procesu',
+    czenglishTrap: 'Saying "We must solve this heavy problem"',
+    example: 'Before expanding manufacturing, we have to address the supply chain bottleneck.'
+  },
+  {
+    id: '2',
+    phrase: 'Align on deliverables',
+    phonetic: '/əˈlaɪn ɒn dɪˈlɪv.ər.ə.bəlz/',
+    category: 'Alignment',
+    level: 'B2',
+    czech: 'Sjednotit se na konkrétních výstupech / cílech',
+    czenglishTrap: 'Saying "Make sure what we want to make"',
+    example: 'Let us align on key deliverables before signing off on the Q3 sprint.'
+  },
+  {
+    id: '3',
+    phrase: 'Mitigate risk exposure',
+    phonetic: '/ˈmɪt.ɪ.ɡeɪt rɪsk ɪkˈspəʊ.ʒər/',
+    category: 'Risk Management',
+    level: 'C1',
+    czech: 'Zmírnit vystavení se rizikům',
+    czenglishTrap: 'Saying "Decrease danger"',
+    example: 'We hedged our foreign exchange contracts to mitigate risk exposure in Central Europe.'
+  },
+  {
+    id: '4',
+    phrase: 'Streamline operational overhead',
+    phonetic: '/ˈstriːm.laɪn ˌɒp.ərˈeɪ.ʃən.əl ˈəʊ.və.hed/',
+    category: 'Finance & OPEX',
+    level: 'C1',
+    czech: 'Zefektivnit a snížit provozní režijní náklady',
+    czenglishTrap: 'Saying "Make costs smaller"',
+    example: 'By consolidating our Brno and Prague warehouses, we can streamline operational overhead by 12%.'
+  },
+  {
+    id: '5',
+    phrase: 'Gain stakeholder buy-in',
+    phonetic: '/ɡeɪn ˈsteɪkˌhəʊl.dər baɪ-ɪn/',
+    category: 'Governance',
+    level: 'B2–C1',
+    czech: 'Získat podporu / souhlas klíčových partnerů a akcionářů',
+    czenglishTrap: 'Saying "Agree everyone"',
+    example: 'We cannot present this acquisition without gaining early stakeholder buy-in.'
+  },
+  {
+    id: '6',
+    phrase: 'Bandwidth is fully allocated',
+    phonetic: '/ˈbænd.wɪtθ ɪz ˈfʊl.i ˈæl.ə.keɪ.tɪd/',
+    category: 'Executive Presence',
+    level: 'C1',
+    czech: 'Kapacita / čas je plně vyčerpán (diplomatické odmítnutí)',
+    czenglishTrap: 'Saying "I do not have time for this now"',
+    example: 'Our engineering bandwidth is fully allocated toward the enterprise rollout this month.'
+  },
+  {
+    id: '7',
+    phrase: 'To put this into perspective',
+    phonetic: '/tuː pʊt ðɪs ˈɪn.tuː pəˈspek.tɪv/',
+    category: 'Signposting',
+    level: 'B2–C1',
+    czech: 'Abychom to uvedli do širších souvislostí / reality',
+    czenglishTrap: 'Saying "For your better understanding..."',
+    example: 'To put this into perspective, our ARR growth is outpacing the regional industry standard by 3x.'
+  },
+  {
+    id: '8',
+    phrase: 'Pivot the go-to-market strategy',
+    phonetic: '/ˈpɪv.ət ðə ɡəʊ-tuː-ˈmɑː.kɪt ˈstræt.ə.dʒi/',
+    category: 'Strategy',
+    level: 'C1',
+    czech: 'Strategicky změnit přístup vstupu na trh',
+    czenglishTrap: 'Saying "Change how we sell things completely"',
+    example: 'We decided to pivot the go-to-market strategy toward mid-market industrial clients.'
+  },
+  {
+    id: 'term_ecom_1',
+    phrase: 'Drive omnichannel synergies',
+    phonetic: '/draɪv ˈɒm.nɪˌtʃæn.əl ˈsɪn.ə.dʒiz/',
+    category: 'Omnichannel Retail',
+    level: 'C1',
+    czech: 'Vytěžit synergie z propojení e-shopu a kamenných prodejen',
+    czenglishTrap: 'Saying "Connect shops with internet store"',
+    example: 'Our Click & Collect network in Datart stores enables us to drive omnichannel synergies that pure-play e-shops cannot match.'
+  },
+  {
+    id: 'term_ecom_2',
+    phrase: 'Protect margin against marketplace price erosion',
+    phonetic: '/prəˈtekt ˈmɑː.dʒɪn əˈɡenst ˈmɑː.kɪt.pleɪs praɪs ɪˈrəʊ.ʒən/',
+    category: 'Pricing Strategy',
+    level: 'C1',
+    czech: 'Chránit marži před cenovou erozí / podbízením na online tržištích',
+    czenglishTrap: 'Saying "Keep our margin when Allegro sells cheap"',
+    example: 'Instead of engaging in a race to the bottom on price, we bundle premium delivery and installation to protect margin against marketplace price erosion.'
+  },
+  {
+    id: 'term_ecom_3',
+    phrase: 'Optimize warehouse pick-and-pack throughput',
+    phonetic: '/ˈɒp.tɪ.maɪz ˈweə.haʊs pɪk-ænd-pæk ˈθruː.pʊt/',
+    category: 'Supply Chain & Logistics',
+    level: 'B2–C1',
+    czech: 'Optimalizovat průchodnost / kapacitu vychystávání v logistickém centru',
+    czenglishTrap: 'Saying "Make packaging faster in our Jirny hall"',
+    example: 'Automated sorting lines in our central fulfillment center allow us to optimize warehouse pick-and-pack throughput ahead of Black Friday.'
   }
-},
-brief_consolidation: {
-  title: "Post-Merger Logistics Consolidation in Central Europe",
-  domain: "Supply Chain & Operations",
-  text: "Consolidating major electronics retail operations requires rigorous alignment between procurement teams and automated fulfillment centers. Redundant SKU overlap across acquired banners must be rationalized to prevent working capital from stagnating in slow-moving inventory. When scaling warehouse capacity in logistical hubs, operations directors must safeguard delivery SLAs while negotiating volume rebates with multinational consumer electronics brands.",
-  glossary: {
-    "consolidation": { czech: "Konsolidace / sloučení provozů", phonetic: "/kənˌsɒl.ɪˈdeɪ.ʃən/", trap: "Saying 'putting together'", example: "Post-merger warehouse consolidation." },
-    "procurement": { czech: "Nákupní oddělení / strategický nákup", phonetic: "/prəˈkjʊə.mənt/", trap: "Saying 'buying department'", example: "Procurement negotiated better vendor terms." },
-    "sku": { czech: "Skladová položka / artikl", phonetic: "/ˌes.keɪˈjuː/", trap: "Saying 'product number'", example: "Rationalizing 15,000 slow-moving SKUs." },
-    "overlap": { czech: "Překryv / duplicita v nabídce", phonetic: "/ˈəʊ.və.læp/", trap: "Saying 'having same things twice'", example: "Eliminating brand catalog overlap." },
-    "stagnating": { czech: "Zadržování / váznutí kapitálu", phonetic: "/stæɡˈneɪ.tɪŋ/", trap: "Saying 'money staying in boxes'", example: "Prevent working capital from stagnating." },
-    "rebates": { czech: "Zpětné bonusy / objemové slevy od dodavatelů", phonetic: "/ˈriː.beɪts/", trap: "Saying 'money back from producers'", example: "Securing quarterly volume rebates from Samsung." }
+];
+
+const EXECUTIVE_BRIEFINGS = {
+  brief_mna: {
+    title: "Navigating Cross-Border M&A and Retaining Executive Buy-in",
+    domain: "Corporate Governance & M&A",
+    text: "When executing cross-border acquisitions across Central and Eastern Europe, the priority is to streamline operational overhead while actively mitigating risk exposure. Many executives mistakenly assume cost synergies will materialize automatically. To gain stakeholder buy-in, leadership must align on deliverables during initial due diligence and ring-fence legacy liabilities before closing the transaction.",
+    glossary: {
+      "acquisitions": { czech: "Akvizice / nákup firem", phonetic: "/ˌæk.wɪˈzɪʃ.ənz/", trap: "Saying 'company buying'", example: "The syndicate completed two strategic acquisitions in Munich." },
+      "streamline": { czech: "Zjednodušit / zefektivnit", phonetic: "/ˈstriːm.laɪn/", trap: "Saying 'make smaller'", example: "We will streamline management layers." },
+      "overhead": { czech: "Režijní náklady", phonetic: "/ˈəʊ.və.hed/", trap: "Saying 'normal spending'", example: "Reducing operational overhead is vital." },
+      "mitigating": { czech: "Zmírňování rizik", phonetic: "/ˈmɪt.ɪ.ɡeɪ.tɪŋ/", trap: "Saying 'decreasing danger'", example: "Mitigating supply chain delays." },
+      "synergies": { czech: "Synergie / vzájemný přínos", phonetic: "/ˈsɪn.ə.dʒiz/", trap: "Saying 'benefits of working together'", example: "We expect high revenue synergies." },
+      "stakeholder": { czech: "Zainteresovaná strana / partner", phonetic: "/ˈsteɪkˌhəʊl.dər/", trap: "Saying 'all people in project'", example: "Consult with each strategic stakeholder." },
+      "buy-in": { czech: "Podpora / souhlas", phonetic: "/ˈbaɪ.ɪn/", trap: "Saying 'agreement buy'", example: "Secure board buy-in early." },
+      "deliverables": { czech: "Konkrétní výstupy projektu", phonetic: "/dɪˈlɪv.ər.ə.bəlz/", trap: "Saying 'things we must give'", example: "Align on Q4 deliverables." },
+      "diligence": { czech: "Prověrka společnosti", phonetic: "/ˈdɪl.ɪ.dʒəns/", trap: "Saying 'company check'", example: "Legal is finalizing due diligence." },
+      "ring-fence": { czech: "Oddělit a právně chránit", phonetic: "/rɪŋ fens/", trap: "Saying 'put wall around'", example: "We will ring-fence this budget." }
+    }
+  },
+  brief_earnings: {
+    title: "Q3 Earnings Call: Defending Margins Under Headwinds",
+    domain: "Investor Relations & Finance",
+    text: "The objective of today's briefing is to address our margin compression with complete transparency. While we encountered macroeconomic headwinds across DACH distribution channels, our underlying customer retention remains resilient. We have initiated proactive cost-containment measures to safeguard gross margin, and our operational bandwidth is now fully focused on high-margin enterprise accounts.",
+    glossary: {
+      "objective": { czech: "Cíl jednání / záměr", phonetic: "/əbˈdʒek.tɪv/", trap: "Saying 'what we want today'", example: "The primary objective is clear." },
+      "compression": { czech: "Tlak na pokles / stlačení marží", phonetic: "/kəmˈpreʃ.ən/", trap: "Saying 'margin falling down'", example: "We face severe margin compression." },
+      "transparency": { czech: "Otevřenost / transparentnost", phonetic: "/trænˈspær.ən.si/", trap: "Saying 'clear speaking'", example: "We address investors with transparency." },
+      "headwinds": { czech: "Protivítr / nepříznivé vnější vlivy", phonetic: "/ˈhed.wɪndz/", trap: "Saying 'bad weather in economy'", example: "Navigating international currency headwinds." },
+      "resilient": { czech: "Odolný / pružný", phonetic: "/rɪˈzɪl.i.ənt/", trap: "Saying 'holding strong'", example: "Our unit economics remain resilient." },
+      "cost-containment": { czech: "Kontrola a omezení nákladů", phonetic: "/kɒst kənˈteɪn.mənt/", trap: "Saying 'stop spending money'", example: "Immediate cost-containment directives." },
+      "bandwidth": { czech: "Kapacita / čas týmu", phonetic: "/ˈbænd.wɪtθ/", trap: "Saying 'time we have to work'", example: "Our engineering bandwidth is committed." }
+    }
+  },
+  brief_tech: {
+    title: "Modernizing Core Banking: Deprecating Legacy Systems",
+    domain: "Enterprise Tech & Operations",
+    text: "Maintaining legacy architecture generates immense technical debt and slows our deployment velocity. To protect compliance and ensure backward compatibility, we are structuring a phased migration. Our engineering leads must address the data pipeline bottleneck before decommissioning on-premise infrastructure.",
+    glossary: {
+      "legacy": { czech: "Zastaralý / zděděný systém", phonetic: "/ˈleɡ.ə.si/", trap: "Saying 'old software'", example: "Phasing out legacy ERP servers." },
+      "architecture": { czech: "Systémová architektura", phonetic: "/ˈɑː.kɪ.tek.tʃər/", trap: "Saying 'structure'", example: "Cloud-native microservice architecture." },
+      "debt": { czech: "Technologický dluh", phonetic: "/det/", trap: "Saying 'technical money minus'", example: "Refactoring code reduces technical debt." },
+      "velocity": { czech: "Rychlost dodávání / vývoje", phonetic: "/vəˈlɒs.ə.ti/", trap: "Saying 'development speed'", example: "Sprint velocity improved by 20%." },
+      "backward": { czech: "Zpětná kompatibilita", phonetic: "/ˈbæk.wəd/", trap: "Saying 'working with old'", example: "Strict backward compatibility tests." },
+      "bottleneck": { czech: "Úzké hrdlo", phonetic: "/ˈbɒt.əl.nek/", trap: "Saying 'slow point'", example: "Eliminate the testing bottleneck." },
+      "decommissioning": { czech: "Vyřazení z provozu", phonetic: "/ˌdiː.kəˈmɪʃ.ən.ɪŋ/", trap: "Saying 'shutting down old things'", example: "Decommissioning redundant mainframes." }
+    }
+  },
+  brief_omnichannel: {
+    title: "Omnichannel Defense: Competing with Cross-Border Marketplaces",
+    domain: "E-Commerce Strategy & Retail",
+    text: "As international marketplaces intensify price competition across the Czech digital landscape, domestic electronics retailers like HP TRONIC and Datart must leverage their physical retail footprint as a strategic moat. Pure-play e-commerce platforms struggle with last-mile economics on large domestic appliances. By integrating automated central distribution with same-day store pickup and white-glove installation services, traditional retail leaders can defend customer lifetime value and insulate gross margins from aggressive cross-border discounting.",
+    glossary: {
+      "footprint": { czech: "Síť poboček / fyzická přítomnost", phonetic: "/ˈfʊt.prɪnt/", trap: "Saying 'all our shops'", example: "Expanding our urban store footprint." },
+      "moat": { czech: "Konkurenční výhoda / ochranný val", phonetic: "/məʊt/", trap: "Saying 'our big wall against competitors'", example: "Our store network serves as a defensible moat." },
+      "pure-play": { czech: "Čistě online prodejce bez prodejen", phonetic: "/pjʊə pleɪ/", trap: "Saying 'only internet shop'", example: "Pure-play competitors face high delivery churn." },
+      "last-mile": { czech: "Doručení na poslední míli ke koncovému zákazníkovi", phonetic: "/lɑːst maɪl/", trap: "Saying 'end transport'", example: "Optimizing last-mile freight costs." },
+      "white-glove": { czech: "Prémiová služba s výnosem do patra a instalací", phonetic: "/waɪt ɡlʌv/", trap: "Saying 'service with gloves'", example: "White-glove appliance installation drives repeat orders." },
+      "insulate": { czech: "Ochránit / izolovat od negativních vlivů", phonetic: "/ˈɪn.sjə.leɪt/", trap: "Saying 'make safe from'", example: "Insulate margins from price drops." }
+    }
+  },
+  brief_consolidation: {
+    title: "Post-Merger Logistics Consolidation in Central Europe",
+    domain: "Supply Chain & Operations",
+    text: "Consolidating major electronics retail operations requires rigorous alignment between procurement teams and automated fulfillment centers. Redundant SKU overlap across acquired banners must be rationalized to prevent working capital from stagnating in slow-moving inventory. When scaling warehouse capacity in logistical hubs, operations directors must safeguard delivery SLAs while negotiating volume rebates with multinational consumer electronics brands.",
+    glossary: {
+      "consolidation": { czech: "Konsolidace / sloučení provozů", phonetic: "/kənˌsɒl.ɪˈdeɪ.ʃən/", trap: "Saying 'putting together'", example: "Post-merger warehouse consolidation." },
+      "procurement": { czech: "Nákupní oddělení / strategický nákup", phonetic: "/prəˈkjʊə.mənt/", trap: "Saying 'buying department'", example: "Procurement negotiated better vendor terms." },
+      "sku": { czech: "Skladová položka / artikl", phonetic: "/ˌes.keɪˈjuː/", trap: "Saying 'product number'", example: "Rationalizing 15,000 slow-moving SKUs." },
+      "overlap": { czech: "Překryv / duplicita v nabídce", phonetic: "/ˈəʊ.və.læp/", trap: "Saying 'having same things twice'", example: "Eliminating brand catalog overlap." },
+      "stagnating": { czech: "Zadržování / váznutí kapitálu", phonetic: "/stæɡˈneɪ.tɪŋ/", trap: "Saying 'money staying in boxes'", example: "Prevent working capital from stagnating." },
+      "rebates": { czech: "Zpětné bonusy / objemové slevy od dodavatelů", phonetic: "/ˈriː.beɪts/", trap: "Saying 'money back from producers'", example: "Securing quarterly volume rebates from Samsung." }
+    }
   }
-},
-    };
-
-    const SCENARIOS = {
-      cfo_budget: {
-        name: 'Mark Foster',
-        role: 'Group CFO (London HQ)',
-        mood: 'Analytical, questioning non-essential CAPEX',
-        avatar: 'MF',
-        initialMessage: "Good morning. I've been reviewing your branch OPEX proposal for next quarter. You're asking for a 15% increase in engineering headcount. In this macroeconomic climate, that seems difficult to defend. Walk me through the numbers.",
-        czechTip: "Czech managers often sound too direct ('We need people because we have projects'). Open by recognizing fiduciary pressure, then frame it around ROI and customer churn reduction."
-      },
-      board_disagree: {
-        name: 'Elena Rostova',
-        role: 'Non-Executive Board Member',
-        mood: 'Skeptical, risk-averse',
-        avatar: 'ER',
-        initialMessage: "I see your recommendation to postpone the legacy ERP migration. Frankly, this delay exposes us to operational risk. Why should the board back another rescheduling?",
-        czechTip: "Avoid defensive words like 'It is not our fault'. Frame the postponement as a calculated risk-mitigation move to safeguard revenue."
-      },
-      pitch_hostile: {
-        name: 'David Vance',
-        role: 'Managing Partner (Venture Capital)',
-        mood: 'Fast-paced, aggressive Q&A',
-        avatar: 'DV',
-        initialMessage: "Your unit economics look attractive on slide 3, but Central European tech founders frequently underestimate international enterprise CAC. What gives you the conviction you can scale into the DACH region?",
-        czechTip: "Acknowledge the DACH sales cycle reality with gravitas: 'That is a pertinent critique. However, our initial pilot conversion in Munich demonstrates...'"
-      },
-      vendor_rebate_dispute: {
-          name: 'Christoph Becker',
-          role: 'Commercial VP - Consumer Tech (Vienna)',
-          mood: 'Tough supplier, resistant to giving discounts',
-          avatar: 'CB',
-          initialMessage: "Good morning. I've analyzed your sell-out numbers across the Czech and Slovak networks for our premium OLED TVs. Your volumes are down 8% compared to target, yet your buying team is demanding the full 5% back-end rebate. Why should we grant full rebates when your store network missed the target?",
-          czechTip: "Do not blame inflation or consumer mood. Reframe around your promotional spend, front-row store placement in Datart, and your defense against gray imports."
-      },
-        marketplace_expansion: {
-          name: 'Karolína Dvořáková',
-          role: 'Chief Commercial Officer',
-          mood: 'Data-driven, concerned about brand dilution',
-          avatar: 'KD',
-          initialMessage: "Our board is pressing us to open an official storefront on foreign digital marketplaces like Allegro and Amazon. I'm worried we'll cannabilize our own direct-to-consumer traffic and destroy our premium service positioning. How do you propose we approach this channel without triggering a pricing war with our own e-shop?",
-          czechTip: "Acknowledge the cannibalization risk immediately ('That is a valid apprehension...'). Suggest listing only high-turnover refurbished items or specific private-label SKUs (e.g., ETA products) while ring-fencing core premium lines for your own domain."
-},
-    };
-
-    const QUIZ_QUESTIONS = [
-      {
-        question: 'Jak nejlépe v boardroomu nahradit: "I don\'t agree with you at all"?',
-        options: [
-          'I don\'t agree with your calculations here.',
-          'I see the merit in your perspective, however, we must consider the downside risk.',
-          'That is a completely wrong direction for our enterprise.',
-          'You must understand that our team cannot do this.'
-        ],
-        correctIdx: 1,
-        explanation: 'Diplomatic softening ("I see the merit, however...") avoids confrontation while asserting executive authority.'
-      },
-      {
-        question: 'Jak diplomaticky a profesionálně vyjádřit: "I don\'t have time for this"?',
-        options: [
-          'My bandwidth is fully allocated toward our primary Q3 deliverables.',
-          'I am too busy with other work right now.',
-          'Please do not disturb me with this project.',
-          'We have no hours left in our schedule.'
-        ],
-        correctIdx: 0,
-        explanation: '"Bandwidth is fully allocated" is standard C-level terminology for diplomatic capacity management.'
-      },
-      {
-        question: 'Jak v prezentaci představit klíčový graf nebo data místo doslovného "Look at this picture"?',
-        options: [
-          'Look at this graphic very carefully.',
-          'If you direct your attention to slide 4, the margin inflection is evident.',
-          'Here is picture showing our numbers.',
-          'I show you now what we calculated.'
-        ],
-        correctIdx: 1,
-        explanation: '"If you direct your attention to..." provides natural executive signposting and cadence.'
-      }
-    ];
-
-    const DEBATE_PROMPTS = [
-      {
-        topic: "Should Czech engineering firms offshore software testing to Asia, or keep 100% in-house to protect IP?",
-        teamA: "Team A: Defend aggressive cost reduction (Offshore)",
-        teamB: "Team B: Defend brand value and engineering control (In-house)"
-      },
-      {
-        topic: "Mandatory 3 days per week in the Prague office vs 100% remote work for senior developers.",
-        teamA: "Team A: Defend cultural cohesion and rapid mentorship",
-        teamB: "Team B: Defend global talent attraction and autonomy"
-      },
-      {
-        topic: "Freezing all Q4 marketing budgets to preserve cash runway vs Doubling down on customer acquisition.",
-        teamA: "Team A: Defend capital preservation and survival",
-        teamB: "Team B: Defend counter-cyclical growth and capturing market share"
-      }
-    ];
-
-    const SHOOTOUT_PAIRS = [
-      {
-        cz: "Nemůžeme to stihnout včas, protože dodavatel má zpoždění.",
-        en: "We are facing timeline constraints due to upstream vendor slippage, so we need to adjust milestones."
-      },
-      {
-        cz: "To je úplně špatný nápad, který bude stát moc peněz.",
-        en: "I see significant exposure here; the projected return does not justify the capital expenditure."
-      },
-      {
-        cz: "Musíme okamžitě propustit lidi a zmenšit náklady.",
-        en: "We need to execute immediate workforce rationalization to preserve our runway."
-      }
-    ];
-
-    /* ========================================================
-       2. APPLICATION STATE
-       ======================================================== */
-    let currentCardIdx = 0;
-    let isFlipped = false;
-    let userWordBank = [...VOCAB_DATABASE];
-    let currentlyInspectedWord = null;
-
-    function updateBankCounts() {
-      const count = userWordBank.length;
-      const navBankEl = document.getElementById('nav-bank-count');
-      const totalVocabEl = document.getElementById('total-vocab-count');
-      const statMasteredEl = document.getElementById('stat-mastered');
-
-      if (navBankEl) navBankEl.innerText = count;
-      if (totalVocabEl) totalVocabEl.innerText = count;
-      if (statMasteredEl) statMasteredEl.innerText = count;
-    }
-
-    function switchTab(tabId) {
-      const tabs = ['dashboard', 'reading', 'roleplay', 'teleprompter', 'vocab', 'workshop'];
-      tabs.forEach(t => {
-        const page = document.getElementById(`tab-${t}`);
-        const navBtn = document.getElementById(`nav-${t}`);
-        if (page) page.classList.add('hidden');
-        if (navBtn) {
-          navBtn.classList.remove('text-indigo-400', 'bg-indigo-500/10', 'border-indigo-500/20');
-          navBtn.classList.add('text-slate-400');
-        }
-      });
-
-      const activePage = document.getElementById(`tab-${tabId}`);
-      const activeBtn = document.getElementById(`nav-${tabId}`);
-      if (activePage) activePage.classList.remove('hidden');
-      if (activeBtn) {
-        activeBtn.classList.add('text-indigo-400', 'bg-indigo-500/10', 'border', 'border-indigo-500/20');
-        activeBtn.classList.remove('text-slate-400');
-      }
-
-      if (tabId === 'reading') loadBriefing();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    /* ========================================================
-       3. BRIEFINGS & CLICK-TO-SAVE
-       ======================================================== */
-    let currentBriefingKey = 'brief_mna';
-
-    function loadBriefing() {
-      const sel = document.getElementById('briefing-select');
-      if (sel) currentBriefingKey = sel.value;
-      const b = EXECUTIVE_BRIEFINGS[currentBriefingKey];
-      if (!b) return;
-
-      document.getElementById('briefing-domain').innerText = b.domain;
-      document.getElementById('briefing-title').innerText = b.title;
-
-      const container = document.getElementById('interactive-text-container');
-      container.innerHTML = '';
-
-      const words = b.text.split(' ');
-      words.forEach((w) => {
-        const cleanWord = w.toLowerCase().replace(/[^a-z0-9-]/g, '');
-        const isGlossed = b.glossary && b.glossary[cleanWord];
-
-        const span = document.createElement('span');
-        span.className = isGlossed 
-          ? 'cursor-pointer px-1 py-0.5 rounded bg-indigo-500/20 text-indigo-200 border-b border-indigo-400 hover:bg-amber-400/20 hover:text-amber-300 font-semibold transition'
-          : 'cursor-pointer hover:text-amber-300 hover:underline transition';
-        span.innerText = w + ' ';
-        span.onclick = () => inspectWord(cleanWord, w.replace(/[^a-zA-Z0-9-]/g, ''), isGlossed ? b.glossary[cleanWord] : null);
-        container.appendChild(span);
-      });
-
-      const firstKey = Object.keys(b.glossary)[0];
-      if (firstKey) inspectWord(firstKey, firstKey, b.glossary[firstKey]);
-    }
-
-    function inspectWord(cleanWord, displayWord, glossaryEntry) {
-      currentlyInspectedWord = {
-        phrase: glossaryEntry ? cleanWord : displayWord,
-        czech: glossaryEntry ? glossaryEntry.czech : `Klíčový termín: ${displayWord}`,
-        phonetic: glossaryEntry ? glossaryEntry.phonetic : `/${cleanWord}/`,
-        trap: glossaryEntry ? glossaryEntry.trap : 'Pozor na doslovný překlad do češtiny',
-        example: glossaryEntry ? glossaryEntry.example : `In an executive meeting: "...focus on ${cleanWord}..."`,
-        category: EXECUTIVE_BRIEFINGS[currentBriefingKey].domain,
-        level: 'B2–C1'
-      };
-
-      document.getElementById('inspect-phrase').innerText = currentlyInspectedWord.phrase;
-      document.getElementById('inspect-phonetic').innerText = currentlyInspectedWord.phonetic;
-      document.getElementById('inspect-czech').innerText = currentlyInspectedWord.czech;
-      document.getElementById('inspect-trap').innerText = currentlyInspectedWord.trap;
-      document.getElementById('inspect-example').innerText = `"${currentlyInspectedWord.example}"`;
-
-      const inBank = userWordBank.some(item => item.phrase.toLowerCase() === currentlyInspectedWord.phrase.toLowerCase());
-      const btn = document.getElementById('inspect-save-btn');
-      if (inBank) {
-        btn.innerHTML = `<i data-lucide="check" class="w-4 h-4"></i><span>Saved in Word Bank</span>`;
-        btn.className = 'w-full py-2.5 rounded-xl bg-emerald-700 text-white font-semibold text-xs flex items-center justify-center space-x-2 transition';
-      } else {
-        btn.innerHTML = `<i data-lucide="bookmark-plus" class="w-4 h-4"></i><span>Save to Word Bank</span>`;
-        btn.className = 'w-full py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs flex items-center justify-center space-x-2 transition shadow-lg shadow-indigo-600/30';
-      }
-      lucide.createIcons();
-    }
-
-    function saveInspectedWordToBank() {
-      if (!currentlyInspectedWord) return;
-      const exists = userWordBank.some(item => item.phrase.toLowerCase() === currentlyInspectedWord.phrase.toLowerCase());
-
-      if (exists) {
-        showToast('Already Banked', `"${currentlyInspectedWord.phrase}" is already in your Word Bank.`);
-        return;
-      }
-
-      const newEntry = {
-        id: 'bank_' + Date.now(),
-        phrase: currentlyInspectedWord.phrase,
-        phonetic: currentlyInspectedWord.phonetic,
-        category: currentlyInspectedWord.category,
-        level: 'B2–C1',
-        czech: currentlyInspectedWord.czech,
-        czenglishTrap: currentlyInspectedWord.trap,
-        example: currentlyInspectedWord.example
-      };
-
-      userWordBank.unshift(newEntry);
-      updateBankCounts();
-
-      const btn = document.getElementById('inspect-save-btn');
-      btn.innerHTML = `<i data-lucide="check" class="w-4 h-4"></i><span>Saved in Word Bank</span>`;
-      btn.className = 'w-full py-2.5 rounded-xl bg-emerald-700 text-white font-semibold text-xs flex items-center justify-center space-x-2 transition';
-      lucide.createIcons();
-
-      showToast('Word Banked!', `Added "${newEntry.phrase}" to your active practice deck.`);
-    }
-
-    function readBriefingAloud() {
-      const b = EXECUTIVE_BRIEFINGS[currentBriefingKey];
-      if (b) speakText(b.text);
-    }
-
-    let readingRecognition = null;
-    let isReadingSpeech = false;
-    function toggleBriefingSpeechRecord() {
-      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-      if (!SpeechRecognition) {
-        showToast('Speech Not Supported', 'Web Speech API is not supported in this browser. Please use Chrome or Edge.');
-        return;
-      }
-
-      const statusBox = document.getElementById('reading-speech-status');
-      const label = document.getElementById('briefing-rec-label');
-
-      if (isReadingSpeech) {
-        if (readingRecognition) readingRecognition.stop();
-        isReadingSpeech = false;
-        statusBox.classList.add('hidden');
-        label.innerText = 'Read Aloud (Voice Check)';
-        return;
-      }
-
-      readingRecognition = new SpeechRecognition();
-      readingRecognition.lang = 'en-US';
-      readingRecognition.continuous = true;
-      readingRecognition.interimResults = true;
-
-      const targetText = EXECUTIVE_BRIEFINGS[currentBriefingKey].text.toLowerCase();
-
-      readingRecognition.onstart = () => {
-        isReadingSpeech = true;
-        statusBox.classList.remove('hidden');
-        label.innerText = 'Stop Voice Check';
-      };
-
-      readingRecognition.onresult = (e) => {
-        let transcript = '';
-        for (let i = e.resultIndex; i < e.results.length; ++i) {
-          transcript += e.results[i][0].transcript;
-        }
-        const spokenWords = transcript.toLowerCase().split(/\s+/);
-        let matchCount = 0;
-        spokenWords.forEach(sw => {
-          if (targetText.includes(sw) && sw.length > 3) matchCount++;
-        });
-        const matchPct = Math.min(Math.round((matchCount / (targetText.split(/\s+/).length * 0.4)) * 100), 100);
-        document.getElementById('reading-match-score').innerText = `Pacing Match: ${matchPct}%`;
-      };
-
-      readingRecognition.onerror = () => {
-        isReadingSpeech = false;
-        statusBox.classList.add('hidden');
-        label.innerText = 'Read Aloud (Voice Check)';
-      };
-
-      readingRecognition.onend = () => {
-        isReadingSpeech = false;
-        statusBox.classList.add('hidden');
-        label.innerText = 'Read Aloud (Voice Check)';
-      };
-
-      readingRecognition.start();
-    }
-
-    /* ========================================================
-       4. WORD BANK & FLASHCARDS
-       ======================================================== */
-    function setVocabMode(mode) {
-      document.getElementById('vocab-flashcards-subview').classList.add('hidden');
-      document.getElementById('vocab-quiz-subview').classList.add('hidden');
-      document.getElementById('vocab-list-subview').classList.add('hidden');
-
-      ['flashcards', 'quiz', 'list'].forEach(m => {
-        const btn = document.getElementById(`vocab-view-${m}`);
-        btn.classList.remove('bg-indigo-600', 'text-white');
-        btn.classList.add('text-slate-400');
-      });
-
-      document.getElementById(`vocab-${mode}-subview`).classList.remove('hidden');
-      const activeBtn = document.getElementById(`vocab-view-${mode}`);
-      activeBtn.classList.add('bg-indigo-600', 'text-white');
-      activeBtn.classList.remove('text-slate-400');
-
-      if (mode === 'flashcards') renderCurrentFlashcard();
-      if (mode === 'quiz') startVocabQuiz();
-      if (mode === 'list') renderVocabDictionary();
-    }
-
-    function renderCurrentFlashcard() {
-      if (currentCardIdx >= userWordBank.length) currentCardIdx = 0;
-      if (currentCardIdx < 0) currentCardIdx = userWordBank.length - 1;
-      const card = userWordBank[currentCardIdx];
-      if (!card) return;
-
-      const inner = document.getElementById('flashcard-inner');
-      inner.classList.remove('flipped');
-      isFlipped = false;
-
-      document.getElementById('card-current-idx').innerText = currentCardIdx + 1;
-      document.getElementById('card-total-idx').innerText = userWordBank.length;
-      document.getElementById('card-category').innerText = card.category;
-      document.getElementById('card-phrase').innerText = card.phrase;
-      document.getElementById('card-phonetic').innerText = card.phonetic || '/.../';
-      document.getElementById('card-level').innerText = card.level || 'B2–C1';
-      document.getElementById('card-czech').innerText = card.czech;
-      document.getElementById('card-trap').innerText = `"${card.czenglishTrap || 'Literal translation'}"`;
-      document.getElementById('card-example').innerText = `"${card.example || ''}"`;
-    }
-
-    function toggleCardFlip() {
-      const inner = document.getElementById('flashcard-inner');
-      isFlipped = !isFlipped;
-      if (isFlipped) inner.classList.add('flipped');
-      else inner.classList.remove('flipped');
-    }
-
-    function handleCardNav(direction) {
-      currentCardIdx = (currentCardIdx + direction + userWordBank.length) % userWordBank.length;
-      renderCurrentFlashcard();
-    }
-
-    function speakCurrentCard() {
-      const card = userWordBank[currentCardIdx];
-      if (card) speakText(card.phrase);
-    }
-
-    function speakText(text) {
-      if (!('speechSynthesis' in window)) {
-        showToast('Speech Not Available', 'Browser does not support SpeechSynthesis.');
-        return;
-      }
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = 'en-GB';
-      utterance.rate = 0.95;
-      utterance.pitch = 1.0;
-      window.speechSynthesis.speak(utterance);
-    }
-
-    let currentQuizIdx = 0;
-    function startVocabQuiz() {
-      currentQuizIdx = 0;
-      loadQuizQuestion(0);
-    }
-
-    function loadQuizQuestion(idx) {
-      const q = QUIZ_QUESTIONS[idx];
-      document.getElementById('quiz-question-num').innerText = idx + 1;
-      document.getElementById('quiz-prompt').innerText = q.question;
-      document.getElementById('quiz-feedback-box').classList.add('hidden');
-      document.getElementById('quiz-next-btn').classList.add('hidden');
-
-      const container = document.getElementById('quiz-options-container');
-      container.innerHTML = '';
-
-      q.options.forEach((opt, index) => {
-        const btn = document.createElement('button');
-        btn.className = 'w-full text-left p-3.5 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-800 text-xs font-medium text-slate-200 transition flex items-center justify-between';
-        btn.innerHTML = `<span>${opt}</span><span class="text-slate-600 font-mono text-[10px]">${index + 1}</span>`;
-        btn.onclick = () => selectQuizOption(index, q.correctIdx, q.explanation);
-        container.appendChild(btn);
-      });
-    }
-
-    function selectQuizOption(selectedIdx, correctIdx, explanation) {
-      const feedback = document.getElementById('quiz-feedback-box');
-      feedback.classList.remove('hidden');
-
-      if (selectedIdx === correctIdx) {
-        feedback.className = 'p-3.5 rounded-xl text-xs bg-emerald-950/40 border border-emerald-900/60 text-emerald-200';
-        feedback.innerHTML = `<strong>✅ Executive Standard!</strong> ${explanation}`;
-      } else {
-        feedback.className = 'p-3.5 rounded-xl text-xs bg-rose-950/40 border border-rose-900/60 text-rose-200';
-        feedback.innerHTML = `<strong>❌ Czenglish / Sub-optimal.</strong> ${explanation}`;
-      }
-
-      document.getElementById('quiz-next-btn').classList.remove('hidden');
-    }
-
-    function nextQuizQuestion() {
-      currentQuizIdx = (currentQuizIdx + 1) % QUIZ_QUESTIONS.length;
-      loadQuizQuestion(currentQuizIdx);
-    }
-
-    function renderVocabDictionary() {
-      const grid = document.getElementById('vocab-terms-grid');
-      grid.innerHTML = '';
-
-      userWordBank.forEach(item => {
-        const card = document.createElement('div');
-        card.className = 'p-4 rounded-xl bg-slate-900 border border-slate-800 flex flex-col justify-between';
-        card.innerHTML = `
-          <div>
-            <div class="flex items-center justify-between">
-              <span class="text-[10px] px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-400 font-semibold">${item.category}</span>
-              <span class="text-slate-500 text-[10px] font-mono">${item.level || 'B2–C1'}</span>
-            </div>
-            <h4 class="font-bold text-white text-sm mt-2">${item.phrase}</h4>
-            <p class="text-xs text-amber-300/90 mt-1 font-medium">${item.czech}</p>
-            <p class="text-[11px] text-slate-400 mt-2 italic">"${item.example || ''}"</p>
-          </div>
-          <div class="mt-3 pt-2 border-t border-slate-800 flex justify-end items-center text-xs">
-            <button onclick="speakText('${item.phrase.replace(/'/g, "\\'")}')" class="text-indigo-400 hover:text-white flex items-center gap-1">
-              <i data-lucide="volume-2" class="w-3.5 h-3.5"></i>
-              <span>Listen</span>
-            </button>
-          </div>
-        `;
-        grid.appendChild(card);
-      });
-      lucide.createIcons();
-    }
-
-    function filterVocabList() {
-      const q = document.getElementById('vocab-search-input').value.toLowerCase();
-      const grid = document.getElementById('vocab-terms-grid');
-      const cards = grid.children;
-      Array.from(cards).forEach(card => {
-        const text = card.innerText.toLowerCase();
-        card.style.display = text.includes(q) ? 'flex' : 'none';
-      });
-    }
-
-    /* ========================================================
-       5. ROLEPLAY SIMULATOR
-       ======================================================== */
-    let currentScenarioKey = 'cfo_budget';
-
-    function changeScenario() {
-      const sel = document.getElementById('scenario-select').value;
-      currentScenarioKey = sel;
-      const s = SCENARIOS[sel];
-      document.getElementById('persona-name').innerText = s.name;
-      document.getElementById('persona-role').innerText = s.role;
-      document.getElementById('persona-mood').innerText = `Mood: ${s.mood}`;
-      document.getElementById('persona-avatar').innerText = s.avatar;
-      document.getElementById('scenario-tip').innerText = s.czechTip;
-      restartRoleplay();
-    }
-
-    function restartRoleplay() {
-      const s = SCENARIOS[currentScenarioKey];
-      const chatContainer = document.getElementById('chat-messages');
-      chatContainer.innerHTML = '';
-      appendChatMessage(s.name, s.initialMessage, 'partner');
-      speakText(s.initialMessage);
-    }
-
-    function appendChatMessage(sender, text, type) {
-      const container = document.getElementById('chat-messages');
-      const msgDiv = document.createElement('div');
-      msgDiv.className = `flex ${type === 'user' ? 'justify-end' : 'justify-start'}`;
-
-      if (type === 'partner') {
-        msgDiv.innerHTML = `
-          <div class="max-w-[85%] bg-slate-800 text-slate-100 p-3.5 rounded-2xl rounded-tl-none border border-slate-700/80 space-y-1">
-            <div class="text-[10px] font-bold text-indigo-400">${sender}</div>
-            <div class="leading-relaxed text-xs">${text}</div>
-            <div class="text-right pt-1">
-              <button onclick="speakText('${text.replace(/'/g, "\\'")}')" class="text-slate-400 hover:text-white p-1" title="Replay Audio">
-                <i data-lucide="volume-2" class="w-3.5 h-3.5 inline"></i>
-              </button>
-            </div>
-          </div>
-        `;
-      } else {
-        msgDiv.innerHTML = `
-          <div class="max-w-[85%] bg-indigo-600 text-white p-3.5 rounded-2xl rounded-tr-none shadow-md space-y-1">
-            <div class="text-[10px] font-bold text-indigo-200">You (Executive Voice)</div>
-            <div class="leading-relaxed text-xs">${text}</div>
-          </div>
-        `;
-      }
-
-      container.appendChild(msgDiv);
-      container.scrollTop = container.scrollHeight;
-      lucide.createIcons();
-    }
-
-    function sendUserMessage() {
-      const input = document.getElementById('roleplay-input');
-      const text = input.value.trim();
-      if (!text) return;
-
-      appendChatMessage('You', text, 'user');
-      input.value = '';
-
-      setTimeout(() => {
-        generatePartnerReply(text);
-      }, 1000);
-    }
-
-    function generatePartnerReply(userText) {
-      const s = SCENARIOS[currentScenarioKey];
-      const lower = userText.toLowerCase();
-      let reply = '';
-
-      if (lower.includes('bottleneck') || lower.includes('deliverables') || lower.includes('merit') || lower.includes('unit economics') || lower.includes('bandwidth')) {
-        reply = "I appreciate that strategic framing. That addresses my primary concern regarding resource allocation. However, how soon do you project this to reflect in gross margins?";
-      } else if (lower.includes('problem') || lower.includes('we must') || lower.includes('i disagree') || lower.includes('hard')) {
-        reply = "I hear you, but that sounds somewhat reactionary. Let's elevate this discussion: what specific mitigation milestones are you putting in place for the board?";
-      } else {
-        reply = "Understood. If we greenlight this initiative, what specific risk indicators will you be tracking week-over-week?";
-      }
-
-      appendChatMessage(s.name, reply, 'partner');
-      speakText(reply);
-    }
-
-    function insertPrompt(promptText) {
-      const input = document.getElementById('roleplay-input');
-      input.value = promptText;
-      input.focus();
-    }
-
-    let recognition;
-    let isRecognizing = false;
-    function toggleSpeechRecognition() {
-      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-      if (!SpeechRecognition) {
-        showToast('Speech Recognition Unavailable', 'Your browser does not support Web Speech Recognition. Use Chrome or Edge.');
-        return;
-      }
-
-      const recStatus = document.getElementById('recording-status');
-      const voiceBtn = document.getElementById('voice-record-btn');
-
-      if (isRecognizing) {
-        recognition.stop();
-        isRecognizing = false;
-        recStatus.classList.add('hidden');
-        voiceBtn.classList.remove('text-rose-500', 'bg-rose-950/40');
-        return;
-      }
-
-      recognition = new SpeechRecognition();
-      recognition.lang = 'en-US';
-      recognition.interimResults = false;
-      recognition.maxAlternatives = 1;
-
-      recognition.onstart = () => {
-        isRecognizing = true;
-        recStatus.classList.remove('hidden');
-        voiceBtn.classList.add('text-rose-500', 'bg-rose-950/40');
-      };
-
-      recognition.onresult = (event) => {
-        const transcript = event.results[0][0].transcript;
-        document.getElementById('roleplay-input').value = transcript;
-        showToast('Speech Transcribed', `Recognized: "${transcript.substring(0, 30)}..."`);
-      };
-
-      recognition.onerror = () => {
-        recStatus.classList.add('hidden');
-        isRecognizing = false;
-      };
-
-      recognition.onend = () => {
-        isRecognizing = false;
-        recStatus.classList.add('hidden');
-        voiceBtn.classList.remove('text-rose-500', 'bg-rose-950/40');
-      };
-
-      recognition.start();
-    }
-
-    /* ========================================================
-       6. PITCH PROMPTER & RECORDING
-       ======================================================== */
-    const PITCH_TEMPLATES = {
-      board_update: `The objective of today's briefing is to walk you through our strategic pivot and Q3 performance.
+};
+
+const SCENARIOS = {
+  cfo_budget: {
+    name: 'Mark Foster',
+    role: 'Group CFO (London HQ)',
+    mood: 'Analytical, questioning non-essential CAPEX',
+    avatar: 'MF',
+    initialMessage: "Good morning. I've been reviewing your branch OPEX proposal for next quarter. You're asking for a 15% increase in engineering headcount. In this macroeconomic climate, that seems difficult to defend. Walk me through the numbers.",
+    czechTip: "Czech managers often sound too direct ('We need people because we have projects'). Open by recognizing fiduciary pressure, then frame it around ROI and customer churn reduction."
+  },
+  board_disagree: {
+    name: 'Elena Rostova',
+    role: 'Non-Executive Board Member',
+    mood: 'Skeptical, risk-averse',
+    avatar: 'ER',
+    initialMessage: "I see your recommendation to postpone the legacy ERP migration. Frankly, this delay exposes us to operational risk. Why should the board back another rescheduling?",
+    czechTip: "Avoid defensive words like 'It is not our fault'. Frame the postponement as a calculated risk-mitigation move to safeguard revenue."
+  },
+  pitch_hostile: {
+    name: 'David Vance',
+    role: 'Managing Partner (Venture Capital)',
+    mood: 'Fast-paced, aggressive Q&A',
+    avatar: 'DV',
+    initialMessage: "Your unit economics look attractive on slide 3, but Central European tech founders frequently underestimate international enterprise CAC. What gives you the conviction you can scale into the DACH region?",
+    czechTip: "Acknowledge the DACH sales cycle reality with gravitas: 'That is a pertinent critique. However, our initial pilot conversion in Munich demonstrates...'"
+  },
+  vendor_rebate_dispute: {
+    name: 'Christoph Becker',
+    role: 'Commercial VP - Consumer Tech (Vienna)',
+    mood: 'Tough supplier, resistant to giving discounts',
+    avatar: 'CB',
+    initialMessage: "Good morning. I've analyzed your sell-out numbers across the Czech and Slovak networks for our premium OLED TVs. Your volumes are down 8% compared to target, yet your buying team is demanding the full 5% back-end rebate. Why should we grant full rebates when your store network missed the target?",
+    czechTip: "Do not blame inflation or consumer mood. Reframe around your promotional spend, front-row store placement in Datart, and your defense against gray imports."
+  },
+  marketplace_expansion: {
+    name: 'Karolína Dvořáková',
+    role: 'Chief Commercial Officer',
+    mood: 'Data-driven, concerned about brand dilution',
+    avatar: 'KD',
+    initialMessage: "Our board is pressing us to open an official storefront on foreign digital marketplaces like Allegro and Amazon. I'm worried we'll cannibalize our own direct-to-consumer traffic and destroy our premium service positioning. How do you propose we approach this channel without triggering a pricing war with our own e-shop?",
+    czechTip: "Acknowledge the cannibalization risk immediately ('That is a valid apprehension...'). Suggest listing only high-turnover refurbished items or specific private-label SKUs (e.g., ETA products) while ring-fencing core premium lines for your own domain."
+  }
+};
+
+/* ========================================================
+   PITCH PROMPTER TEMPLATES (ALL CORPORATE & E-COMMERCE)
+   ======================================================== */
+const PITCH_TEMPLATES = {
+  board_update: `The objective of today's briefing is to walk you through our strategic pivot and Q3 performance.
 
 To put this into perspective, despite macroeconomic headwinds in Europe, our enterprise contract value expanded by 24% quarter-over-quarter.
 
@@ -1679,7 +244,8 @@ If you direct your attention to slide 4, our customer acquisition cost dropped s
 While we encountered supply chain friction earlier this year, our core unit economics remain exceptionally robust.
 
 I will now open the floor for any strategic or operational questions.`,
-      pitch_deck: `Good morning. We are here today to discuss our Series A expansion round.
+
+  pitch_deck: `Good morning. We are here today to discuss our Series A expansion round.
 
 Our platform eliminates operational friction for Central European exporters by automating cross-border compliance.
 
@@ -1688,7 +254,8 @@ To put this opportunity into perspective, the addressable B2B market in the CEE 
 Our team has demonstrated exceptional capital efficiency, maintaining an 18-month runway with positive unit economics.
 
 We are actively seeking strategic partners who share our conviction for scaling enterprise software across Europe.`,
-      bad_news: `Thank you for joining this emergency briefing.
+
+  bad_news: `Thank you for joining this emergency briefing.
 
 I want to be completely transparent regarding our Q2 EBITDA performance.
 
@@ -1696,246 +263,114 @@ While we have encountered unforeseen headwinds due to vendor contract cancellati
 
 We have already instituted strict cost-containment measures to streamline our operational overhead and preserve runway.
 
-Our leadership team is fully mobilized to safeguard margin stability heading into Q4.`
-    };
+Our leadership team is fully mobilized to safeguard margin stability heading into Q4.`,
 
-    function loadPitchTemplate() {
-      const key = document.getElementById('template-select').value;
-      if (PITCH_TEMPLATES[key]) {
-        document.getElementById('pitch-text-editor').value = PITCH_TEMPLATES[key];
-        calculatePrompterMetrics();
-      }
-    }
+  peak_season_pitch: `The purpose of today's operational briefing is to review our peak Q4 readiness across our retail and fulfillment network.
 
-    function insertSignpost(phrase) {
-      const editor = document.getElementById('pitch-text-editor');
-      editor.value += `\n\n${phrase}`;
-      editor.scrollTop = editor.scrollHeight;
-      calculatePrompterMetrics();
-      showToast('Signpost Inserted', 'Added boardroom transition phrase to your script.');
-    }
+To put this into perspective, we anticipate dispatching over 120,000 orders daily through our automated logistics hubs during Black Friday week.
 
-    function calculatePrompterMetrics() {
-      const text = document.getElementById('pitch-text-editor').value.trim();
-      const words = text ? text.split(/\s+/).length : 0;
-      document.getElementById('word-count').innerText = words;
+If you look at our delivery projections, over 65% of customer transactions will be collected in-store via our express pickup service, mitigating courier capacity bottlenecks.
 
-      const seconds = Math.round((words / 130) * 60);
-      const m = Math.floor(seconds / 60);
-      const s = seconds % 60;
-      document.getElementById('time-estimate').innerText = `${m}m ${s < 10 ? '0' : ''}${s}s`;
-    }
+While we anticipate aggressive discounting from cross-border marketplaces, our bundled warranty and certified premium delivery will preserve our gross margin.
 
-    let prompterInterval = null;
-    function togglePrompterScroll() {
-      const screen = document.getElementById('prompter-screen');
-      const icon = document.getElementById('prompter-play-icon');
-      const txt = document.getElementById('prompter-play-text');
+I will now open the floor to address any supply chain or inventory inquiries.`,
 
-      if (prompterInterval) {
-        clearInterval(prompterInterval);
-        prompterInterval = null;
-        txt.innerText = 'Resume Teleprompter';
-        icon.setAttribute('data-lucide', 'play');
-        lucide.createIcons();
-      } else {
-        txt.innerText = 'Pause Teleprompter';
-        icon.setAttribute('data-lucide', 'pause');
-        lucide.createIcons();
+  store_remodeling_pitch: `Good afternoon members of the investment committee.
 
-        const speed = parseInt(document.getElementById('prompter-speed').value, 10);
-        prompterInterval = setInterval(() => {
-          screen.scrollTop += speed * 0.8;
-          if (screen.scrollTop + screen.clientHeight >= screen.scrollHeight - 5) {
-            clearInterval(prompterInterval);
-            prompterInterval = null;
-            txt.innerText = 'Completed Delivery';
-            showToast('Rehearsal Completed', 'Great pacing! Review your audio recording or run it again.');
-          }
-        }, 50);
-      }
-    }
+Today's proposal focuses on modernizing twenty flagship regional locations into experiential omnichannel hubs.
 
-    function resetPrompterScroll() {
-      if (prompterInterval) {
-        clearInterval(prompterInterval);
-        prompterInterval = null;
-        document.getElementById('prompter-play-text').innerText = 'Start Teleprompter';
-      }
-      document.getElementById('prompter-screen').scrollTop = 0;
-    }
+To put this investment into context, renovated store concepts in Prague and Brno generated an 18% uplift in high-margin appliance sales over the last two quarters.
 
-    let mediaRecorder;
-    let audioChunks = [];
-    let isRecordingAudio = false;
+Furthermore, integrating real-time inventory displays allows store associates to prevent lost sales by immediately converting out-of-stock items into home deliveries.
 
-    async function togglePitchRecording() {
-      const btnText = document.getElementById('rec-btn-text');
-      const dot = document.getElementById('rec-dot');
-      const audioEl = document.getElementById('recorded-audio');
+This project delivers payback within 14 months while cementing our local brand leadership.
 
-      if (isRecordingAudio) {
-        mediaRecorder.stop();
-        isRecordingAudio = false;
-        btnText.innerText = 'Record Voice';
-        dot.classList.remove('recording-pulse');
-        return;
-      }
+I welcome your strategic questions regarding project timeline and capital allocation.`
+};
 
-      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-        showToast('Microphone Unavailable', 'Your browser does not support voice recording.');
-        return;
-      }
+const QUIZ_QUESTIONS = [
+  {
+    question: 'Jak nejlépe v boardroomu nahradit: "I don\'t agree with you at all"?',
+    options: [
+      'I don\'t agree with your calculations here.',
+      'I see the merit in your perspective, however, we must consider the downside risk.',
+      'That is a completely wrong direction for our enterprise.',
+      'You must understand that our team cannot do this.'
+    ],
+    correctIdx: 1,
+    explanation: 'Diplomatic softening ("I see the merit, however...") avoids confrontation while asserting executive authority.'
+  },
+  {
+    question: 'Jak diplomaticky a profesionálně vyjádřit: "I don\'t have time for this"?',
+    options: [
+      'My bandwidth is fully allocated toward our primary Q3 deliverables.',
+      'I am too busy with other work right now.',
+      'Please do not disturb me with this project.',
+      'We have no hours left in our schedule.'
+    ],
+    correctIdx: 0,
+    explanation: '"Bandwidth is fully allocated" is standard C-level terminology for diplomatic capacity management.'
+  },
+  {
+    question: 'Jak v prezentaci představit klíčový graf nebo data místo doslovného "Look at this picture"?',
+    options: [
+      'Look at this graphic very carefully.',
+      'If you direct your attention to slide 4, the margin inflection is evident.',
+      'Here is picture showing our numbers.',
+      'I show you now what we calculated.'
+    ],
+    correctIdx: 1,
+    explanation: '"If you direct your attention to..." provides natural executive signposting and cadence.'
+  }
+];
 
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        mediaRecorder = new MediaRecorder(stream);
-        audioChunks = [];
+const DEBATE_PROMPTS = [
+  {
+    topic: "Should Czech engineering firms offshore software testing to Asia, or keep 100% in-house to protect IP?",
+    teamA: "Team A: Defend aggressive cost reduction (Offshore)",
+    teamB: "Team B: Defend brand value and engineering control (In-house)"
+  },
+  {
+    topic: "Mandatory 3 days per week in the Prague office vs 100% remote work for senior developers.",
+    teamA: "Team A: Defend cultural cohesion and rapid mentorship",
+    teamB: "Team B: Defend global talent attraction and autonomy"
+  },
+  {
+    topic: "Freezing all Q4 marketing budgets to preserve cash runway vs Doubling down on customer acquisition.",
+    teamA: "Team A: Defend capital preservation and survival",
+    teamB: "Team B: Defend counter-cyclical growth and capturing market share"
+  },
+  {
+    topic: "Should a major Czech retail group open its own open marketplace to third-party sellers, or maintain a strictly curated, 100% owned inventory model?",
+    teamA: "Team A: Defend launching a broad marketplace to compete with Allegro and expand catalog variety.",
+    teamB: "Team B: Defend brand trust, certified warranties, and reliable delivery by owning all inventory."
+  },
+  {
+    topic: "Should retail branch staff be incentivized purely on local physical store sales, or on total digital revenue generated in their catchment area?",
+    teamA: "Team A: Defend local store attribution to drive active physical upselling and premium client care.",
+    teamB: "Team B: Defend regional omnichannel attribution so staff gladly assist online returns and digital orders."
+  }
+];
 
-        mediaRecorder.ondataavailable = (e) => {
-          audioChunks.push(e.data);
-        };
-
-        mediaRecorder.onstop = () => {
-          const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
-          const audioUrl = URL.createObjectURL(audioBlob);
-          audioEl.src = audioUrl;
-          audioEl.classList.remove('hidden');
-          showToast('Recording Saved', 'Click play to review your executive tone and pace.');
-        };
-
-        mediaRecorder.start();
-        isRecordingAudio = true;
-        btnText.innerText = 'Stop Recording';
-        dot.classList.add('recording-pulse');
-      } catch (err) {
-        console.error('Audio capture error', err);
-        showToast('Permission Denied', 'Please grant microphone access to record practice pitches.');
-      }
-    }
-
-    /* ========================================================
-       7. WORKSHOP & TIMED DEBATES
-       ======================================================== */
-    let debatePromptIdx = 0;
-    function nextDebatePrompt() {
-      debatePromptIdx = (debatePromptIdx + 1) % DEBATE_PROMPTS.length;
-      const d = DEBATE_PROMPTS[debatePromptIdx];
-      document.getElementById('debate-prompt-text').innerText = `"${d.topic}"`;
-      resetDebateTimer();
-    }
-
-    let debateTimerSeconds = 300;
-    let debateTimerInterval = null;
-    function toggleDebateTimer() {
-      const btn = document.getElementById('timer-toggle-btn');
-      if (debateTimerInterval) {
-        clearInterval(debateTimerInterval);
-        debateTimerInterval = null;
-        btn.innerText = 'Resume Timer';
-      } else {
-        btn.innerText = 'Pause Timer';
-        debateTimerInterval = setInterval(() => {
-          if (debateTimerSeconds > 0) {
-            debateTimerSeconds--;
-            const m = Math.floor(debateTimerSeconds / 60);
-            const s = debateTimerSeconds % 60;
-            document.getElementById('debate-timer-display').innerText = `${m < 10 ? '0' : ''}${m}:${s < 10 ? '0' : ''}${s}`;
-          } else {
-            clearInterval(debateTimerInterval);
-            debateTimerInterval = null;
-            btn.innerText = 'Time Up!';
-            showToast('Time Expired!', 'Debate round finished.');
-          }
-        }, 1000);
-      }
-    }
-
-    function resetDebateTimer() {
-      if (debateTimerInterval) {
-        clearInterval(debateTimerInterval);
-        debateTimerInterval = null;
-      }
-      debateTimerSeconds = 300;
-      document.getElementById('debate-timer-display').innerText = '05:00';
-      document.getElementById('timer-toggle-btn').innerText = 'Start Timer';
-    }
-
-    let shootoutIdx = 0;
-    function drawShootoutCard() {
-      shootoutIdx = (shootoutIdx + 1) % SHOOTOUT_PAIRS.length;
-      document.getElementById('shootout-czech').innerText = `"${SHOOTOUT_PAIRS[shootoutIdx].cz}"`;
-      document.getElementById('shootout-answer').innerText = SHOOTOUT_PAIRS[shootoutIdx].en;
-      document.getElementById('shootout-answer').classList.add('hidden');
-      document.getElementById('shootout-placeholder').classList.remove('hidden');
-    }
-
-    function toggleShootoutAnswer() {
-      document.getElementById('shootout-answer').classList.remove('hidden');
-      document.getElementById('shootout-placeholder').classList.add('hidden');
-    }
-
-    function switchWorkshopMode(mode) {
-      const classView = document.getElementById('workshop-class-view');
-      const selfView = document.getElementById('workshop-self-view');
-      const btnClass = document.getElementById('toggle-inclass');
-      const btnSelf = document.getElementById('toggle-selfstudy');
-
-      if (mode === 'class') {
-        classView.classList.remove('hidden');
-        selfView.classList.add('hidden');
-        btnClass.classList.add('bg-indigo-600', 'text-white');
-        btnClass.classList.remove('text-slate-400');
-        btnSelf.classList.remove('bg-indigo-600', 'text-white');
-        btnSelf.classList.add('text-slate-400');
-      } else {
-        classView.classList.add('hidden');
-        selfView.classList.remove('hidden');
-        btnSelf.classList.add('bg-indigo-600', 'text-white');
-        btnSelf.classList.remove('text-slate-400');
-        btnClass.classList.remove('bg-indigo-600', 'text-white');
-        btnClass.classList.add('text-slate-400');
-      }
-    }
-
-    /* ========================================================
-       8. TOAST & NOTIFICATIONS
-       ======================================================== */
-    let toastTimeout;
-    function showToast(title, body) {
-      const toast = document.getElementById('toast');
-      document.getElementById('toast-title').innerText = title;
-      document.getElementById('toast-body').innerText = body;
-
-      toast.classList.remove('opacity-0', 'translate-y-24', 'pointer-events-none');
-      toast.classList.add('opacity-100', 'translate-y-0');
-
-      clearTimeout(toastTimeout);
-      toastTimeout = setTimeout(() => {
-        toast.classList.add('opacity-0', 'translate-y-24', 'pointer-events-none');
-        toast.classList.remove('opacity-100', 'translate-y-0');
-      }, 3500);
-    }
-
-    /* ========================================================
-       9. INITIALIZATION
-       ======================================================== */
-    window.addEventListener('DOMContentLoaded', () => {
-      updateBankCounts();
-      loadBriefing();
-      renderCurrentFlashcard();
-      restartRoleplay();
-      calculatePrompterMetrics();
-
-      const pitchEditor = document.getElementById('pitch-text-editor');
-      if (pitchEditor) {
-        pitchEditor.addEventListener('input', calculatePrompterMetrics);
-      }
-
-      if (window.lucide && typeof lucide.createIcons === 'function') {
-        lucide.createIcons();
-      }
-    });
-  </script>
-</body>
-</html>
+const SHOOTOUT_PAIRS = [
+  {
+    cz: "Nemůžeme to stihnout včas, protože dodavatel má zpoždění.",
+    en: "We are facing timeline constraints due to upstream vendor slippage, so we need to adjust milestones."
+  },
+  {
+    cz: "To je úplně špatný nápad, který bude stát moc peněz.",
+    en: "I see significant exposure here; the projected return does not justify the capital expenditure."
+  },
+  {
+    cz: "Musíme okamžitě propustit lidi a zmenšit náklady.",
+    en: "We need to execute immediate workforce rationalization to preserve our runway."
+  },
+  {
+    cz: "Zákazníci si jdou zboží prohlédnout do prodejny, ale pak si ho koupí levněji na internetu.",
+    en: "We are mitigating showrooming by equipping our floor sales specialists with instant price-matching authority and premium add-ons."
+  },
+  {
+    cz: "Musíme zkrátit dobu od kliknutí na webu po předání zboží v prodejně na 30 minut.",
+    en: "We need to compress our click-to-collection window down to thirty minutes to outperform courier lead times."
+  }
+];
