@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ExecuSpeak CZ | Corporate English Mastery for Czech Executives</title>
+  <title>ExecuSpeak CZ | Corporate English for Czech Executives</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Lucide Icons -->
@@ -76,7 +76,7 @@
 <body class="h-full flex flex-col font-sans selection:bg-indigo-600 selection:text-white bg-slate-950 text-slate-100 antialiased">
 
   <!-- Top Executive Navigation Bar -->
-  <header class="border-b border-slate-800 bg-slate-900/90 backdrop-blur sticky top-0 z-50">
+  <header class="border-b border-slate-800 bg-slate-900/90 backdrop-blur sticky top-0 z-40">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
       <!-- Brand Logo -->
       <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('dashboard')">
@@ -88,7 +88,7 @@
             <span class="font-bold tracking-tight text-lg text-white">ExecuSpeak</span>
             <span class="text-xs font-semibold px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20">CZ • C-SUITE</span>
           </div>
-          <p class="text-[10px] text-slate-400 font-medium tracking-wide">B1–C1 CORPORATE READINESS</p>
+          <p class="text-[10px] text-slate-400 font-medium tracking-wide">PROFESSIONAL SPOKEN ENGLISH</p>
         </div>
       </div>
 
@@ -118,29 +118,19 @@
           <i data-lucide="users" class="w-4 h-4"></i>
           <span>In-Class Workshop</span>
         </button>
-        <button onclick="switchTab('cms')" id="nav-cms" class="nav-btn px-3.5 py-2 rounded-lg text-xs font-medium transition flex items-center space-x-2 text-slate-400 hover:text-white hover:bg-slate-800">
-          <i data-lucide="folder-plus" class="w-4 h-4"></i>
-          <span>Content Studio</span>
-        </button>
       </nav>
 
-      <!-- Executive Profile & Stats Widget -->
-      <div class="flex items-center space-x-4">
-        <div class="hidden sm:flex items-center space-x-3 px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700/60">
-          <div class="flex items-center space-x-1.5 text-amber-400 text-xs font-semibold" title="Daily Executive Streak">
-            <i data-lucide="flame" class="w-4 h-4 fill-amber-400 text-amber-400"></i>
-            <span id="streak-counter">3</span>d
+      <!-- Right Profile Pill -->
+      <div class="flex items-center space-x-3">
+        <div id="user-profile-badge" class="flex items-center space-x-2 px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800">
+          <div class="w-7 h-7 rounded-full bg-gradient-to-tr from-indigo-600 to-amber-500 flex items-center justify-center text-xs font-bold text-white shadow" id="auth-avatar">
+            EX
           </div>
-          <div class="h-3 w-px bg-slate-700"></div>
-          <div class="flex items-center space-x-1.5 text-indigo-400 text-xs font-semibold" title="Executive Fluency Score">
-            <i data-lucide="award" class="w-4 h-4"></i>
-            <span id="score-counter">420</span> XP
+          <div class="text-left hidden sm:block">
+            <div class="text-xs font-semibold text-white leading-tight" id="auth-name">Executive Learner</div>
+            <div class="text-[10px] text-slate-400" id="auth-email">executive@company.cz</div>
           </div>
         </div>
-        <!-- Reset Storage Option in small icon dropdown -->
-        <button onclick="confirmResetProgress()" title="Reset Session Progress" class="p-2 rounded-lg text-slate-400 hover:text-rose-400 hover:bg-slate-800 transition">
-          <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
-        </button>
       </div>
     </div>
   </header>
@@ -153,7 +143,6 @@
     <button onclick="switchTab('teleprompter')" class="px-2.5 py-1.5 rounded text-slate-400 whitespace-nowrap">Pitch Prompter</button>
     <button onclick="switchTab('vocab')" class="px-2.5 py-1.5 rounded text-slate-400 whitespace-nowrap">Word Bank</button>
     <button onclick="switchTab('workshop')" class="px-2.5 py-1.5 rounded text-slate-400 whitespace-nowrap">In-Class</button>
-    <button onclick="switchTab('cms')" class="px-2.5 py-1.5 rounded text-slate-400 whitespace-nowrap">Content Studio</button>
   </div>
 
   <!-- Main View Container -->
@@ -161,7 +150,6 @@
 
     <!-- ==================== TAB 0: DASHBOARD ==================== -->
     <div id="tab-dashboard" class="space-y-6">
-      <!-- Welcome Hero Banner -->
       <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 p-6 sm:p-8 border border-indigo-500/20 shadow-2xl">
         <div class="relative z-10 max-w-3xl">
           <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 text-xs font-semibold mb-3">
@@ -173,7 +161,7 @@
             <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-amber-300">Read executive briefings, practice speaking aloud, bank every key phrase.</span>
           </h1>
           <p class="mt-2 text-sm sm:text-base text-slate-300">
-            A standalone speech accelerator for Czech executives and professionals. Read authentic C-level dossiers, click any unfamiliar word to save it, and practice verbal simulations under realistic pressure.
+            A standalone speech accelerator for Czech executives and retail leaders. Read authentic C-level dossiers, click any unfamiliar word to save it, and practice verbal simulations under realistic pressure.
           </p>
           <div class="mt-6 flex flex-wrap gap-3">
             <button onclick="switchTab('reading')" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-medium text-sm flex items-center space-x-2 shadow-lg shadow-indigo-600/30 transition">
@@ -189,48 +177,38 @@
       </div>
 
       <!-- Quick Metrics Grid -->
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div class="bg-slate-900/90 border border-slate-800 p-4 rounded-xl flex items-center space-x-3.5">
           <div class="p-3 bg-indigo-500/10 text-indigo-400 rounded-lg">
             <i data-lucide="bookmark-check" class="w-6 h-6"></i>
           </div>
           <div>
             <div class="text-2xl font-bold text-white" id="stat-mastered">0</div>
-            <div class="text-xs text-slate-400 font-medium">Banked Phrases</div>
+            <div class="text-xs text-slate-400 font-medium">Banked Phrases Available</div>
           </div>
         </div>
         <div class="bg-slate-900/90 border border-slate-800 p-4 rounded-xl flex items-center space-x-3.5">
           <div class="p-3 bg-amber-500/10 text-amber-400 rounded-lg">
-            <i data-lucide="mic" class="w-6 h-6"></i>
+            <i data-lucide="book-open" class="w-6 h-6"></i>
           </div>
           <div>
-            <div class="text-2xl font-bold text-white">42 min</div>
-            <div class="text-xs text-slate-400 font-medium">Spoken Practice</div>
+            <div class="text-2xl font-bold text-white">5 Modules</div>
+            <div class="text-xs text-slate-400 font-medium">Executive & E-Commerce Dossiers</div>
           </div>
         </div>
         <div class="bg-slate-900/90 border border-slate-800 p-4 rounded-xl flex items-center space-x-3.5">
           <div class="p-3 bg-emerald-500/10 text-emerald-400 rounded-lg">
-            <i data-lucide="shield-check" class="w-6 h-6"></i>
+            <i data-lucide="mic" class="w-6 h-6"></i>
           </div>
           <div>
-            <div class="text-2xl font-bold text-white">92%</div>
-            <div class="text-xs text-slate-400 font-medium">Diplomacy Rating</div>
-          </div>
-        </div>
-        <div class="bg-slate-900/90 border border-slate-800 p-4 rounded-xl flex items-center space-x-3.5">
-          <div class="p-3 bg-sky-500/10 text-sky-400 rounded-lg">
-            <i data-lucide="flame" class="w-6 h-6"></i>
-          </div>
-          <div>
-            <div class="text-2xl font-bold text-white" id="stat-streak">3</div>
-            <div class="text-xs text-slate-400 font-medium">Day Habit Streak</div>
+            <div class="text-2xl font-bold text-white">Active</div>
+            <div class="text-xs text-slate-400 font-medium">Interactive Speech Engine</div>
           </div>
         </div>
       </div>
 
       <!-- Feature Jump Cards -->
       <div class="grid md:grid-cols-3 gap-6">
-        <!-- Feature 1 -->
         <div onclick="switchTab('reading')" class="group cursor-pointer bg-slate-900 border border-slate-800 hover:border-indigo-500/50 p-5 rounded-xl transition duration-200">
           <div class="w-10 h-10 rounded-lg bg-indigo-500/10 text-indigo-400 flex items-center justify-center mb-4 group-hover:scale-110 transition">
             <i data-lucide="book-open" class="w-5 h-5"></i>
@@ -244,7 +222,6 @@
           </p>
         </div>
 
-        <!-- Feature 2 -->
         <div onclick="switchTab('roleplay')" class="group cursor-pointer bg-slate-900 border border-slate-800 hover:border-amber-500/50 p-5 rounded-xl transition duration-200">
           <div class="w-10 h-10 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center mb-4 group-hover:scale-110 transition">
             <i data-lucide="mic" class="w-5 h-5"></i>
@@ -254,11 +231,10 @@
             <i data-lucide="arrow-right" class="w-4 h-4 opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition"></i>
           </h3>
           <p class="text-xs text-slate-400 mt-2 leading-relaxed">
-            Practice speaking into your microphone against a demanding CFO, board director, or investor. Real-time feedback on diplomacy and executive tone.
+            Practice speaking into your microphone against a demanding CFO, vendor VP, or commercial board with natural turn-taking audio.
           </p>
         </div>
 
-        <!-- Feature 3 -->
         <div onclick="switchTab('teleprompter')" class="group cursor-pointer bg-slate-900 border border-slate-800 hover:border-emerald-500/50 p-5 rounded-xl transition duration-200">
           <div class="w-10 h-10 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center mb-4 group-hover:scale-110 transition">
             <i data-lucide="presentation" class="w-5 h-5"></i>
@@ -272,7 +248,9 @@
           </p>
         </div>
       </div>
-    <!-- ==================== TAB 1: EXECUTIVE BRIEFINGS & CLICK-TO-BANK (NEW) ==================== -->
+    </div>
+
+    <!-- ==================== TAB 1: EXECUTIVE BRIEFINGS ==================== -->
     <div id="tab-reading" class="hidden space-y-6">
       <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
         <div>
@@ -291,12 +269,13 @@
             <option value="brief_mna">1. M&A Strategy & Post-Merger Synergies</option>
             <option value="brief_earnings">2. Q3 Earnings Call & Margin Compression</option>
             <option value="brief_tech">3. Tech Scaling & Legacy Modernization</option>
+            <option value="brief_omnichannel">4. Omnichannel Retail vs Marketplaces (Datart)</option>
+            <option value="brief_consolidation">5. Retail Logistics & SKU Rationalization</option>
           </select>
         </div>
       </div>
 
       <div class="grid lg:grid-cols-12 gap-6">
-        <!-- Interactive Reading Surface (8 cols) -->
         <div class="lg:col-span-8 space-y-4">
           <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
             <div class="flex items-center justify-between border-b border-slate-800 pb-3">
@@ -316,15 +295,10 @@
               </div>
             </div>
 
-            <!-- Briefing Title -->
             <h3 class="text-lg sm:text-xl font-extrabold text-white" id="briefing-title">Navigating Cross-Border M&A and Retaining Executive Buy-in</h3>
 
-            <!-- Interactive Tokenized Text Screen -->
-            <div class="p-5 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 text-sm sm:text-base leading-relaxed tracking-wide min-h-[260px] select-text" id="interactive-text-container">
-              <!-- Rendered with clickable interactive words -->
-            </div>
+            <div class="p-5 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 text-sm sm:text-base leading-relaxed tracking-wide min-h-[260px] select-text" id="interactive-text-container"></div>
 
-            <!-- Voice Reading Live Feedback Bar -->
             <div id="reading-speech-status" class="hidden p-3 rounded-xl bg-slate-950 border border-indigo-500/30 flex items-center justify-between text-xs">
               <div class="flex items-center space-x-2 text-indigo-300">
                 <span class="w-2.5 h-2.5 rounded-full bg-rose-500 animate-ping"></span>
@@ -334,13 +308,12 @@
             </div>
 
             <div class="flex items-center justify-between text-xs text-slate-500 pt-1">
-              <span>💡 Tip: Click any word to hear how a London/US executive pronounces it.</span>
-              <span class="text-indigo-400 cursor-pointer hover:underline" onclick="switchTab('vocab')">View my saved Word Bank &rarr;</span>
+              <span>💡 Tip: Click any word to hear how an executive pronounces it.</span>
+              <span class="text-indigo-400 cursor-pointer hover:underline" onclick="switchTab('vocab')">View Word Bank &rarr;</span>
             </div>
           </div>
         </div>
 
-        <!-- Word Inspector & Bank Card (4 cols) -->
         <div class="lg:col-span-4 space-y-4">
           <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4 sticky top-20 shadow-xl" id="word-inspector-card">
             <div class="flex items-center justify-between">
@@ -369,7 +342,7 @@
 
               <div>
                 <span class="text-[10px] font-bold uppercase text-rose-400">Czenglish Caution</span>
-                <p class="text-slate-300 bg-rose-950/20 border border-rose-900/30 p-2.5 rounded-lg mt-0.5" id="inspect-trap">Avoid literal Czech translation: "We have big problem with speed."</p>
+                <p class="text-slate-300 bg-rose-950/20 border border-rose-900/30 p-2.5 rounded-lg mt-0.5" id="inspect-trap">Avoid literal translation: "We have big problem with speed."</p>
               </div>
 
               <div>
@@ -380,44 +353,40 @@
 
             <button onclick="saveInspectedWordToBank()" id="inspect-save-btn" class="w-full py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs flex items-center justify-center space-x-2 transition shadow-lg shadow-indigo-600/30">
               <i data-lucide="bookmark-plus" class="w-4 h-4"></i>
-              <span>Save to Word Bank & Practice Deck</span>
+              <span>Save to Word Bank</span>
             </button>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ==================== TAB 2: BOARDROOM WORD BANK (Updated) ==================== -->
+    <!-- ==================== TAB 2: BOARDROOM WORD BANK ==================== -->
     <div id="tab-vocab" class="hidden space-y-6">
-      <!-- Drill Header & Mode Switch -->
       <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
         <div>
           <h2 class="text-xl font-bold text-white flex items-center space-x-2">
-            <span>Executive Word Bank & Spaced Recall</span>
+            <span>Executive Word Bank & Practice</span>
             <span class="text-xs px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-400 border border-indigo-500/30">Active Lexicon</span>
           </h2>
-          <p class="text-xs text-slate-400 mt-0.5">Review terms saved from briefings, roleplays, or imported lessons with voice drills.</p>
+          <p class="text-xs text-slate-400 mt-0.5">Review terms saved from briefings, roleplays, and lessons with voice drills.</p>
         </div>
 
         <div class="flex items-center space-x-2 bg-slate-900 p-1 rounded-xl border border-slate-800">
           <button id="vocab-view-flashcards" onclick="setVocabMode('flashcards')" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-white bg-indigo-600 transition">Flashcards</button>
           <button id="vocab-view-quiz" onclick="setVocabMode('quiz')" class="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:text-white transition">Quick Recall Test</button>
-          <button id="vocab-view-list" onclick="setVocabMode('list')" class="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:text-white transition">Saved Terms (<span id="total-vocab-count">0</span>)</button>
+          <button id="vocab-view-list" onclick="setVocabMode('list')" class="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:text-white transition">All Terms (<span id="total-vocab-count">0</span>)</button>
         </div>
       </div>
 
-      <!-- Subview A: Flashcard Mode -->
+      <!-- Flashcards View -->
       <div id="vocab-flashcards-subview" class="max-w-xl mx-auto space-y-5">
-        <!-- Progress Counter -->
         <div class="flex items-center justify-between text-xs text-slate-400 px-1">
-          <span>Card <span id="card-current-idx" class="font-bold text-white">1</span> of <span id="card-total-idx" class="font-bold text-white">12</span></span>
-          <span id="card-deck-name" class="font-medium text-indigo-400">Deck: Boardroom Diplomacy & Finance</span>
+          <span>Card <span id="card-current-idx" class="font-bold text-white">1</span> of <span id="card-total-idx" class="font-bold text-white">11</span></span>
+          <span id="card-deck-name" class="font-medium text-indigo-400">Boardroom & Retail Collocations</span>
         </div>
 
-        <!-- 3D Flippable Card -->
         <div class="card-flip w-full h-[360px] cursor-pointer" onclick="toggleCardFlip()">
           <div id="flashcard-inner" class="card-inner relative w-full h-full rounded-2xl shadow-xl">
-            <!-- Front of Card (English Expression) -->
             <div class="card-front absolute inset-0 w-full h-full rounded-2xl bg-slate-900 border border-slate-800 p-7 flex flex-col justify-between shadow-2xl">
               <div class="flex items-center justify-between">
                 <span class="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded bg-indigo-500/10 text-indigo-400 border border-indigo-500/20" id="card-category">Strategic Pivot</span>
@@ -440,7 +409,6 @@
               </div>
             </div>
 
-            <!-- Back of Card (Czech Context & Czenglish Contrast) -->
             <div class="card-back absolute inset-0 w-full h-full rounded-2xl bg-slate-900 border border-slate-700 p-7 flex flex-col justify-between shadow-2xl">
               <div>
                 <div class="flex items-center justify-between mb-2">
@@ -451,13 +419,11 @@
                 </div>
                 <div class="text-lg font-bold text-white mb-3" id="card-czech">Změnit směr / strategii obchodního modelu</div>
 
-                <!-- Czenglish Warning Box -->
                 <div class="p-2.5 rounded-lg bg-rose-950/30 border border-rose-900/40 mb-3 text-xs">
                   <span class="font-bold text-rose-400">Czenglish trap:</span> 
                   <span class="text-slate-300" id="card-trap">"We must totally change our company direction."</span>
                 </div>
 
-                <!-- Executive Example -->
                 <div class="text-xs text-slate-300 bg-slate-800/80 p-3 rounded-lg border border-slate-700">
                   <span class="font-bold text-indigo-400 block mb-1">Boardroom context:</span>
                   <span id="card-example" class="italic">"Given our Q2 burn rate, we need to pivot our core offering toward enterprise SaaS."</span>
@@ -465,26 +431,25 @@
               </div>
 
               <div class="text-center text-xs text-slate-500 pt-2 border-t border-slate-800">
-                How well do you know this phrase?
+                Card Study Navigation
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Rating Action Buttons (SRS Loop) -->
         <div class="flex items-center gap-3">
-          <button onclick="handleCardRating(false)" class="flex-1 py-3 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 font-semibold text-xs flex items-center justify-center space-x-2 transition">
-            <i data-lucide="repeat" class="w-4 h-4 text-amber-400"></i>
-            <span>Still Learning (Opakovat)</span>
+          <button onclick="handleCardNav(-1)" class="flex-1 py-3 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 font-semibold text-xs flex items-center justify-center space-x-2 transition">
+            <i data-lucide="chevron-left" class="w-4 h-4"></i>
+            <span>Previous Card</span>
           </button>
-          <button onclick="handleCardRating(true)" class="flex-1 py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs flex items-center justify-center space-x-2 shadow-lg shadow-emerald-600/20 transition">
-            <i data-lucide="check" class="w-4 h-4"></i>
-            <span>Mastered (Zvládnuto +15 XP)</span>
+          <button onclick="handleCardNav(1)" class="flex-1 py-3 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs flex items-center justify-center space-x-2 shadow-lg shadow-indigo-600/20 transition">
+            <span>Next Card</span>
+            <i data-lucide="chevron-right" class="w-4 h-4"></i>
           </button>
         </div>
       </div>
 
-      <!-- Subview B: Interactive Instant Recall Test -->
+      <!-- Recall Quiz -->
       <div id="vocab-quiz-subview" class="hidden max-w-xl mx-auto space-y-5">
         <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl space-y-5 shadow-xl">
           <div class="flex items-center justify-between text-xs text-slate-400 border-b border-slate-800 pb-3">
@@ -492,7 +457,7 @@
               <i data-lucide="sparkles" class="w-4 h-4"></i>
               <span>C-Level Instant Recall Test</span>
             </span>
-            <span>Question <span id="quiz-question-num" class="text-white font-bold">1</span>/5</span>
+            <span>Question <span id="quiz-question-num" class="text-white font-bold">1</span>/3</span>
           </div>
 
           <div>
@@ -500,15 +465,8 @@
             <div class="text-base font-bold text-white mt-1" id="quiz-prompt">Jak nejlépe nahradit: "I don't agree with you at all"?</div>
           </div>
 
-          <!-- Quiz Options -->
-          <div class="space-y-2.5" id="quiz-options-container">
-            <!-- Rendered dynamically -->
-          </div>
-
-          <!-- Instant Feedback Alert -->
-          <div id="quiz-feedback-box" class="hidden p-3.5 rounded-xl text-xs">
-            <!-- Dynamic feedback message -->
-          </div>
+          <div class="space-y-2.5" id="quiz-options-container"></div>
+          <div id="quiz-feedback-box" class="hidden p-3.5 rounded-xl text-xs"></div>
 
           <div class="flex justify-end pt-2">
             <button id="quiz-next-btn" onclick="nextQuizQuestion()" class="hidden px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold flex items-center space-x-2 transition">
@@ -519,52 +477,42 @@
         </div>
       </div>
 
-      <!-- Subview C: Full Vocabulary Dictionary & Search -->
+      <!-- Saved Terms List -->
       <div id="vocab-list-subview" class="hidden space-y-4">
-        <div class="flex items-center justify-between gap-4">
-          <div class="relative flex-1 max-w-md">
-            <i data-lucide="search" class="w-4 h-4 absolute left-3 top-3 text-slate-500"></i>
-            <input type="text" id="vocab-search-input" oninput="filterVocabList()" placeholder="Search terms, Czech translation, or level..." class="w-full bg-slate-900 border border-slate-800 rounded-xl pl-9 pr-4 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500">
-          </div>
-          <button onclick="switchTab('cms')" class="px-3 py-1.5 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-400 border border-indigo-500/30 text-xs font-semibold flex items-center space-x-1.5 transition">
-            <i data-lucide="plus" class="w-3.5 h-3.5"></i>
-            <span>Add / Import Words</span>
-          </button>
+        <div class="relative max-w-md">
+          <i data-lucide="search" class="w-4 h-4 absolute left-3 top-3 text-slate-500"></i>
+          <input type="text" id="vocab-search-input" oninput="filterVocabList()" placeholder="Search terms, Czech translation, or domain..." class="w-full bg-slate-900 border border-slate-800 rounded-xl pl-9 pr-4 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500">
         </div>
 
-        <div class="grid md:grid-cols-2 gap-3" id="vocab-terms-grid">
-          <!-- Populated dynamically -->
-        </div>
+        <div class="grid md:grid-cols-2 gap-3" id="vocab-terms-grid"></div>
       </div>
     </div>
 
-    <!-- ==================== TAB 2: EXECUTIVE ROLEPLAY (VOICE & TEXT) ==================== -->
+    <!-- ==================== TAB 3: EXECUTIVE ROLEPLAY ==================== -->
     <div id="tab-roleplay" class="hidden space-y-6">
       <div class="border-b border-slate-800 pb-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <div>
           <h2 class="text-xl font-bold text-white flex items-center space-x-2">
             <span>Executive Boardroom Simulator</span>
-            <span class="text-xs px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">Live Partner AI</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">Live Speech Partner</span>
           </h2>
-          <p class="text-xs text-slate-400">Simulate tough conversations with international stakeholders. Receive live feedback on tone and diplomacy.</p>
+          <p class="text-xs text-slate-400">Simulate tough conversations with international stakeholders, suppliers, and board members.</p>
         </div>
 
-        <!-- Scenario Selector Dropdown -->
         <div class="flex items-center space-x-2">
           <label for="scenario-select" class="text-xs text-slate-400">Select Scenario:</label>
           <select id="scenario-select" onchange="changeScenario()" class="bg-slate-900 border border-slate-700 text-white text-xs rounded-xl px-3 py-2 focus:outline-none focus:border-indigo-500">
             <option value="cfo_budget">1. Defending OPEX Budget Cuts with CFO Mark</option>
             <option value="board_disagree">2. Diplomatic Disagreement with Non-Exec Director</option>
             <option value="pitch_hostile">3. Handling Aggressive Q&A During Strategy Pitch</option>
+            <option value="vendor_rebate_dispute">4. Annual Vendor Rebate Negotiation (Supplier)</option>
+            <option value="marketplace_expansion">5. Marketplace Channel Strategy (Internal Board)</option>
           </select>
         </div>
       </div>
 
-      <!-- Main Roleplay Interface -->
       <div class="grid lg:grid-cols-3 gap-6">
-        <!-- Chat Dialogue Column (2 spans) -->
         <div class="lg:col-span-2 bg-slate-900 border border-slate-800 rounded-2xl flex flex-col h-[520px] shadow-2xl">
-          <!-- Scenario Persona Bar -->
           <div class="px-5 py-3.5 border-b border-slate-800 bg-slate-900/80 rounded-t-2xl flex items-center justify-between">
             <div class="flex items-center space-x-3">
               <div class="w-9 h-9 rounded-full bg-gradient-to-br from-indigo-500 to-indigo-800 flex items-center justify-center font-bold text-xs text-white ring-2 ring-indigo-500/30" id="persona-avatar">
@@ -585,27 +533,21 @@
             </button>
           </div>
 
-          <!-- Chat History -->
-          <div id="chat-messages" class="flex-1 overflow-y-auto p-5 space-y-4 text-xs">
-            <!-- Messages added here -->
-          </div>
+          <div id="chat-messages" class="flex-1 overflow-y-auto p-5 space-y-4 text-xs"></div>
 
-          <!-- Executive Input Toolbar -->
           <div class="p-3.5 border-t border-slate-800 bg-slate-900/60 rounded-b-2xl">
-            <!-- Quick Suggestion Pill -->
             <div class="mb-2 flex items-center space-x-2 overflow-x-auto text-[11px] pb-1">
-              <span class="text-slate-500 font-medium whitespace-nowrap">C-Suite Prompts:</span>
+              <span class="text-slate-500 font-medium whitespace-nowrap">Suggested Openers:</span>
               <button onclick="insertPrompt('I see the merit in your numbers, however, cutting R&D now jeopardizes Q4 deliverables.')" class="px-2 py-1 rounded-md bg-slate-800 hover:bg-slate-700 text-slate-300 whitespace-nowrap border border-slate-700">"I see the merit, however..."</button>
               <button onclick="insertPrompt('If we look at the unit economics, this investment achieves payback in 6 months.')" class="px-2 py-1 rounded-md bg-slate-800 hover:bg-slate-700 text-slate-300 whitespace-nowrap border border-slate-700">"If we look at unit economics..."</button>
             </div>
 
             <div class="flex items-center space-x-2">
-              <!-- Speech-To-Text Voice Button -->
               <button id="voice-record-btn" onclick="toggleSpeechRecognition()" class="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-indigo-400 hover:text-indigo-300 border border-slate-700 transition" title="Hold/Click to Speak (Web Speech)">
                 <i data-lucide="mic" class="w-5 h-5"></i>
               </button>
 
-              <input type="text" id="roleplay-input" onkeydown="if(event.key==='Enter') sendUserMessage()" placeholder="Type your executive response or click the microphone..." class="flex-1 bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none">
+              <input type="text" id="roleplay-input" onkeydown="if(event.key==='Enter') sendUserMessage()" placeholder="Type your response or click the microphone to speak..." class="flex-1 bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none">
 
               <button onclick="sendUserMessage()" class="p-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold transition flex items-center justify-center shadow-lg shadow-indigo-600/20">
                 <i data-lucide="send" class="w-4 h-4"></i>
@@ -618,62 +560,33 @@
           </div>
         </div>
 
-        <!-- Live Executive Coaching & Metric Panel -->
         <div class="space-y-4">
-          <!-- Real-Time Tone Evaluation Card -->
-          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4">
-            <h3 class="text-xs font-bold uppercase tracking-wider text-amber-400 flex items-center space-x-1.5">
-              <i data-lucide="gauge" class="w-4 h-4"></i>
-              <span>Live Executive Feedback</span>
-            </h3>
-
-            <div>
-              <div class="flex justify-between text-xs font-medium text-slate-300 mb-1">
-                <span>Diplomacy & Softening Score</span>
-                <span id="metric-diplomacy" class="text-indigo-400 font-bold">85%</span>
-              </div>
-              <div class="w-full h-2 rounded-full bg-slate-800 overflow-hidden">
-                <div id="bar-diplomacy" class="h-full bg-indigo-500 rounded-full transition-all duration-500" style="width: 85%"></div>
-              </div>
-            </div>
-
-            <div>
-              <div class="flex justify-between text-xs font-medium text-slate-300 mb-1">
-                <span>Executive Gravitas / Assertiveness</span>
-                <span id="metric-gravitas" class="text-emerald-400 font-bold">78%</span>
-              </div>
-              <div class="w-full h-2 rounded-full bg-slate-800 overflow-hidden">
-                <div id="bar-gravitas" class="h-full bg-emerald-500 rounded-full transition-all duration-500" style="width: 78%"></div>
-              </div>
-            </div>
-
-            <!-- Instant Polish Suggestions -->
-            <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
-              <div class="text-[11px] font-bold text-indigo-300 flex items-center space-x-1">
-                <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
-                <span>Executive Polish Recommendation:</span>
-              </div>
-              <p id="feedback-tip" class="text-xs text-slate-300 leading-relaxed">
-                Use conditional softening phrases like "I would recommend we..." or "Could we consider..." rather than blunt statements like "You must understand".
-              </p>
-            </div>
-          </div>
-
-          <!-- Czech Executive Tips for this scenario -->
-          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 text-xs space-y-2">
-            <div class="font-bold text-slate-200 flex items-center space-x-1.5">
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-3">
+            <div class="font-bold text-white text-sm flex items-center space-x-2">
               <i data-lucide="info" class="w-4 h-4 text-indigo-400"></i>
               <span>Czech Speaker Guidance</span>
             </div>
-            <p class="text-slate-400 leading-relaxed" id="scenario-tip">
+            <p class="text-xs text-slate-300 leading-relaxed" id="scenario-tip">
               In London or US boardroom culture, opening with pure disagreement sounds confrontational. Always acknowledge the CFO's fiduciary duty before presenting counter-data.
             </p>
+          </div>
+
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-3">
+            <div class="font-bold text-white text-sm flex items-center space-x-2">
+              <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400"></i>
+              <span>Executive Speech Rules</span>
+            </div>
+            <ul class="text-xs text-slate-400 space-y-2 list-disc list-inside">
+              <li>Acknowledge first: <em class="text-slate-200">"That is a fair pushback..."</em></li>
+              <li>Avoid literal Czech translations like <em class="text-rose-400">"We must solve"</em> or <em class="text-rose-400">"You must understand"</em>.</li>
+              <li>Anchor arguments with financial collocations: <em class="text-slate-200">mitigate risk, unit economics, payback runway</em>.</li>
+            </ul>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ==================== TAB 3: PITCH BUILDER & TELEPROMPTER ==================== -->
+    <!-- ==================== TAB 4: PITCH BUILDER & TELEPROMPTER ==================== -->
     <div id="tab-teleprompter" class="hidden space-y-6">
       <div class="border-b border-slate-800 pb-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <div>
@@ -684,19 +597,19 @@
           <p class="text-xs text-slate-400">Structure your presentation with boardroom signposts, practice with the teleprompter, and record your voice.</p>
         </div>
 
-        <!-- Signposting Quick Template Injector -->
         <div class="flex items-center space-x-2">
           <span class="text-xs text-slate-400">Insert Template:</span>
           <select id="template-select" onchange="loadPitchTemplate()" class="bg-slate-900 border border-slate-700 text-white text-xs rounded-xl px-3 py-1.5 focus:outline-none">
             <option value="board_update">Quarterly Board Performance Review</option>
             <option value="pitch_deck">Series A / Growth Funding Pitch</option>
             <option value="bad_news">Delivering Restructuring / Missed Targets</option>
+            <option value="peak_season_pitch">Peak Season Fulfillment & Q4 Defense</option>
+            <option value="store_remodeling_pitch">Omnichannel Flagship Store Modernization</option>
           </select>
         </div>
       </div>
 
       <div class="grid lg:grid-cols-12 gap-6">
-        <!-- Signpost Selector Palette (4 cols) -->
         <div class="lg:col-span-4 space-y-4">
           <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl space-y-3">
             <h3 class="text-xs font-bold uppercase tracking-wider text-indigo-400 flex items-center space-x-1.5">
@@ -731,7 +644,7 @@
               </div>
 
               <div>
-                <span class="text-[10px] font-bold text-slate-500 uppercase">3. Softening Bad News (Czech Exec Fix)</span>
+                <span class="text-[10px] font-bold text-slate-500 uppercase">3. Softening Bad News</span>
                 <div class="space-y-1 mt-1">
                   <button onclick="insertSignpost('While we encountered headwinds in Q2, our fundamentals remain robust.')" class="w-full text-left p-2 rounded-lg bg-slate-800/80 hover:bg-indigo-600/20 text-slate-200 text-xs transition border border-slate-700/60">
                     "While we encountered headwinds..."
@@ -757,9 +670,7 @@
           </div>
         </div>
 
-        <!-- Teleprompter Script Editor & Runner (8 cols) -->
         <div class="lg:col-span-8 space-y-4">
-          <!-- Prompter Controls Bar -->
           <div class="bg-slate-900 border border-slate-800 p-3 rounded-2xl flex flex-wrap items-center justify-between gap-3 text-xs">
             <div class="flex items-center space-x-2">
               <button id="prompter-play-btn" onclick="togglePrompterScroll()" class="px-3.5 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-semibold flex items-center space-x-1.5 transition">
@@ -771,13 +682,11 @@
               </button>
             </div>
 
-            <!-- Speed Controller -->
             <div class="flex items-center space-x-2">
               <span class="text-slate-400">Scroll Speed:</span>
               <input type="range" id="prompter-speed" min="1" max="5" value="2" class="w-24 accent-indigo-500">
             </div>
 
-            <!-- Audio Recording & Playback Controls -->
             <div class="flex items-center space-x-2">
               <button id="audio-rec-btn" onclick="togglePitchRecording()" class="px-3 py-1.5 rounded-lg bg-rose-600/20 hover:bg-rose-600/30 text-rose-300 border border-rose-500/30 font-medium flex items-center space-x-1.5 transition">
                 <i data-lucide="circle" class="w-3.5 h-3.5 fill-rose-500 text-rose-500" id="rec-dot"></i>
@@ -787,16 +696,14 @@
             </div>
           </div>
 
-          <!-- Teleprompter Screen -->
           <div id="prompter-screen" class="relative bg-slate-950 border border-slate-800 rounded-2xl h-[380px] p-6 overflow-y-auto shadow-inner text-slate-200">
-            <!-- Focus Guide Overlay Line -->
             <div class="sticky top-20 left-0 right-0 h-10 border-y border-amber-500/20 bg-amber-500/5 pointer-events-none rounded flex items-center justify-end px-3">
               <span class="text-[10px] text-amber-400/60 font-mono tracking-wider">EYE-LINE FOCUS</span>
             </div>
 
             <textarea id="pitch-text-editor" class="w-full bg-transparent border-0 text-white font-sans text-lg sm:text-xl leading-relaxed focus:outline-none resize-none min-h-[300px]" placeholder="Type or paste your executive presentation script here, or click the signposts on the left...">The objective of today's briefing is to walk you through our strategic pivot and Q3 performance.
 
-To put this into perspective, despite macroeconomic headwinds, our enterprise contract value expanded by 24% quarter-over-quarter.
+To put this into perspective, despite macroeconomic headwinds in Europe, our enterprise contract value expanded by 24% quarter-over-quarter.
 
 If you direct your attention to slide 4, our customer acquisition cost dropped significantly, largely attributable to automated onboarding and direct executive referrals.
 
@@ -805,7 +712,6 @@ While we encountered supply chain friction earlier this year, our core unit econ
 I will now open the floor for any strategic or operational questions.</textarea>
           </div>
 
-          <!-- Pacing & Word Count Metrics -->
           <div class="flex items-center justify-between text-xs text-slate-400 px-1">
             <div class="flex space-x-4">
               <span>Words: <strong id="word-count" class="text-white">68</strong></span>
@@ -820,33 +726,31 @@ I will now open the floor for any strategic or operational questions.</textarea>
       </div>
     </div>
 
-    <!-- ==================== TAB 4: IN-CLASS WORKSHOP & DAILY HABITS ==================== -->
+    <!-- ==================== TAB 5: IN-CLASS WORKSHOP & ROUTINES ==================== -->
     <div id="tab-workshop" class="hidden space-y-6">
       <div class="border-b border-slate-800 pb-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <div>
           <h2 class="text-xl font-bold text-white flex items-center space-x-2">
-            <span>In-Class Workshop & Daily Habits</span>
-            <span class="text-xs px-2 py-0.5 rounded bg-purple-500/20 text-purple-400 border border-purple-500/30">Coach & Self-Study Hub</span>
+            <span>In-Class Workshop & Daily Practice</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-purple-500/20 text-purple-400 border border-purple-500/30">Speaking Exercises</span>
           </h2>
-          <p class="text-xs text-slate-400">Switch between classroom team activities and your personal 10-minute daily executive routine.</p>
+          <p class="text-xs text-slate-400">Timed classroom team debates and personal spoken practice routines.</p>
         </div>
 
         <div class="flex items-center space-x-1 bg-slate-900 p-1 rounded-xl border border-slate-800">
           <button id="toggle-inclass" onclick="switchWorkshopMode('class')" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-white bg-indigo-600 transition">In-Class Activity</button>
-          <button id="toggle-selfstudy" onclick="switchWorkshopMode('self')" class="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:text-white transition">Self-Study Daily Routine</button>
+          <button id="toggle-selfstudy" onclick="switchWorkshopMode('self')" class="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:text-white transition">Self-Study Checklist</button>
         </div>
       </div>
 
-      <!-- Workshop Mode: IN-CLASS TEAM CHALLENGES -->
+      <!-- Workshop Mode: IN-CLASS -->
       <div id="workshop-class-view" class="space-y-6">
-        <!-- 5-Minute Timed Debate Challenge Generator -->
         <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl space-y-4">
           <div class="flex items-center justify-between">
             <div class="flex items-center space-x-2">
               <span class="p-2 rounded-lg bg-indigo-500/10 text-indigo-400"><i data-lucide="timer" class="w-5 h-5"></i></span>
               <h3 class="text-base font-bold text-white">5-Minute Executive Debate Battle (Team vs Team)</h3>
             </div>
-            <!-- Timer Display -->
             <div class="flex items-center space-x-3">
               <div class="text-xl font-mono font-bold text-amber-400 bg-slate-950 px-3 py-1 rounded-lg border border-slate-800" id="debate-timer-display">05:00</div>
               <button onclick="toggleDebateTimer()" id="timer-toggle-btn" class="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-xs font-semibold text-white transition">Start Timer</button>
@@ -854,15 +758,14 @@ I will now open the floor for any strategic or operational questions.</textarea>
             </div>
           </div>
 
-          <!-- Current Prompt Banner -->
           <div class="p-4 rounded-xl bg-slate-950 border border-slate-800">
             <div class="text-[10px] uppercase font-bold tracking-wider text-slate-500 mb-1">Debate Topic For Czech Executives:</div>
             <div class="text-lg font-bold text-white" id="debate-prompt-text">
               "Should Czech engineering firms offshore all software testing to Asia, or keep 100% in-house to protect IP?"
             </div>
             <div class="mt-3 flex flex-wrap gap-4 text-xs">
-              <div class="text-indigo-400 font-medium">Team A: Defend aggressive cost reduction (Offshore)</div>
-              <div class="text-amber-400 font-medium">Team B: Defend brand value and engineering control (In-house)</div>
+              <div class="text-indigo-400 font-medium" id="debate-team-a">Team A: Defend aggressive cost reduction (Offshore)</div>
+              <div class="text-amber-400 font-medium" id="debate-team-b">Team B: Defend brand value and engineering control (In-house)</div>
             </div>
           </div>
 
@@ -875,7 +778,6 @@ I will now open the floor for any strategic or operational questions.</textarea>
           </div>
         </div>
 
-        <!-- 60-Second Phrase Shootout -->
         <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl space-y-4">
           <div class="flex items-center justify-between">
             <div class="flex items-center space-x-2">
@@ -908,362 +810,58 @@ I will now open the floor for any strategic or operational questions.</textarea>
         </div>
       </div>
 
-      <!-- Workshop Mode: SELF-STUDY DAILY 10-MIN ROUTINE -->
+      <!-- Workshop Mode: SELF-STUDY -->
       <div id="workshop-self-view" class="hidden space-y-6">
         <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl space-y-5">
-          <div class="flex items-center justify-between">
-            <div>
-              <h3 class="text-base font-bold text-white">Daily 10-Minute Executive Habit Checklist</h3>
-              <p class="text-xs text-slate-400">Consistent micro-habits yield higher C-suite retention than weekly grammar lectures.</p>
-            </div>
-            <div class="text-xs font-semibold text-amber-400 bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/20">
-              Today's Goal: 3/3 Completed
-            </div>
+          <div>
+            <h3 class="text-base font-bold text-white">Spoken Executive Routine Checklist</h3>
+            <p class="text-xs text-slate-400">Recommended 10-minute daily practice structure for speaking retention.</p>
           </div>
 
           <div class="space-y-3">
             <label class="flex items-start space-x-3 p-3.5 rounded-xl bg-slate-950 border border-slate-800 hover:border-slate-700 cursor-pointer transition">
-              <input type="checkbox" id="habit-vocab" onchange="toggleHabit('habit-vocab')" class="mt-1 w-4 h-4 rounded text-indigo-600 bg-slate-800 border-slate-700 focus:ring-0">
+              <input type="checkbox" id="habit-vocab" class="mt-1 w-4 h-4 rounded text-indigo-600 bg-slate-800 border-slate-700 focus:ring-0">
               <div class="flex-1 text-xs">
                 <div class="font-bold text-white">1. Complete 10 Spaced Flashcards in Boardroom Drill</div>
-                <div class="text-slate-400 mt-0.5">Focus on collocations instead of isolated nouns. Eliminate 1 Czenglish habit.</div>
+                <div class="text-slate-400 mt-0.5">Focus on collocations instead of isolated words. Listen and repeat aloud.</div>
               </div>
-              <span class="text-[11px] font-semibold text-indigo-400">+25 XP</span>
             </label>
 
             <label class="flex items-start space-x-3 p-3.5 rounded-xl bg-slate-950 border border-slate-800 hover:border-slate-700 cursor-pointer transition">
-              <input type="checkbox" id="habit-roleplay" onchange="toggleHabit('habit-roleplay')" class="mt-1 w-4 h-4 rounded text-indigo-600 bg-slate-800 border-slate-700 focus:ring-0">
+              <input type="checkbox" id="habit-roleplay" class="mt-1 w-4 h-4 rounded text-indigo-600 bg-slate-800 border-slate-700 focus:ring-0">
               <div class="flex-1 text-xs">
                 <div class="font-bold text-white">2. Hold a 3-Turn Voice Exchange in Executive Roleplay</div>
-                <div class="text-slate-400 mt-0.5">Defend budget numbers aloud. Focus on natural vocal intonation.</div>
+                <div class="text-slate-400 mt-0.5">Defend your position aloud using the microphone. Practice natural intonation.</div>
               </div>
-              <span class="text-[11px] font-semibold text-emerald-400">+35 XP</span>
             </label>
 
             <label class="flex items-start space-x-3 p-3.5 rounded-xl bg-slate-950 border border-slate-800 hover:border-slate-700 cursor-pointer transition">
-              <input type="checkbox" id="habit-pitch" onchange="toggleHabit('habit-pitch')" class="mt-1 w-4 h-4 rounded text-indigo-600 bg-slate-800 border-slate-700 focus:ring-0">
+              <input type="checkbox" id="habit-pitch" class="mt-1 w-4 h-4 rounded text-indigo-600 bg-slate-800 border-slate-700 focus:ring-0">
               <div class="flex-1 text-xs">
                 <div class="font-bold text-white">3. Rehearse 1 Pitch Slide on the Teleprompter with Audio Recording</div>
-                <div class="text-slate-400 mt-0.5">Listen to your own delivery speed. Aim for steady 120-135 words per minute.</div>
+                <div class="text-slate-400 mt-0.5">Listen to your recorded audio. Aim for a steady 120-135 words per minute.</div>
               </div>
-              <span class="text-[11px] font-semibold text-amber-400">+40 XP</span>
             </label>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ==================== TAB 5: INSTRUCTOR CONTENT STUDIO (CMS) ==================== -->
-    <div id="tab-cms" class="hidden space-y-6">
-      <!-- CMS Header -->
-      <div class="border-b border-slate-800 pb-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-        <div>
-          <h2 class="text-xl font-bold text-white flex items-center space-x-2">
-            <span>Instructor Content Studio</span>
-            <span class="text-xs px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-400 border border-indigo-500/30">Teacher & Deck CMS</span>
-          </h2>
-          <p class="text-xs text-slate-400 mt-0.5">Quickly import vocabulary from Excel/Sheets, build custom roleplay scenarios, or share lesson decks via Class Codes.</p>
-        </div>
-
-        <div class="flex items-center space-x-2">
-          <button onclick="loadSampleLessonPack('mergers')" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-medium text-slate-300 border border-slate-700 flex items-center space-x-1.5 transition">
-            <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-400"></i>
-            <span>Load "M&A & Restructuring" Pack</span>
-          </button>
-          <button onclick="loadSampleLessonPack('tech')" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-medium text-slate-300 border border-slate-700 flex items-center space-x-1.5 transition">
-            <i data-lucide="code" class="w-3.5 h-3.5 text-sky-400"></i>
-            <span>Load "Tech & Engineering" Pack</span>
-          </button>
-        </div>
-      </div>
-
-      <!-- CMS Sub-navigation Tabs -->
-      <div class="flex border-b border-slate-800 gap-2">
-        <button id="cms-tab-btn-bulk" onclick="switchCmsTab('bulk')" class="px-4 py-2 border-b-2 border-indigo-500 text-indigo-400 text-xs font-semibold flex items-center space-x-1.5 transition">
-          <i data-lucide="file-spreadsheet" class="w-4 h-4"></i>
-          <span>Bulk Sheet Import</span>
-        </button>
-        <button id="cms-tab-btn-single" onclick="switchCmsTab('single')" class="px-4 py-2 border-b-2 border-transparent text-slate-400 hover:text-white text-xs font-medium flex items-center space-x-1.5 transition">
-          <i data-lucide="plus-circle" class="w-4 h-4"></i>
-          <span>Single Term Creator</span>
-        </button>
-        <button id="cms-tab-btn-scenario" onclick="switchCmsTab('scenario')" class="px-4 py-2 border-b-2 border-transparent text-slate-400 hover:text-white text-xs font-medium flex items-center space-x-1.5 transition">
-          <i data-lucide="message-square-plus" class="w-4 h-4"></i>
-          <span>Custom Scenarios & Debates</span>
-        </button>
-        <button id="cms-tab-btn-share" onclick="switchCmsTab('share')" class="px-4 py-2 border-b-2 border-transparent text-slate-400 hover:text-white text-xs font-medium flex items-center space-x-1.5 transition">
-          <i data-lucide="share-2" class="w-4 h-4"></i>
-          <span>Class Code / Export & Import</span>
-        </button>
-      </div>
-
-      <!-- CMS Subview 1: BULK IMPORT (WocaBee / Excel style) -->
-      <div id="cms-panel-bulk" class="space-y-4">
-        <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl space-y-4">
-          <div class="flex items-start justify-between">
-            <div>
-              <h3 class="text-sm font-bold text-white flex items-center space-x-2">
-                <span>Copy & Paste From Google Sheets / Excel</span>
-                <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-normal">Fastest Way</span>
-              </h3>
-              <p class="text-xs text-slate-400 mt-1">
-                Paste rows separated by Tabs or vertical bars (<code class="bg-slate-800 px-1 py-0.5 rounded text-amber-300">|</code> or <code class="bg-slate-800 px-1 py-0.5 rounded text-amber-300">;</code>).<br>
-                Expected order: <span class="text-slate-300 font-mono text-[11px]">English Term | Czech Meaning | Czenglish Trap | C-Level Example Sentence</span>
-              </p>
-            </div>
-            <button onclick="insertSampleBulkData()" class="text-xs text-indigo-400 hover:underline">Insert Sample Rows</button>
-          </div>
-
-          <textarea id="bulk-paste-input" rows="7" placeholder="Address the bottleneck	Vyřešit úzké hrdlo	We must solve this heavy problem	We need to address the bottleneck before Q4.
-Gain stakeholder buy-in	Získat podporu partnerů	Agree everyone	We must gain stakeholder buy-in first." class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3.5 text-xs font-mono text-slate-200 placeholder-slate-600 focus:outline-none focus:border-indigo-500"></textarea>
-
-          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-            <div class="flex items-center space-x-3 text-xs">
-              <span class="text-slate-400">Target Category:</span>
-              <select id="bulk-category-select" class="bg-slate-950 border border-slate-700 text-white text-xs rounded-lg px-2.5 py-1.5 focus:outline-none">
-                <option value="Boardroom & Strategy">Boardroom & Strategy</option>
-                <option value="Finance & Valuation">Finance & Valuation</option>
-                <option value="Negotiation & M&A">Negotiation & M&A</option>
-                <option value="Tech & Operations">Tech & Operations</option>
-                <option value="Leadership Presence">Leadership Presence</option>
-              </select>
-            </div>
-
-            <button onclick="executeBulkImport()" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs flex items-center space-x-2 transition shadow-lg shadow-indigo-600/30">
-              <i data-lucide="check-check" class="w-4 h-4"></i>
-              <span>Parse & Add to Live Lesson Deck</span>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- CMS Subview 2: SINGLE TERM CREATOR -->
-      <div id="cms-panel-single" class="hidden space-y-4">
-        <form onsubmit="handleSingleTermSubmit(event)" class="bg-slate-900 border border-slate-800 p-6 rounded-2xl space-y-4">
-          <div class="grid sm:grid-cols-2 gap-4">
-            <div>
-              <label class="block text-xs font-semibold text-slate-300 mb-1">C-Level English Phrase *</label>
-              <input type="text" id="single-phrase" required placeholder="e.g. Underwrite the operational risk" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-indigo-500">
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-slate-300 mb-1">Czech Translation (Překlad) *</label>
-              <input type="text" id="single-czech" required placeholder="e.g. Převzít garanci / krýt provozní riziko" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-indigo-500">
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-rose-400 mb-1">Czenglish Trap to Avoid (Častá chyba)</label>
-              <input type="text" id="single-trap" placeholder="e.g. 'Pay the danger if problem happens'" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-indigo-500">
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-indigo-400 mb-1">Phonetic Transcription (optional)</label>
-              <input type="text" id="single-phonetic" placeholder="e.g. /ˈʌn.də.raɪt ðə ˌɒp.ərˈeɪ.ʃən.əl rɪsk/" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
-            </div>
-            <div class="sm:col-span-2">
-              <label class="block text-xs font-semibold text-slate-300 mb-1">Boardroom Context Example Sentence *</label>
-              <input type="text" id="single-example" required placeholder="e.g. Given the geopolitical friction, the syndicate agreed to underwrite the operational risk." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-indigo-500">
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-slate-300 mb-1">Business Domain / Tag</label>
-              <select id="single-category" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-indigo-500">
-                <option value="Strategy">Strategy</option>
-                <option value="Boardroom Diplomacy">Boardroom Diplomacy</option>
-                <option value="Finance & OPEX">Finance & OPEX</option>
-                <option value="Negotiation">Negotiation</option>
-                <option value="Tech & Operations">Tech & Operations</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-slate-300 mb-1">CEFR Level</label>
-              <select id="single-level" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-indigo-500">
-                <option value="B2–C1">B2–C1 (Executive Intermediate)</option>
-                <option value="C1">C1 (Authoritative Boardroom)</option>
-                <option value="B2">B2 (Professional Fluency)</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="flex justify-end pt-2">
-            <button type="submit" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs flex items-center space-x-2 transition">
-              <i data-lucide="plus" class="w-4 h-4"></i>
-              <span>Save & Add to Active Deck</span>
-            </button>
-          </div>
-        </form>
-      </div>
-
-      <!-- CMS Subview 3: SCENARIOS & DEBATE PROMPTS -->
-      <div id="cms-panel-scenario" class="hidden space-y-4">
-        <div class="grid lg:grid-cols-2 gap-6">
-          <!-- Create AI Roleplay Scenario -->
-          <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl space-y-3">
-            <h3 class="text-sm font-bold text-white flex items-center space-x-2">
-              <i data-lucide="mic" class="w-4 h-4 text-emerald-400"></i>
-              <span>Add Custom AI Roleplay Scenario</span>
-            </h3>
-            <div class="space-y-3 text-xs">
-              <div>
-                <label class="block text-slate-400 mb-1">Scenario Title</label>
-                <input type="text" id="custom-scenario-title" placeholder="e.g. Negotiating a 20% Salary Increase with Regional VP" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-white">
-              </div>
-              <div class="grid grid-cols-2 gap-2">
-                <div>
-                  <label class="block text-slate-400 mb-1">AI Counterpart Name</label>
-                  <input type="text" id="custom-scenario-name" placeholder="e.g. Richard Hendricks" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-white">
-                </div>
-                <div>
-                  <label class="block text-slate-400 mb-1">AI Persona Role</label>
-                  <input type="text" id="custom-scenario-role" placeholder="e.g. Managing Director (Zurich)" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-white">
-                </div>
-              </div>
-              <div>
-                <label class="block text-slate-400 mb-1">AI Counterpart Opening Challenge *</label>
-                <textarea id="custom-scenario-prompt" rows="3" placeholder="e.g. I received your request for budget expansion. Given our margin compression this year, why should we authorize this?" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-white"></textarea>
-              </div>
-              <div>
-                <label class="block text-slate-400 mb-1">Coaching Note for Czech Executive</label>
-                <input type="text" id="custom-scenario-tip" placeholder="e.g. Do not quote living costs. Focus on value created and enterprise retention." class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-white">
-              </div>
-              <button onclick="saveCustomScenario()" class="w-full py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold flex items-center justify-center space-x-1.5 transition">
-                <i data-lucide="check" class="w-4 h-4"></i>
-                <span>Inject Scenario Into Roleplay Tab</span>
-              </button>
-            </div>
-          </div>
-
-          <!-- Create Classroom Debate Prompt -->
-          <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl space-y-3">
-            <h3 class="text-sm font-bold text-white flex items-center space-x-2">
-              <i data-lucide="users" class="w-4 h-4 text-amber-400"></i>
-              <span>Add In-Class Timed Debate Prompt</span>
-            </h3>
-            <div class="space-y-3 text-xs">
-              <div>
-                <label class="block text-slate-400 mb-1">Debate Topic Proposition *</label>
-                <textarea id="custom-debate-topic" rows="3" placeholder="e.g. Should Czech manufacturing plants adopt generative AI inspection immediately or wait 2 years for tech maturity?" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-white"></textarea>
-              </div>
-              <div>
-                <label class="block text-slate-400 mb-1">Team A Position</label>
-                <input type="text" id="custom-debate-team-a" placeholder="e.g. Defend early adopter advantage and first-mover margin" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-white">
-              </div>
-              <div>
-                <label class="block text-slate-400 mb-1">Team B Position</label>
-                <input type="text" id="custom-debate-team-b" placeholder="e.g. Defend capital risk prevention and software reliability" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-white">
-              </div>
-              <button onclick="saveCustomDebate()" class="w-full py-2.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-semibold flex items-center justify-center space-x-1.5 transition">
-                <i data-lucide="check" class="w-4 h-4"></i>
-                <span>Inject Debate Topic Into Workshop Tab</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- CMS Subview 4: CLASS CODE & SHARE -->
-      <div id="cms-panel-share" class="hidden space-y-6">
-        <div class="grid lg:grid-cols-2 gap-6">
-          <!-- Generate Shareable Class Code / Export JSON -->
-          <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl space-y-4">
-            <div class="flex items-center space-x-2 text-indigo-400 font-bold text-sm">
-              <i data-lucide="share" class="w-4 h-4"></i>
-              <span>Export Today's Lesson Pack for Students</span>
-            </div>
-            <p class="text-xs text-slate-400">
-              Generate a shareable 6-digit lesson code or copy the full deck JSON. Your students can paste it into their own browser to sync all new phrases without a server!
-            </p>
-
-            <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 flex items-center justify-between">
-              <div>
-                <div class="text-[10px] text-slate-500 uppercase font-mono">Current Active Deck Code</div>
-                <div class="text-2xl font-mono font-bold text-amber-400" id="generated-class-code">EXEC-82</div>
-              </div>
-              <button onclick="copyClassCode()" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold flex items-center space-x-1.5 border border-slate-700">
-                <i data-lucide="copy" class="w-3.5 h-3.5"></i>
-                <span>Copy Code</span>
-              </button>
-            </div>
-
-            <div class="flex space-x-3">
-              <button onclick="exportDeckJson()" class="flex-1 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700 flex items-center justify-center space-x-1.5 transition">
-                <i data-lucide="download" class="w-4 h-4 text-indigo-400"></i>
-                <span>Download .JSON Deck File</span>
-              </button>
-              <button onclick="copyDeckToClipboard()" class="flex-1 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold flex items-center justify-center space-x-1.5 transition">
-                <i data-lucide="clipboard" class="w-4 h-4"></i>
-                <span>Copy Raw JSON</span>
-              </button>
-            </div>
-          </div>
-
-          <!-- Student Import Box -->
-          <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl space-y-4">
-            <div class="flex items-center space-x-2 text-emerald-400 font-bold text-sm">
-              <i data-lucide="download-cloud" class="w-4 h-4"></i>
-              <span>Student Sync / Import Lesson Deck</span>
-            </div>
-            <p class="text-xs text-slate-400">
-              If your instructor provided a 6-character Class Code or a JSON file, paste it here to immediately load the lesson deck:
-            </p>
-
-            <textarea id="import-deck-input" rows="4" placeholder="Paste class code (e.g. EXEC-82) or paste raw JSON deck..." class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs font-mono text-slate-200 focus:outline-none focus:border-emerald-500"></textarea>
-
-            <div class="flex items-center justify-between">
-              <button onclick="restoreDefaultVocabDeck()" class="text-xs text-slate-500 hover:text-rose-400 flex items-center space-x-1">
-                <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
-                <span>Reset to Factory Default Deck</span>
-              </button>
-
-              <button onclick="importDeckFromInput()" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs flex items-center space-x-2 transition shadow-lg shadow-emerald-600/20">
-                <i data-lucide="upload" class="w-4 h-4"></i>
-                <span>Load Deck Into App</span>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Current Live Deck Inventory Table -->
-        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4">
-          <div class="flex items-center justify-between">
-            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-300">Active Deck Phrases (<span id="cms-deck-count">8</span>)</h3>
-            <span class="text-xs text-slate-500">Changes reflect immediately in Flashcards & Quizzes</span>
-          </div>
-
-          <div class="overflow-x-auto">
-            <table class="w-full text-left text-xs">
-              <thead class="border-b border-slate-800 text-slate-400 uppercase text-[10px] tracking-wider">
-                <tr>
-                  <th class="py-2.5 px-3">English Term</th>
-                  <th class="py-2.5 px-3">Czech Meaning</th>
-                  <th class="py-2.5 px-3">Category</th>
-                  <th class="py-2.5 px-3">Czenglish Trap</th>
-                  <th class="py-2.5 px-3 text-right">Action</th>
-                </tr>
-              </thead>
-              <tbody id="cms-deck-table-body" class="divide-y divide-slate-800/60 text-slate-300">
-                <!-- Populated dynamically -->
-              </tbody>
-            </table>
           </div>
         </div>
       </div>
     </div>
   </main>
 
-  <!-- Interactive Modal / Notification Toast -->
+  <!-- Notification Toast -->
   <div id="toast" class="fixed bottom-5 right-5 max-w-sm bg-slate-900 border border-indigo-500/40 text-white px-4 py-3 rounded-xl shadow-2xl transition transform translate-y-24 opacity-0 pointer-events-none z-50 flex items-center space-x-3">
     <div id="toast-icon" class="text-indigo-400"><i data-lucide="check-circle" class="w-5 h-5"></i></div>
     <div class="text-xs">
-      <div id="toast-title" class="font-bold">XP Awarded!</div>
-      <div id="toast-body" class="text-slate-400">+15 XP added to your Executive Score.</div>
+      <div id="toast-title" class="font-bold">Notification</div>
+      <div id="toast-body" class="text-slate-400">Action completed successfully.</div>
     </div>
   </div>
 
   <!-- APPLICATION LOGIC SCRIPT -->
   <script>
     /* ========================================================
-       1. DATA STRUCTURES & LOCAL STORAGE PERSISTENCE
+       1. DATA STRUCTURES (EDIT DIRECTLY HERE IN GITHUB)
        ======================================================== */
-    const STORAGE_KEY = 'execuspeak_cz_state';
-
-    // Curated high-impact C-suite vocabulary tailored for Czech executives (B1-C1)
     const VOCAB_DATABASE = [
       {
         id: '1',
@@ -1273,8 +871,7 @@ Gain stakeholder buy-in	Získat podporu partnerů	Agree everyone	We must gain st
         level: 'B2–C1',
         czech: 'Vyřešit úzké hrdlo / překážku v procesu',
         czenglishTrap: 'Saying "We must solve this heavy problem"',
-        example: 'Before expanding manufacturing, we have to address the supply chain bottleneck.',
-        mastered: false
+        example: 'Before expanding manufacturing, we have to address the supply chain bottleneck.'
       },
       {
         id: '2',
@@ -1284,8 +881,7 @@ Gain stakeholder buy-in	Získat podporu partnerů	Agree everyone	We must gain st
         level: 'B2',
         czech: 'Sjednotit se na konkrétních výstupech / cílech',
         czenglishTrap: 'Saying "Make sure what we want to make"',
-        example: 'Let us align on key deliverables before signing off on the Q3 sprint.',
-        mastered: true
+        example: 'Let us align on key deliverables before signing off on the Q3 sprint.'
       },
       {
         id: '3',
@@ -1295,8 +891,7 @@ Gain stakeholder buy-in	Získat podporu partnerů	Agree everyone	We must gain st
         level: 'C1',
         czech: 'Zmírnit vystavení se rizikům',
         czenglishTrap: 'Saying "Decrease danger"',
-        example: 'We hedged our foreign exchange contracts to mitigate risk exposure in Central Europe.',
-        mastered: false
+        example: 'We hedged our foreign exchange contracts to mitigate risk exposure in Central Europe.'
       },
       {
         id: '4',
@@ -1306,8 +901,7 @@ Gain stakeholder buy-in	Získat podporu partnerů	Agree everyone	We must gain st
         level: 'C1',
         czech: 'Zefektivnit a snížit provozní režijní náklady',
         czenglishTrap: 'Saying "Make costs smaller"',
-        example: 'By consolidating our Brno and Prague warehouses, we can streamline operational overhead by 12%.',
-        mastered: false
+        example: 'By consolidating our Brno and Prague warehouses, we can streamline operational overhead by 12%.'
       },
       {
         id: '5',
@@ -1317,8 +911,7 @@ Gain stakeholder buy-in	Získat podporu partnerů	Agree everyone	We must gain st
         level: 'B2–C1',
         czech: 'Získat podporu / souhlas klíčových partnerů a akcionářů',
         czenglishTrap: 'Saying "Agree everyone"',
-        example: 'We cannot present this acquisition without gaining early stakeholder buy-in.',
-        mastered: false
+        example: 'We cannot present this acquisition without gaining early stakeholder buy-in.'
       },
       {
         id: '6',
@@ -1328,8 +921,7 @@ Gain stakeholder buy-in	Získat podporu partnerů	Agree everyone	We must gain st
         level: 'C1',
         czech: 'Kapacita / čas je plně vyčerpán (diplomatické odmítnutí)',
         czenglishTrap: 'Saying "I do not have time for this now"',
-        example: 'Our engineering bandwidth is fully allocated toward the enterprise rollout this month.',
-        mastered: false
+        example: 'Our engineering bandwidth is fully allocated toward the enterprise rollout this month.'
       },
       {
         id: '7',
@@ -1339,8 +931,7 @@ Gain stakeholder buy-in	Získat podporu partnerů	Agree everyone	We must gain st
         level: 'B2–C1',
         czech: 'Abychom to uvedli do širších souvislostí / reality',
         czenglishTrap: 'Saying "For your better understanding..."',
-        example: 'To put this into perspective, our ARR growth is outpacing the regional industry standard by 3x.',
-        mastered: false
+        example: 'To put this into perspective, our ARR growth is outpacing the regional industry standard by 3x.'
       },
       {
         id: '8',
@@ -1350,12 +941,40 @@ Gain stakeholder buy-in	Získat podporu partnerů	Agree everyone	We must gain st
         level: 'C1',
         czech: 'Strategicky změnit přístup vstupu na trh',
         czenglishTrap: 'Saying "Change how we sell things completely"',
-        example: 'We decided to pivot the go-to-market strategy toward mid-market industrial clients.',
-        mastered: false
+        example: 'We decided to pivot the go-to-market strategy toward mid-market industrial clients.'
+      },
+      {
+        id: 'term_ecom_1',
+        phrase: 'Drive omnichannel synergies',
+        phonetic: '/draɪv ˈɒm.nɪˌtʃæn.əl ˈsɪn.ə.dʒiz/',
+        category: 'Omnichannel Retail',
+        level: 'C1',
+        czech: 'Vytěžit synergie z propojení e-shopu a kamenných prodejen',
+        czenglishTrap: 'Saying "Connect shops with internet store"',
+        example: 'Our Click & Collect network in Datart stores enables us to drive omnichannel synergies that pure-play e-shops cannot match.'
+      },
+      {
+        id: 'term_ecom_2',
+        phrase: 'Protect margin against marketplace price erosion',
+        phonetic: '/prəˈtekt ˈmɑː.dʒɪn əˈɡenst ˈmɑː.kɪt.pleɪs praɪs ɪˈrəʊ.ʒən/',
+        category: 'Pricing Strategy',
+        level: 'C1',
+        czech: 'Chránit marži před cenovou erozí / podbízením na online tržištích',
+        czenglishTrap: 'Saying "Keep our margin when Allegro sells cheap"',
+        example: 'Instead of engaging in a race to the bottom on price, we bundle premium delivery and installation to protect margin against marketplace price erosion.'
+      },
+      {
+        id: 'term_ecom_3',
+        phrase: 'Optimize warehouse pick-and-pack throughput',
+        phonetic: '/ˈɒp.tɪ.maɪz ˈweə.haʊs pɪk-ænd-pæk ˈθruː.pʊt/',
+        category: 'Supply Chain & Logistics',
+        level: 'B2–C1',
+        czech: 'Optimalizovat průchodnost / kapacitu vychystávání v logistickém centru',
+        czenglishTrap: 'Saying "Make packaging faster in our Jirny hall"',
+        example: 'Automated sorting lines in our central fulfillment center allow us to optimize warehouse pick-and-pack throughput ahead of Black Friday.'
       }
     ];
 
-    // Executive Dossiers for Reading, Speaking Aloud, and Click-to-Save
     const EXECUTIVE_BRIEFINGS = {
       brief_mna: {
         title: "Navigating Cross-Border M&A and Retaining Executive Buy-in",
@@ -1401,88 +1020,240 @@ Gain stakeholder buy-in	Získat podporu partnerů	Agree everyone	We must gain st
           "bottleneck": { czech: "Úzké hrdlo", phonetic: "/ˈbɒt.əl.nek/", trap: "Saying 'slow point'", example: "Eliminate the testing bottleneck." },
           "decommissioning": { czech: "Vyřazení z provozu", phonetic: "/ˌdiː.kəˈmɪʃ.ən.ɪŋ/", trap: "Saying 'shutting down old things'", example: "Decommissioning redundant mainframes." }
         }
-      }
-    };
-
-    // State object loaded from LocalStorage
-    let state = {
-      score: 420,
-      streak: 3,
-      masteredIds: ['2'],
-      currentCardIdx: 0,
-      isFlipped: false,
-      vocabDatabase: null, // Stores word bank
-      customScenarios: [],
-      customDebates: [],
-      habits: {
-        'habit-vocab': true,
-        'habit-roleplay': false,
-        'habit-pitch': false
-      }
-    };
-
-    let currentlyInspectedWord = null;
-
-    function getActiveVocabList() {
-      return state.vocabDatabase || VOCAB_DATABASE;
-    }
-
-    function loadState() {
-      try {
-        const stored = localStorage.getItem(STORAGE_KEY);
-        if (stored) {
-          const parsed = JSON.parse(stored);
-          state = Object.assign(state, parsed);
+      },
+      brief_omnichannel: {
+        title: "Omnichannel Defense: Competing with Cross-Border Marketplaces",
+        domain: "E-Commerce Strategy & Retail",
+        text: "As international marketplaces intensify price competition across the Czech digital landscape, domestic electronics retailers like HP TRONIC and Datart must leverage their physical retail footprint as a strategic moat. Pure-play e-commerce platforms struggle with last-mile economics on large domestic appliances. By integrating automated central distribution with same-day store pickup and white-glove installation services, traditional retail leaders can defend customer lifetime value and insulate gross margins from aggressive cross-border discounting.",
+        glossary: {
+          "footprint": { czech: "Síť poboček / fyzická přítomnost", phonetic: "/ˈfʊt.prɪnt/", trap: "Saying 'all our shops'", example: "Expanding our urban store footprint." },
+          "moat": { czech: "Konkurenční výhoda / ochranný val", phonetic: "/məʊt/", trap: "Saying 'our big wall against competitors'", example: "Our store network serves as a defensible moat." },
+          "pure-play": { czech: "Čistě online prodejce bez prodejen", phonetic: "/pjʊə pleɪ/", trap: "Saying 'only internet shop'", example: "Pure-play competitors face high delivery churn." },
+          "last-mile": { czech: "Doručení na poslední míli ke koncovému zákazníkovi", phonetic: "/lɑːst maɪl/", trap: "Saying 'end transport'", example: "Optimizing last-mile freight costs." },
+          "white-glove": { czech: "Prémiová služba s výnosem do patra a instalací", phonetic: "/waɪt ɡlʌv/", trap: "Saying 'service with gloves'", example: "White-glove appliance installation drives repeat orders." },
+          "insulate": { czech: "Ochránit / izolovat od negativních vlivů", phonetic: "/ˈɪn.sjə.leɪt/", trap: "Saying 'make safe from'", example: "Insulate margins from price drops." }
         }
-      } catch (e) {
-        console.warn('LocalStorage error:', e);
+      },
+      brief_consolidation: {
+        title: "Post-Merger Logistics Consolidation in Central Europe",
+        domain: "Supply Chain & Operations",
+        text: "Consolidating major electronics retail operations requires rigorous alignment between procurement teams and automated fulfillment centers. Redundant SKU overlap across acquired banners must be rationalized to prevent working capital from stagnating in slow-moving inventory. When scaling warehouse capacity in logistical hubs, operations directors must safeguard delivery SLAs while negotiating volume rebates with multinational consumer electronics brands.",
+        glossary: {
+          "consolidation": { czech: "Konsolidace / sloučení provozů", phonetic: "/kənˌsɒl.ɪˈdeɪ.ʃən/", trap: "Saying 'putting together'", example: "Post-merger warehouse consolidation." },
+          "procurement": { czech: "Nákupní oddělení / strategický nákup", phonetic: "/prəˈkjʊə.mənt/", trap: "Saying 'buying department'", example: "Procurement negotiated better vendor terms." },
+          "sku": { czech: "Skladová položka / artikl", phonetic: "/ˌes.keɪˈjuː/", trap: "Saying 'product number'", example: "Rationalizing 15,000 slow-moving SKUs." },
+          "overlap": { czech: "Překryv / duplicita v nabídce", phonetic: "/ˈəʊ.və.læp/", trap: "Saying 'having same things twice'", example: "Eliminating brand catalog overlap." },
+          "stagnating": { czech: "Zadržování / váznutí kapitálu", phonetic: "/stæɡˈneɪ.tɪŋ/", trap: "Saying 'money staying in boxes'", example: "Prevent working capital from stagnating." },
+          "rebates": { czech: "Zpětné bonusy / objemové slevy od dodavatelů", phonetic: "/ˈriː.beɪts/", trap: "Saying 'money back from producers'", example: "Securing quarterly volume rebates from Samsung." }
+        }
       }
+    };
 
-      if (!state.vocabDatabase || state.vocabDatabase.length === 0) {
-        state.vocabDatabase = [...VOCAB_DATABASE];
+    const SCENARIOS = {
+      cfo_budget: {
+        name: 'Mark Foster',
+        role: 'Group CFO (London HQ)',
+        mood: 'Analytical, questioning non-essential CAPEX',
+        avatar: 'MF',
+        initialMessage: "Good morning. I've been reviewing your branch OPEX proposal for next quarter. You're asking for a 15% increase in engineering headcount. In this macroeconomic climate, that seems difficult to defend. Walk me through the numbers.",
+        czechTip: "Czech managers often sound too direct ('We need people because we have projects'). Open by recognizing fiduciary pressure, then frame it around ROI and customer churn reduction."
+      },
+      board_disagree: {
+        name: 'Elena Rostova',
+        role: 'Non-Executive Board Member',
+        mood: 'Skeptical, risk-averse',
+        avatar: 'ER',
+        initialMessage: "I see your recommendation to postpone the legacy ERP migration. Frankly, this delay exposes us to operational risk. Why should the board back another rescheduling?",
+        czechTip: "Avoid defensive words like 'It is not our fault'. Frame the postponement as a calculated risk-mitigation move to safeguard revenue."
+      },
+      pitch_hostile: {
+        name: 'David Vance',
+        role: 'Managing Partner (Venture Capital)',
+        mood: 'Fast-paced, aggressive Q&A',
+        avatar: 'DV',
+        initialMessage: "Your unit economics look attractive on slide 3, but Central European tech founders frequently underestimate international enterprise CAC. What gives you the conviction you can scale into the DACH region?",
+        czechTip: "Acknowledge the DACH sales cycle reality with gravitas: 'That is a pertinent critique. However, our initial pilot conversion in Munich demonstrates...'"
+      },
+      vendor_rebate_dispute: {
+        name: 'Christoph Becker',
+        role: 'Commercial VP - Consumer Tech (Vienna)',
+        mood: 'Tough supplier, resistant to giving discounts',
+        avatar: 'CB',
+        initialMessage: "Good morning. I've analyzed your sell-out numbers across the Czech and Slovak networks for our premium OLED TVs. Your volumes are down 8% compared to target, yet your buying team is demanding the full 5% back-end rebate. Why should we grant full rebates when your store network missed the target?",
+        czechTip: "Do not blame inflation or consumer mood. Reframe around your promotional spend, front-row store placement in Datart, and your defense against gray imports."
+      },
+      marketplace_expansion: {
+        name: 'Karolína Dvořáková',
+        role: 'Chief Commercial Officer',
+        mood: 'Data-driven, concerned about brand dilution',
+        avatar: 'KD',
+        initialMessage: "Our board is pressing us to open an official storefront on foreign digital marketplaces like Allegro and Amazon. I'm worried we'll cannibalize our own direct-to-consumer traffic and destroy our premium service positioning. How do you propose we approach this channel without triggering a pricing war with our own e-shop?",
+        czechTip: "Acknowledge the cannibalization risk immediately ('That is a valid apprehension...'). Suggest listing only high-turnover refurbished items or specific private-label SKUs (e.g., ETA products) while ring-fencing core premium lines for your own domain."
       }
+    };
 
-      if (state.customScenarios && state.customScenarios.length > 0) {
-        state.customScenarios.forEach(sc => {
-          SCENARIOS[sc.id] = sc;
-          ensureScenarioInSelect(sc.id, sc.title);
-        });
+    const PITCH_TEMPLATES = {
+      board_update: `The objective of today's briefing is to walk you through our strategic pivot and Q3 performance.
+
+To put this into perspective, despite macroeconomic headwinds in Europe, our enterprise contract value expanded by 24% quarter-over-quarter.
+
+If you direct your attention to slide 4, our customer acquisition cost dropped significantly, largely attributable to automated onboarding and direct executive referrals.
+
+While we encountered supply chain friction earlier this year, our core unit economics remain exceptionally robust.
+
+I will now open the floor for any strategic or operational questions.`,
+
+      pitch_deck: `Good morning. We are here today to discuss our Series A expansion round.
+
+Our platform eliminates operational friction for Central European exporters by automating cross-border compliance.
+
+To put this opportunity into perspective, the addressable B2B market in the CEE region alone represents 4.2 billion euros.
+
+Our team has demonstrated exceptional capital efficiency, maintaining an 18-month runway with positive unit economics.
+
+We are actively seeking strategic partners who share our conviction for scaling enterprise software across Europe.`,
+
+      bad_news: `Thank you for joining this emergency briefing.
+
+I want to be completely transparent regarding our Q2 EBITDA performance.
+
+While we have encountered unforeseen headwinds due to vendor contract cancellations in Germany, our core underlying customer retention remains rock-solid at 94%.
+
+We have already instituted strict cost-containment measures to streamline our operational overhead and preserve runway.
+
+Our leadership team is fully mobilized to safeguard margin stability heading into Q4.`,
+
+      peak_season_pitch: `The purpose of today's operational briefing is to review our peak Q4 readiness across our retail and fulfillment network.
+
+To put this into perspective, we anticipate dispatching over 120,000 orders daily through our automated logistics hubs during Black Friday week.
+
+If you look at our delivery projections, over 65% of customer transactions will be collected in-store via our express pickup service, mitigating courier capacity bottlenecks.
+
+While we anticipate aggressive discounting from cross-border marketplaces, our bundled warranty and certified premium delivery will preserve our gross margin.
+
+I will now open the floor to address any supply chain or inventory inquiries.`,
+
+      store_remodeling_pitch: `Good afternoon members of the investment committee.
+
+Today's proposal focuses on modernizing twenty flagship regional locations into experiential omnichannel hubs.
+
+To put this investment into context, renovated store concepts in Prague and Brno generated an 18% uplift in high-margin appliance sales over the last two quarters.
+
+Furthermore, integrating real-time inventory displays allows store associates to prevent lost sales by immediately converting out-of-stock items into home deliveries.
+
+This project delivers payback within 14 months while cementing our local brand leadership.
+
+I welcome your strategic questions regarding project timeline and capital allocation.`
+    };
+
+    const QUIZ_QUESTIONS = [
+      {
+        question: 'Jak nejlépe v boardroomu nahradit: "I don\'t agree with you at all"?',
+        options: [
+          'I don\'t agree with your calculations here.',
+          'I see the merit in your perspective, however, we must consider the downside risk.',
+          'That is a completely wrong direction for our enterprise.',
+          'You must understand that our team cannot do this.'
+        ],
+        correctIdx: 1,
+        explanation: 'Diplomatic softening ("I see the merit, however...") avoids confrontation while asserting executive authority.'
+      },
+      {
+        question: 'Jak diplomaticky a profesionálně vyjádřit: "I don\'t have time for this"?',
+        options: [
+          'My bandwidth is fully allocated toward our primary Q3 deliverables.',
+          'I am too busy with other work right now.',
+          'Please do not disturb me with this project.',
+          'We have no hours left in our schedule.'
+        ],
+        correctIdx: 0,
+        explanation: '"Bandwidth is fully allocated" is standard C-level terminology for diplomatic capacity management.'
+      },
+      {
+        question: 'Jak v prezentaci představit klíčový graf nebo data místo doslovného "Look at this picture"?',
+        options: [
+          'Look at this graphic very carefully.',
+          'If you direct your attention to slide 4, the margin inflection is evident.',
+          'Here is picture showing our numbers.',
+          'I show you now what we calculated.'
+        ],
+        correctIdx: 1,
+        explanation: '"If you direct your attention to..." provides natural executive signposting and cadence.'
       }
+    ];
 
-      if (state.customDebates && state.customDebates.length > 0) {
-        state.customDebates.forEach(deb => {
-          if (!DEBATE_PROMPTS.some(d => d.topic === deb.topic)) {
-            DEBATE_PROMPTS.unshift(deb);
-          }
-        });
+    const DEBATE_PROMPTS = [
+      {
+        topic: "Should Czech engineering firms offshore software testing to Asia, or keep 100% in-house to protect IP?",
+        teamA: "Team A: Defend aggressive cost reduction (Offshore)",
+        teamB: "Team B: Defend brand value and engineering control (In-house)"
+      },
+      {
+        topic: "Mandatory 3 days per week in the Prague office vs 100% remote work for senior developers.",
+        teamA: "Team A: Defend cultural cohesion and rapid mentorship",
+        teamB: "Team B: Defend global talent attraction and autonomy"
+      },
+      {
+        topic: "Freezing all Q4 marketing budgets to preserve cash runway vs Doubling down on customer acquisition.",
+        teamA: "Team A: Defend capital preservation and survival",
+        teamB: "Team B: Defend counter-cyclical growth and capturing market share"
+      },
+      {
+        topic: "Should a major Czech retail group open its own open marketplace to third-party sellers, or maintain a strictly curated, 100% owned inventory model?",
+        teamA: "Team A: Defend launching a broad marketplace to compete with Allegro and expand catalog variety.",
+        teamB: "Team B: Defend brand trust, certified warranties, and reliable delivery by owning all inventory."
+      },
+      {
+        topic: "Should retail branch staff be incentivized purely on local physical store sales, or on total digital revenue generated in their catchment area?",
+        teamA: "Team A: Defend local store attribution to drive active physical upselling and premium client care.",
+        teamB: "Team B: Defend regional omnichannel attribution so staff gladly assist online returns and digital orders."
       }
+    ];
 
-      updateUIStats();
-    }
-
-    function updateUIStats() {
-      const list = getActiveVocabList();
-      document.getElementById('score-counter').innerText = state.score;
-      document.getElementById('streak-counter').innerText = state.streak;
-      document.getElementById('stat-streak').innerText = state.streak;
-      document.getElementById('stat-mastered').innerText = list.length;
-      document.getElementById('total-vocab-count').innerText = list.length;
-      document.getElementById('nav-bank-count').innerText = list.length;
-
-      const cmsCount = document.getElementById('cms-deck-count');
-      if (cmsCount) cmsCount.innerText = list.length;
-
-      for (const [key, val] of Object.entries(state.habits)) {
-        const el = document.getElementById(key);
-        if (el) el.checked = val;
+    const SHOOTOUT_PAIRS = [
+      {
+        cz: "Nemůžeme to stihnout včas, protože dodavatel má zpoždění.",
+        en: "We are facing timeline constraints due to upstream vendor slippage, so we need to adjust milestones."
+      },
+      {
+        cz: "To je úplně špatný nápad, který bude stát moc peněz.",
+        en: "I see significant exposure here; the projected return does not justify the capital expenditure."
+      },
+      {
+        cz: "Musíme okamžitě propustit lidi a zmenšit náklady.",
+        en: "We need to execute immediate workforce rationalization to preserve our runway."
+      },
+      {
+        cz: "Zákazníci si jdou zboží prohlédnout do prodejny, ale pak si ho koupí levněji na internetu.",
+        en: "We are mitigating showrooming by equipping our floor sales specialists with instant price-matching authority and premium add-ons."
+      },
+      {
+        cz: "Musíme zkrátit dobu od kliknutí na webu po předání zboží v prodejně na 30 minut.",
+        en: "We need to compress our click-to-collection window down to thirty minutes to outperform courier lead times."
       }
-    }
+    ];
 
     /* ========================================================
-       2. TAB NAVIGATION
+       2. APPLICATION STATE
        ======================================================== */
+    let currentCardIdx = 0;
+    let isFlipped = false;
+    let userWordBank = [...VOCAB_DATABASE];
+    let currentlyInspectedWord = null;
+
+    function updateBankCounts() {
+      const count = userWordBank.length;
+      const navBankEl = document.getElementById('nav-bank-count');
+      const totalVocabEl = document.getElementById('total-vocab-count');
+      const statMasteredEl = document.getElementById('stat-mastered');
+
+      if (navBankEl) navBankEl.innerText = count;
+      if (totalVocabEl) totalVocabEl.innerText = count;
+      if (statMasteredEl) statMasteredEl.innerText = count;
+    }
+
     function switchTab(tabId) {
-      const tabs = ['dashboard', 'reading', 'roleplay', 'teleprompter', 'vocab', 'workshop', 'cms'];
+      const tabs = ['dashboard', 'reading', 'roleplay', 'teleprompter', 'vocab', 'workshop'];
       tabs.forEach(t => {
         const page = document.getElementById(`tab-${t}`);
         const navBtn = document.getElementById(`nav-${t}`);
@@ -1501,17 +1272,12 @@ Gain stakeholder buy-in	Získat podporu partnerů	Agree everyone	We must gain st
         activeBtn.classList.remove('text-slate-400');
       }
 
-      if (tabId === 'reading') {
-        loadBriefing();
-      } else if (tabId === 'cms') {
-        renderCmsTable();
-      }
-
+      if (tabId === 'reading') loadBriefing();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     /* ========================================================
-       3. INTERACTIVE READING & CLICK-TO-SAVE WORD BANK
+       3. BRIEFINGS & CLICK-TO-SAVE
        ======================================================== */
     let currentBriefingKey = 'brief_mna';
 
@@ -1524,7 +1290,6 @@ Gain stakeholder buy-in	Získat podporu partnerů	Agree everyone	We must gain st
       document.getElementById('briefing-domain').innerText = b.domain;
       document.getElementById('briefing-title').innerText = b.title;
 
-      // Tokenize text into clickable words & detect glossed collocations
       const container = document.getElementById('interactive-text-container');
       container.innerHTML = '';
 
@@ -1542,11 +1307,8 @@ Gain stakeholder buy-in	Získat podporu partnerů	Agree everyone	We must gain st
         container.appendChild(span);
       });
 
-      // Default inspector load
       const firstKey = Object.keys(b.glossary)[0];
-      if (firstKey) {
-        inspectWord(firstKey, firstKey, b.glossary[firstKey]);
-      }
+      if (firstKey) inspectWord(firstKey, firstKey, b.glossary[firstKey]);
     }
 
     function inspectWord(cleanWord, displayWord, glossaryEntry) {
@@ -1566,29 +1328,24 @@ Gain stakeholder buy-in	Získat podporu partnerů	Agree everyone	We must gain st
       document.getElementById('inspect-trap').innerText = currentlyInspectedWord.trap;
       document.getElementById('inspect-example').innerText = `"${currentlyInspectedWord.example}"`;
 
-      // Check if already in bank
-      const list = getActiveVocabList();
-      const inBank = list.some(item => item.phrase.toLowerCase() === currentlyInspectedWord.phrase.toLowerCase());
+      const inBank = userWordBank.some(item => item.phrase.toLowerCase() === currentlyInspectedWord.phrase.toLowerCase());
       const btn = document.getElementById('inspect-save-btn');
       if (inBank) {
         btn.innerHTML = `<i data-lucide="check" class="w-4 h-4"></i><span>Saved in Word Bank</span>`;
-        btn.classList.remove('bg-indigo-600', 'hover:bg-indigo-500');
-        btn.classList.add('bg-emerald-700');
+        btn.className = 'w-full py-2.5 rounded-xl bg-emerald-700 text-white font-semibold text-xs flex items-center justify-center space-x-2 transition';
       } else {
-        btn.innerHTML = `<i data-lucide="bookmark-plus" class="w-4 h-4"></i><span>Save to Word Bank & Practice Deck</span>`;
-        btn.classList.add('bg-indigo-600', 'hover:bg-indigo-500');
-        btn.classList.remove('bg-emerald-700');
+        btn.innerHTML = `<i data-lucide="bookmark-plus" class="w-4 h-4"></i><span>Save to Word Bank</span>`;
+        btn.className = 'w-full py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs flex items-center justify-center space-x-2 transition shadow-lg shadow-indigo-600/30';
       }
       lucide.createIcons();
     }
 
     function saveInspectedWordToBank() {
       if (!currentlyInspectedWord) return;
-      const list = getActiveVocabList();
-      const exists = list.some(item => item.phrase.toLowerCase() === currentlyInspectedWord.phrase.toLowerCase());
+      const exists = userWordBank.some(item => item.phrase.toLowerCase() === currentlyInspectedWord.phrase.toLowerCase());
 
       if (exists) {
-        showToast('Already Banked', `"${currentlyInspectedWord.phrase}" is already in your active Word Bank.`);
+        showToast('Already Banked', `"${currentlyInspectedWord.phrase}" is already in your Word Bank.`);
         return;
       }
 
@@ -1600,31 +1357,25 @@ Gain stakeholder buy-in	Získat podporu partnerů	Agree everyone	We must gain st
         level: 'B2–C1',
         czech: currentlyInspectedWord.czech,
         czenglishTrap: currentlyInspectedWord.trap,
-        example: currentlyInspectedWord.example,
-        mastered: false
+        example: currentlyInspectedWord.example
       };
 
-      state.vocabDatabase.unshift(newEntry);
-      state.score += 15;
-      saveState();
+      userWordBank.unshift(newEntry);
+      updateBankCounts();
 
       const btn = document.getElementById('inspect-save-btn');
-      btn.innerHTML = `<i data-lucide="check" class="w-4 h-4"></i><span>Saved in Word Bank (+15 XP)</span>`;
-      btn.classList.remove('bg-indigo-600');
-      btn.classList.add('bg-emerald-700');
+      btn.innerHTML = `<i data-lucide="check" class="w-4 h-4"></i><span>Saved in Word Bank</span>`;
+      btn.className = 'w-full py-2.5 rounded-xl bg-emerald-700 text-white font-semibold text-xs flex items-center justify-center space-x-2 transition';
       lucide.createIcons();
 
-      showToast('Word Banked!', `Added "${newEntry.phrase}" to your personalized vocabulary & drill deck.`);
+      showToast('Word Banked!', `Added "${newEntry.phrase}" to your active practice deck.`);
     }
 
     function readBriefingAloud() {
       const b = EXECUTIVE_BRIEFINGS[currentBriefingKey];
-      if (b) {
-        speakText(b.text);
-      }
+      if (b) speakText(b.text);
     }
 
-    // Read Aloud Speech Evaluator for Reading Tab
     let readingRecognition = null;
     let isReadingSpeech = false;
     function toggleBriefingSpeechRecord() {
@@ -1670,11 +1421,6 @@ Gain stakeholder buy-in	Získat podporu partnerů	Agree everyone	We must gain st
         });
         const matchPct = Math.min(Math.round((matchCount / (targetText.split(/\s+/).length * 0.4)) * 100), 100);
         document.getElementById('reading-match-score').innerText = `Pacing Match: ${matchPct}%`;
-
-        if (matchPct > 60) {
-          state.score += 25;
-          saveState();
-        }
       };
 
       readingRecognition.onerror = () => {
@@ -1692,54 +1438,8 @@ Gain stakeholder buy-in	Získat podporu partnerů	Agree everyone	We must gain st
       readingRecognition.start();
     }
 
-    function saveState() {
-      try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-      } catch (e) {
-        console.warn('LocalStorage save error:', e);
-      }
-      updateUIStats();
-      renderCmsTable();
-    }
-
-    const QUIZ_QUESTIONS = [
-      {
-        question: 'Jak nejlépe v boardroomu nahradit: "I don\'t agree with you at all"?',
-        options: [
-          'I don\'t agree with your calculations here.',
-          'I see the merit in your perspective, however, we must consider the downside risk.',
-          'That is a completely wrong direction for our enterprise.',
-          'You must understand that our team cannot do this.'
-        ],
-        correctIdx: 1,
-        explanation: 'Diplomatic softening ("I see the merit, however...") avoids confrontation while asserting executive authority.'
-      },
-      {
-        question: 'Jak diplomaticky a profesionálně vyjádřit: "I don\'t have time for this"?',
-        options: [
-          'My bandwidth is fully allocated toward our primary Q3 deliverables.',
-          'I am too busy with other work right now.',
-          'Please do not disturb me with this project.',
-          'We have no hours left in our schedule.'
-        ],
-        correctIdx: 0,
-        explanation: '"Bandwidth is fully allocated" is standard C-level terminology for diplomatic capacity management.'
-      },
-      {
-        question: 'Jak v prezentaci představit klíčový graf nebo data místo doslovného "Look at this picture"?',
-        options: [
-          'Look at this graphic very carefully.',
-          'If you direct your attention to slide 4, the margin inflection is evident.',
-          'Here is picture showing our numbers.',
-          'I show you now what we calculated.'
-        ],
-        correctIdx: 1,
-        explanation: '"If you direct your attention to..." provides natural executive signposting and cadence.'
-      }
-    ];
-
     /* ========================================================
-       3. MODULE 1: BOARDROOM VOCAB DRILL
+       4. WORD BANK & FLASHCARDS
        ======================================================== */
     function setVocabMode(mode) {
       document.getElementById('vocab-flashcards-subview').classList.add('hidden');
@@ -1763,23 +1463,21 @@ Gain stakeholder buy-in	Získat podporu partnerů	Agree everyone	We must gain st
     }
 
     function renderCurrentFlashcard() {
-      const list = getActiveVocabList();
-      if (state.currentCardIdx >= list.length) {
-        state.currentCardIdx = 0;
-      }
-      const card = list[state.currentCardIdx];
+      if (currentCardIdx >= userWordBank.length) currentCardIdx = 0;
+      if (currentCardIdx < 0) currentCardIdx = userWordBank.length - 1;
+      const card = userWordBank[currentCardIdx];
       if (!card) return;
 
       const inner = document.getElementById('flashcard-inner');
       inner.classList.remove('flipped');
-      state.isFlipped = false;
+      isFlipped = false;
 
-      document.getElementById('card-current-idx').innerText = state.currentCardIdx + 1;
-      document.getElementById('card-total-idx').innerText = list.length;
+      document.getElementById('card-current-idx').innerText = currentCardIdx + 1;
+      document.getElementById('card-total-idx').innerText = userWordBank.length;
       document.getElementById('card-category').innerText = card.category;
       document.getElementById('card-phrase').innerText = card.phrase;
       document.getElementById('card-phonetic').innerText = card.phonetic || '/.../';
-      document.getElementById('card-level').innerText = card.level || 'B2-C1';
+      document.getElementById('card-level').innerText = card.level || 'B2–C1';
       document.getElementById('card-czech').innerText = card.czech;
       document.getElementById('card-trap').innerText = `"${card.czenglishTrap || 'Literal translation'}"`;
       document.getElementById('card-example').innerText = `"${card.example || ''}"`;
@@ -1787,40 +1485,19 @@ Gain stakeholder buy-in	Získat podporu partnerů	Agree everyone	We must gain st
 
     function toggleCardFlip() {
       const inner = document.getElementById('flashcard-inner');
-      state.isFlipped = !state.isFlipped;
-      if (state.isFlipped) {
-        inner.classList.add('flipped');
-      } else {
-        inner.classList.remove('flipped');
-      }
+      isFlipped = !isFlipped;
+      if (isFlipped) inner.classList.add('flipped');
+      else inner.classList.remove('flipped');
     }
 
-    function handleCardRating(mastered) {
-      const list = getActiveVocabList();
-      const current = list[state.currentCardIdx];
-      if (!current) return;
-
-      if (mastered) {
-        if (!state.masteredIds.includes(current.id)) {
-          state.masteredIds.push(current.id);
-          state.score += 15;
-          showToast('Term Mastered!', `Added "${current.phrase}" to your active lexicon (+15 XP)`);
-        }
-      } else {
-        state.masteredIds = state.masteredIds.filter(id => id !== current.id);
-      }
-
-      state.currentCardIdx = (state.currentCardIdx + 1) % list.length;
-      saveState();
+    function handleCardNav(direction) {
+      currentCardIdx = (currentCardIdx + direction + userWordBank.length) % userWordBank.length;
       renderCurrentFlashcard();
     }
 
     function speakCurrentCard() {
-      const list = getActiveVocabList();
-      const card = list[state.currentCardIdx];
-      if (card) {
-        speakText(card.phrase);
-      }
+      const card = userWordBank[currentCardIdx];
+      if (card) speakText(card.phrase);
     }
 
     function speakText(text) {
@@ -1830,13 +1507,12 @@ Gain stakeholder buy-in	Získat podporu partnerů	Agree everyone	We must gain st
       }
       window.speechSynthesis.cancel();
       const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = 'en-GB'; // British Corporate English
+      utterance.lang = 'en-GB';
       utterance.rate = 0.95;
       utterance.pitch = 1.0;
       window.speechSynthesis.speak(utterance);
     }
 
-    // Interactive Quiz Implementation
     let currentQuizIdx = 0;
     function startVocabQuiz() {
       currentQuizIdx = 0;
@@ -1869,9 +1545,6 @@ Gain stakeholder buy-in	Získat podporu partnerů	Agree everyone	We must gain st
       if (selectedIdx === correctIdx) {
         feedback.className = 'p-3.5 rounded-xl text-xs bg-emerald-950/40 border border-emerald-900/60 text-emerald-200';
         feedback.innerHTML = `<strong>✅ Executive Standard!</strong> ${explanation}`;
-        state.score += 20;
-        saveState();
-        showToast('Correct Recall!', '+20 XP added to fluency rating');
       } else {
         feedback.className = 'p-3.5 rounded-xl text-xs bg-rose-950/40 border border-rose-900/60 text-rose-200';
         feedback.innerHTML = `<strong>❌ Czenglish / Sub-optimal.</strong> ${explanation}`;
@@ -1888,24 +1561,21 @@ Gain stakeholder buy-in	Získat podporu partnerů	Agree everyone	We must gain st
     function renderVocabDictionary() {
       const grid = document.getElementById('vocab-terms-grid');
       grid.innerHTML = '';
-      const list = getActiveVocabList();
 
-      list.forEach(item => {
-        const isMastered = state.masteredIds.includes(item.id);
+      userWordBank.forEach(item => {
         const card = document.createElement('div');
         card.className = 'p-4 rounded-xl bg-slate-900 border border-slate-800 flex flex-col justify-between';
         card.innerHTML = `
           <div>
             <div class="flex items-center justify-between">
               <span class="text-[10px] px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-400 font-semibold">${item.category}</span>
-              <span class="text-xs ${isMastered ? 'text-emerald-400' : 'text-slate-500'} font-semibold">${isMastered ? 'Mastered' : 'Learning'}</span>
+              <span class="text-slate-500 text-[10px] font-mono">${item.level || 'B2–C1'}</span>
             </div>
             <h4 class="font-bold text-white text-sm mt-2">${item.phrase}</h4>
             <p class="text-xs text-amber-300/90 mt-1 font-medium">${item.czech}</p>
             <p class="text-[11px] text-slate-400 mt-2 italic">"${item.example || ''}"</p>
           </div>
-          <div class="mt-3 pt-2 border-t border-slate-800 flex justify-between items-center text-xs">
-            <span class="text-slate-500 text-[10px] font-mono">${item.level || 'B2-C1'}</span>
+          <div class="mt-3 pt-2 border-t border-slate-800 flex justify-end items-center text-xs">
             <button onclick="speakText('${item.phrase.replace(/'/g, "\\'")}')" class="text-indigo-400 hover:text-white flex items-center gap-1">
               <i data-lucide="volume-2" class="w-3.5 h-3.5"></i>
               <span>Listen</span>
@@ -1928,37 +1598,9 @@ Gain stakeholder buy-in	Získat podporu partnerů	Agree everyone	We must gain st
     }
 
     /* ========================================================
-       4. MODULE 2: EXECUTIVE AI ROLEPLAY SIMULATOR
+       5. ROLEPLAY SIMULATOR
        ======================================================== */
-    const SCENARIOS = {
-      cfo_budget: {
-        name: 'Mark Foster',
-        role: 'Group CFO (London HQ)',
-        mood: 'Analytical, questioning non-essential CAPEX',
-        avatar: 'MF',
-        initialMessage: "Good morning. I've been reviewing your branch OPEX proposal for next quarter. You're asking for a 15% increase in engineering headcount. In this macroeconomic climate, that seems difficult to defend. Walk me through the numbers.",
-        czechTip: "Czech managers often sound too direct ('We need people because we have projects'). Open by recognizing fiduciary pressure, then frame it around ROI and customer churn reduction."
-      },
-      board_disagree: {
-        name: 'Elena Rostova',
-        role: 'Non-Executive Board Member',
-        mood: 'Skeptical, risk-averse',
-        avatar: 'ER',
-        initialMessage: "I see your recommendation to postpone the legacy ERP migration. Frankly, this delay exposes us to operational risk. Why should the board back another rescheduling?",
-        czechTip: "Avoid defensive words like 'It is not our fault'. Frame the postponement as a calculated risk-mitigation move to safeguard revenue."
-      },
-      pitch_hostile: {
-        name: 'David Vance',
-        role: 'Managing Partner (Venture Capital)',
-        mood: 'Fast-paced, aggressive Q&A',
-        avatar: 'DV',
-        initialMessage: "Your unit economics look attractive on slide 3, but Central European tech founders frequently underestimate international enterprise CAC. What gives you the conviction you can scale into the DACH region?",
-        czechTip: "Acknowledge the DACH sales cycle reality with gravitas: 'That is a pertinent critique. However, our initial pilot conversion in Munich demonstrates...'"
-      }
-    };
-
     let currentScenarioKey = 'cfo_budget';
-    let chatHistory = [];
 
     function changeScenario() {
       const sel = document.getElementById('scenario-select').value;
@@ -1974,12 +1616,10 @@ Gain stakeholder buy-in	Získat podporu partnerů	Agree everyone	We must gain st
 
     function restartRoleplay() {
       const s = SCENARIOS[currentScenarioKey];
-      chatHistory = [];
       const chatContainer = document.getElementById('chat-messages');
       chatContainer.innerHTML = '';
       appendChatMessage(s.name, s.initialMessage, 'partner');
       speakText(s.initialMessage);
-      evaluateMetrics("Initial greeting");
     }
 
     function appendChatMessage(sender, text, type) {
@@ -2021,9 +1661,6 @@ Gain stakeholder buy-in	Získat podporu partnerů	Agree everyone	We must gain st
       appendChatMessage('You', text, 'user');
       input.value = '';
 
-      evaluateMetrics(text);
-
-      // Intelligent executive partner response generation
       setTimeout(() => {
         generatePartnerReply(text);
       }, 1000);
@@ -2034,8 +1671,8 @@ Gain stakeholder buy-in	Získat podporu partnerů	Agree everyone	We must gain st
       const lower = userText.toLowerCase();
       let reply = '';
 
-      if (lower.includes('bottleneck') || lower.includes('deliverables') || lower.includes('merit') || lower.includes('unit economics') || lower.includes('bandwidth')) {
-        reply = "I appreciate that strategic framing. That addresses my primary concern regarding resource allocation. However, how soon do you project this to reflect in gross margins?";
+      if (lower.includes('bottleneck') || lower.includes('deliverables') || lower.includes('merit') || lower.includes('unit economics') || lower.includes('bandwidth') || lower.includes('synergies') || lower.includes('margin') || lower.includes('rebate')) {
+        reply = "I appreciate that strategic framing. That addresses my primary concern regarding resource allocation and margin protection. However, how soon do you project this to reflect in our quarterly P&L?";
       } else if (lower.includes('problem') || lower.includes('we must') || lower.includes('i disagree') || lower.includes('hard')) {
         reply = "I hear you, but that sounds somewhat reactionary. Let's elevate this discussion: what specific mitigation milestones are you putting in place for the board?";
       } else {
@@ -2044,10 +1681,6 @@ Gain stakeholder buy-in	Získat podporu partnerů	Agree everyone	We must gain st
 
       appendChatMessage(s.name, reply, 'partner');
       speakText(reply);
-
-      // Award XP for engaging in roleplay
-      state.score += 15;
-      saveState();
     }
 
     function insertPrompt(promptText) {
@@ -2056,35 +1689,6 @@ Gain stakeholder buy-in	Získat podporu partnerů	Agree everyone	We must gain st
       input.focus();
     }
 
-    function evaluateMetrics(text) {
-      let diplomacy = 75;
-      let gravitas = 70;
-      let tip = "Good communication. Consider weaving in boardroom signposting verbs like 'mitigate', 'streamline', or 'substantiate'.";
-
-      const lower = text.toLowerCase();
-      if (lower.includes('merit') || lower.includes('perspective') || lower.includes('fair point') || lower.includes('understand your position')) {
-        diplomacy += 15;
-      }
-      if (lower.includes('unit economics') || lower.includes('mitigate') || lower.includes('bandwidth') || lower.includes('burn rate')) {
-        gravitas += 20;
-        tip = "Excellent executive presence. Your financial vocabulary signals command of the situation.";
-      }
-      if (lower.includes('problem') || lower.includes('you must') || lower.includes('i don\'t have time')) {
-        diplomacy -= 15;
-        tip = "Watch out for Czenglish directness: Avoid 'you must' or 'we have a problem'. Use 'We recommend' or 'We are addressing an operational constraint'.";
-      }
-
-      diplomacy = Math.min(Math.max(diplomacy, 45), 98);
-      gravitas = Math.min(Math.max(gravitas, 45), 96);
-
-      document.getElementById('metric-diplomacy').innerText = `${diplomacy}%`;
-      document.getElementById('bar-diplomacy').style.width = `${diplomacy}%`;
-      document.getElementById('metric-gravitas').innerText = `${gravitas}%`;
-      document.getElementById('bar-gravitas').style.width = `${gravitas}%`;
-      document.getElementById('feedback-tip').innerText = tip;
-    }
-
-    // Web Speech API: Voice recognition integration
     let recognition;
     let isRecognizing = false;
     function toggleSpeechRecognition() {
@@ -2122,8 +1726,7 @@ Gain stakeholder buy-in	Získat podporu partnerů	Agree everyone	We must gain st
         showToast('Speech Transcribed', `Recognized: "${transcript.substring(0, 30)}..."`);
       };
 
-      recognition.onerror = (e) => {
-        console.warn('Speech recognition error', e);
+      recognition.onerror = () => {
         recStatus.classList.add('hidden');
         isRecognizing = false;
       };
@@ -2138,38 +1741,8 @@ Gain stakeholder buy-in	Získat podporu partnerů	Agree everyone	We must gain st
     }
 
     /* ========================================================
-       5. MODULE 3: PITCH BUILDER & TELEPROMPTER
+       6. PITCH PROMPTER & RECORDING
        ======================================================== */
-    const PITCH_TEMPLATES = {
-      board_update: `The objective of today's briefing is to walk you through our strategic pivot and Q3 performance.
-
-To put this into perspective, despite macroeconomic headwinds in Europe, our enterprise contract value expanded by 24% quarter-over-quarter.
-
-If you direct your attention to slide 4, our customer acquisition cost dropped significantly, largely attributable to automated onboarding and direct executive referrals.
-
-While we encountered supply chain friction earlier this year, our core unit economics remain exceptionally robust.
-
-I will now open the floor for any strategic or operational questions.`,
-      pitch_deck: `Good morning. We are here today to discuss our Series A expansion round.
-
-Our platform eliminates operational friction for Central European exporters by automating cross-border compliance.
-
-To put this opportunity into perspective, the addressable B2B market in the CEE region alone represents 4.2 billion euros.
-
-Our team has demonstrated exceptional capital efficiency, maintaining an 18-month runway with positive unit economics.
-
-We are actively seeking strategic partners who share our conviction for scaling enterprise software across Europe.`,
-      bad_news: `Thank you for joining this emergency briefing.
-
-I want to be completely transparent regarding our Q2 EBITDA performance.
-
-While we have encountered unforeseen headwinds due to vendor contract cancellations in Germany, our core underlying customer retention remains rock-solid at 94%.
-
-We have already instituted strict cost-containment measures to streamline our operational overhead and preserve runway.
-
-Our leadership team is fully mobilized to safeguard margin stability heading into Q4.`
-    };
-
     function loadPitchTemplate() {
       const key = document.getElementById('template-select').value;
       if (PITCH_TEMPLATES[key]) {
@@ -2236,7 +1809,6 @@ Our leadership team is fully mobilized to safeguard margin stability heading int
       document.getElementById('prompter-screen').scrollTop = 0;
     }
 
-    // MediaRecorder: Rehearse and playback audio
     let mediaRecorder;
     let audioChunks = [];
     let isRecordingAudio = false;
@@ -2287,31 +1859,15 @@ Our leadership team is fully mobilized to safeguard margin stability heading int
     }
 
     /* ========================================================
-       6. MODULE 4: IN-CLASS WORKSHOP & DAILY HABITS
+       7. WORKSHOP & TIMED DEBATES
        ======================================================== */
-    const DEBATE_PROMPTS = [
-      {
-        topic: "Should Czech engineering firms offshore software testing to Asia, or keep 100% in-house to protect IP?",
-        teamA: "Team A: Defend aggressive cost reduction (Offshore)",
-        teamB: "Team B: Defend brand value and engineering control (In-house)"
-      },
-      {
-        topic: "Mandatory 3 days per week in the Prague office vs 100% remote work for senior developers.",
-        teamA: "Team A: Defend cultural cohesion and rapid mentorship",
-        teamB: "Team B: Defend global talent attraction and autonomy"
-      },
-      {
-        topic: "Freezing all Q4 marketing budgets to preserve cash runway vs Doubling down on customer acquisition.",
-        teamA: "Team A: Defend capital preservation and survival",
-        teamB: "Team B: Defend counter-cyclical growth and capturing market share"
-      }
-    ];
-
     let debatePromptIdx = 0;
     function nextDebatePrompt() {
       debatePromptIdx = (debatePromptIdx + 1) % DEBATE_PROMPTS.length;
       const d = DEBATE_PROMPTS[debatePromptIdx];
       document.getElementById('debate-prompt-text').innerText = `"${d.topic}"`;
+      document.getElementById('debate-team-a').innerText = d.teamA;
+      document.getElementById('debate-team-b').innerText = d.teamB;
       resetDebateTimer();
     }
 
@@ -2335,7 +1891,7 @@ Our leadership team is fully mobilized to safeguard margin stability heading int
             clearInterval(debateTimerInterval);
             debateTimerInterval = null;
             btn.innerText = 'Time Up!';
-            showToast('Time Expired!', 'Debate round finished. Teacher debrief and review.');
+            showToast('Time Expired!', 'Debate round finished.');
           }
         }, 1000);
       }
@@ -2351,23 +1907,7 @@ Our leadership team is fully mobilized to safeguard margin stability heading int
       document.getElementById('timer-toggle-btn').innerText = 'Start Timer';
     }
 
-    // Shootout flash card pairs
-    const SHOOTOUT_PAIRS = [
-      {
-        cz: "Nemůžeme to stihnout včas, protože dodavatel má zpoždění.",
-        en: "We are facing timeline constraints due to upstream vendor slippage, so we need to adjust milestones."
-      },
-      {
-        cz: "To je úplně špatný nápad, který bude stát moc peněz.",
-        en: "I see significant exposure here; the projected return does not justify the capital expenditure."
-      },
-      {
-        cz: "Musíme okamžitě propustit lidi a zmenšit náklady.",
-        en: "We need to execute immediate workforce rationalization to preserve our runway."
-      }
-    ];
     let shootoutIdx = 0;
-
     function drawShootoutCard() {
       shootoutIdx = (shootoutIdx + 1) % SHOOTOUT_PAIRS.length;
       document.getElementById('shootout-czech').innerText = `"${SHOOTOUT_PAIRS[shootoutIdx].cz}"`;
@@ -2404,387 +1944,8 @@ Our leadership team is fully mobilized to safeguard margin stability heading int
       }
     }
 
-    function toggleHabit(id) {
-      const el = document.getElementById(id);
-      state.habits[id] = el.checked;
-      if (el.checked) {
-        state.score += 25;
-        showToast('Habit Completed!', 'Great consistency! Added +25 XP to your executive record.');
-      }
-      saveState();
-    }
-
     /* ========================================================
-       7. MODULE 5: INSTRUCTOR CONTENT STUDIO & CMS LOGIC
-       ======================================================== */
-    function switchCmsTab(tab) {
-      ['bulk', 'single', 'scenario', 'share'].forEach(t => {
-        document.getElementById(`cms-panel-${t}`).classList.add('hidden');
-        const btn = document.getElementById(`cms-tab-btn-${t}`);
-        btn.classList.remove('border-indigo-500', 'text-indigo-400');
-        btn.classList.add('border-transparent', 'text-slate-400');
-      });
-
-      document.getElementById(`cms-panel-${tab}`).classList.remove('hidden');
-      const activeBtn = document.getElementById(`cms-tab-btn-${tab}`);
-      activeBtn.classList.remove('border-transparent', 'text-slate-400');
-      activeBtn.classList.add('border-indigo-500', 'text-indigo-400');
-
-      if (tab === 'share') renderCmsTable();
-    }
-
-    // 1. Single Term Submission
-    function handleSingleTermSubmit(event) {
-      event.preventDefault();
-      const phrase = document.getElementById('single-phrase').value.trim();
-      const czech = document.getElementById('single-czech').value.trim();
-      const trap = document.getElementById('single-trap').value.trim();
-      const phonetic = document.getElementById('single-phonetic').value.trim();
-      const example = document.getElementById('single-example').value.trim();
-      const category = document.getElementById('single-category').value;
-      const level = document.getElementById('single-level').value;
-
-      if (!phrase || !czech || !example) return;
-
-      const newCard = {
-        id: 'term_' + Date.now(),
-        phrase,
-        czech,
-        czenglishTrap: trap || 'Literal Czech phrasing',
-        phonetic: phonetic || '',
-        example,
-        category,
-        level,
-        mastered: false
-      };
-
-      state.vocabDatabase.push(newCard);
-      saveState();
-      renderCurrentFlashcard();
-
-      event.target.reset();
-      showToast('Term Added!', `"${phrase}" is now available in Flashcards & Quizzes.`);
-    }
-
-    // 2. Bulk Paste Parser (TSV, Pipe, Semicolon)
-    function executeBulkImport() {
-      const rawText = document.getElementById('bulk-paste-input').value.trim();
-      const category = document.getElementById('bulk-category-select').value;
-      if (!rawText) {
-        showToast('Empty Input', 'Please paste rows of phrases first.');
-        return;
-      }
-
-      const lines = rawText.split('\n');
-      let addedCount = 0;
-
-      lines.forEach((line, idx) => {
-        const clean = line.trim();
-        if (!clean) return;
-
-        // Split by Tab, or Pipe (|), or Semicolon (;)
-        let delimiter = '\t';
-        if (clean.includes('|')) delimiter = '|';
-        else if (clean.includes(';') && !clean.includes('\t')) delimiter = ';';
-
-        const parts = clean.split(delimiter).map(p => p.trim());
-        if (parts.length >= 2) {
-          const phrase = parts[0];
-          const czech = parts[1];
-          const trap = parts[2] || 'Literal word-for-word translation';
-          const example = parts[3] || `We must leverage our capabilities to ${phrase.toLowerCase()} effectively.`;
-
-          state.vocabDatabase.push({
-            id: 'bulk_' + Date.now() + '_' + idx,
-            phrase,
-            czech,
-            czenglishTrap: trap,
-            phonetic: '',
-            example,
-            category,
-            level: 'B2–C1',
-            mastered: false
-          });
-          addedCount++;
-        }
-      });
-
-      if (addedCount > 0) {
-        saveState();
-        renderCurrentFlashcard();
-        document.getElementById('bulk-paste-input').value = '';
-        showToast('Bulk Import Complete', `Successfully added ${addedCount} boardroom terms to active deck.`);
-      } else {
-        showToast('Parse Warning', 'Could not detect valid columns. Use tab or pipe (|) between fields.');
-      }
-    }
-
-    function insertSampleBulkData() {
-      document.getElementById('bulk-paste-input').value = 
-`Hedge foreign currency exposure	Zajistit měnové riziko	Protect money changes	We hedge foreign currency exposure across all CEE cross-border transactions.
-Synergize branch operations	Propojit a zefektivnit provoz poboček	Join offices to work together	The merger allows us to synergize branch operations and lower OPEX.
-Ring-fence the development budget	Oddělit a chránit rozpočet na vývoj	Keep money safe in separate room	We agreed to ring-fence the development budget against regional cuts.`;
-    }
-
-    // 3. Custom Scenarios & Debate Prompts
-    function saveCustomScenario() {
-      const title = document.getElementById('custom-scenario-title').value.trim();
-      const name = document.getElementById('custom-scenario-name').value.trim();
-      const role = document.getElementById('custom-scenario-role').value.trim();
-      const prompt = document.getElementById('custom-scenario-prompt').value.trim();
-      const tip = document.getElementById('custom-scenario-tip').value.trim();
-
-      if (!title || !name || !prompt) {
-        showToast('Missing Fields', 'Please provide Scenario Title, AI Name, and Opening Challenge.');
-        return;
-      }
-
-      const id = 'custom_sc_' + Date.now();
-      const newScenario = {
-        id,
-        title,
-        name,
-        role: role || 'Executive Director',
-        mood: 'Challenging, results-oriented',
-        avatar: name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'EX',
-        initialMessage: prompt,
-        czechTip: tip || 'Focus on structured diplomacy and avoid blunt emotional statements.'
-      };
-
-      SCENARIOS[id] = newScenario;
-      if (!state.customScenarios) state.customScenarios = [];
-      state.customScenarios.push(newScenario);
-      saveState();
-
-      ensureScenarioInSelect(id, title);
-      document.getElementById('scenario-select').value = id;
-      changeScenario();
-
-      // Clear inputs
-      document.getElementById('custom-scenario-title').value = '';
-      document.getElementById('custom-scenario-name').value = '';
-      document.getElementById('custom-scenario-role').value = '';
-      document.getElementById('custom-scenario-prompt').value = '';
-      document.getElementById('custom-scenario-tip').value = '';
-
-      showToast('Scenario Created!', `Switched directly to "${title}" in the Roleplay tab.`);
-      switchTab('roleplay');
-    }
-
-    function saveCustomDebate() {
-      const topic = document.getElementById('custom-debate-topic').value.trim();
-      const teamA = document.getElementById('custom-debate-team-a').value.trim() || 'Team A: Support Proposal';
-      const teamB = document.getElementById('custom-debate-team-b').value.trim() || 'Team B: Defend Counter-Strategy';
-
-      if (!topic) {
-        showToast('Empty Topic', 'Please write a debate proposition.');
-        return;
-      }
-
-      const debate = { topic, teamA, teamB };
-      DEBATE_PROMPTS.unshift(debate);
-      if (!state.customDebates) state.customDebates = [];
-      state.customDebates.push(debate);
-      saveState();
-
-      document.getElementById('debate-prompt-text').innerText = `"${topic}"`;
-      document.getElementById('custom-debate-topic').value = '';
-
-      showToast('Debate Injected!', 'Topic is ready for immediate 5-minute timed battle in Workshop.');
-      switchTab('workshop');
-    }
-
-    // 4. Class Code & Share Features
-    function copyClassCode() {
-      const code = document.getElementById('generated-class-code').innerText;
-      copyToClipboardFallback(code);
-      showToast('Class Code Copied', `Code ${code} copied! Share with your students to sync today's deck.`);
-    }
-
-    function exportDeckJson() {
-      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(getActiveVocabList(), null, 2));
-      const downloadAnchor = document.createElement('a');
-      downloadAnchor.setAttribute("href", dataStr);
-      downloadAnchor.setAttribute("download", `execuspeak_deck_${new Date().toISOString().slice(0,10)}.json`);
-      document.body.appendChild(downloadAnchor);
-      downloadAnchor.click();
-      downloadAnchor.remove();
-      showToast('Deck Exported', 'Downloaded complete lesson deck as a JSON file.');
-    }
-
-    function copyDeckToClipboard() {
-      const jsonText = JSON.stringify(getActiveVocabList());
-      copyToClipboardFallback(jsonText);
-      showToast('JSON Copied', 'Deck data copied to clipboard. Ready to paste.');
-    }
-
-    function copyToClipboardFallback(text) {
-      const textarea = document.createElement('textarea');
-      textarea.value = text;
-      textarea.style.position = 'fixed';
-      textarea.style.opacity = '0';
-      document.body.appendChild(textarea);
-      textarea.select();
-      try {
-        document.execCommand('copy');
-      } catch (err) {
-        console.warn('execCommand error:', err);
-      }
-      document.body.removeChild(textarea);
-    }
-
-    function importDeckFromInput() {
-      const raw = document.getElementById('import-deck-input').value.trim();
-      if (!raw) {
-        showToast('Input Empty', 'Paste a class code or JSON deck string.');
-        return;
-      }
-
-      // Check if it's a sample class code or direct code
-      if (raw.toUpperCase() === 'EXEC-82' || raw.toUpperCase() === 'MA-2026') {
-        loadSampleLessonPack('mergers');
-        return;
-      }
-      if (raw.toUpperCase() === 'TECH-CEE') {
-        loadSampleLessonPack('tech');
-        return;
-      }
-
-      try {
-        const parsed = JSON.parse(raw);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          state.vocabDatabase = parsed;
-          saveState();
-          renderCurrentFlashcard();
-          renderCmsTable();
-          showToast('Deck Imported!', `Successfully loaded ${parsed.length} terms from student import.`);
-          document.getElementById('import-deck-input').value = '';
-        } else {
-          showToast('Invalid Format', 'JSON must be an array of vocabulary objects.');
-        }
-      } catch (err) {
-        showToast('Invalid Code/JSON', 'Unrecognized class code or malformed JSON.');
-      }
-    }
-
-    function loadSampleLessonPack(packName) {
-      if (packName === 'mergers') {
-        const maDeck = [
-          {
-            id: 'ma_1',
-            phrase: 'Conduct due diligence',
-            phonetic: '/kənˈdʌkt djuː ˈdɪl.ɪ.dʒəns/',
-            category: 'Negotiation & M&A',
-            level: 'C1',
-            czech: 'Provést hloubkovou prověrku společnosti (audit)',
-            czenglishTrap: 'Saying "We must check company deeply"',
-            example: 'Before finalizing the letter of intent, legal must conduct exhaustive due diligence.',
-            mastered: false
-          },
-          {
-            id: 'ma_2',
-            phrase: 'Ring-fence the liabilities',
-            phonetic: '/rɪŋ fens ðə ˌlaɪ.əˈbɪl.ə.tiz/',
-            category: 'Finance & Valuation',
-            level: 'C1',
-            czech: 'Izolovat a právně ochránit závazky / dluhy',
-            czenglishTrap: 'Saying "Put wall around company debts"',
-            example: 'Our syndicate structured the SPV to ring-fence all legacy environmental liabilities.',
-            mastered: false
-          },
-          {
-            id: 'ma_3',
-            phrase: 'Material adverse change',
-            phonetic: '/məˈtɪə.ri.əl ædˈvɜːs tʃeɪndʒ/',
-            category: 'Negotiation & M&A',
-            level: 'C1',
-            czech: 'Podstatná nepříznivá změna (klauzule pro odstoupení od smlouvy)',
-            czenglishTrap: 'Saying "Big bad thing happening in contract"',
-            example: 'The buyer triggered the material adverse change clause following the regulatory embargo.',
-            mastered: false
-          }
-        ];
-        state.vocabDatabase = [...maDeck, ...state.vocabDatabase.filter(d => !d.id.startsWith('ma_'))];
-        saveState();
-        renderCurrentFlashcard();
-        renderCmsTable();
-        showToast('Pack Loaded', 'Loaded M&A & Restructuring lesson pack (Code: MA-2026).');
-      } else if (packName === 'tech') {
-        const techDeck = [
-          {
-            id: 'tech_1',
-            phrase: 'Deprecate legacy architecture',
-            phonetic: '/ˈdep.rə.keɪt ˈleɡ.ə.si ˈɑː.kɪ.tek.tʃər/',
-            category: 'Tech & Operations',
-            level: 'B2–C1',
-            czech: 'Ukončit podporu / vyřadit zastaralou systémovou architekturu',
-            czenglishTrap: 'Saying "Delete old computer system"',
-            example: 'We intend to deprecate the monolithic legacy architecture across Q3.',
-            mastered: false
-          },
-          {
-            id: 'tech_2',
-            phrase: 'Ensure backward compatibility',
-            phonetic: '/ɪnˈʃɔːr ˈbæk.wəd kəmˌpæt.əˈbɪl.ə.ti/',
-            category: 'Tech & Operations',
-            level: 'B2',
-            czech: 'Zajistit zpětnou kompatibilitu',
-            czenglishTrap: 'Saying "Make it work with old versions"',
-            example: 'Any SDK update must strictly ensure backward compatibility for our banking partners.',
-            mastered: false
-          }
-        ];
-        state.vocabDatabase = [...techDeck, ...state.vocabDatabase.filter(d => !d.id.startsWith('tech_'))];
-        saveState();
-        renderCurrentFlashcard();
-        renderCmsTable();
-        showToast('Pack Loaded', 'Loaded Tech & Engineering lesson pack (Code: TECH-CEE).');
-      }
-    }
-
-    function restoreDefaultVocabDeck() {
-      state.vocabDatabase = [...VOCAB_DATABASE];
-      saveState();
-      renderCurrentFlashcard();
-      renderCmsTable();
-      showToast('Deck Reset', 'Restored original executive starter deck.');
-    }
-
-    function removeTerm(id) {
-      state.vocabDatabase = state.vocabDatabase.filter(item => item.id !== id);
-      saveState();
-      renderCurrentFlashcard();
-      renderCmsTable();
-      showToast('Term Removed', 'Phrase removed from active deck.');
-    }
-
-    function renderCmsTable() {
-      const tableBody = document.getElementById('cms-deck-table-body');
-      if (!tableBody) return;
-      tableBody.innerHTML = '';
-
-      const list = getActiveVocabList();
-      list.forEach(item => {
-        const tr = document.createElement('tr');
-        tr.className = 'hover:bg-slate-800/40 transition';
-        tr.innerHTML = `
-          <td class="py-2.5 px-3 font-semibold text-white">${item.phrase}</td>
-          <td class="py-2.5 px-3 text-amber-300/90">${item.czech}</td>
-          <td class="py-2.5 px-3"><span class="px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-400 font-mono text-[10px]">${item.category}</span></td>
-          <td class="py-2.5 px-3 text-rose-400/80 italic">${item.czenglishTrap || '—'}</td>
-          <td class="py-2.5 px-3 text-right">
-            <button onclick="removeTerm('${item.id}')" class="p-1 rounded text-slate-500 hover:text-rose-400 transition" title="Delete Term">
-              <i data-lucide="trash-2" class="w-3.5 h-3.5 inline"></i>
-            </button>
-          </td>
-        `;
-        tableBody.appendChild(tr);
-      });
-      lucide.createIcons();
-    }
-
-    /* ========================================================
-       8. UTILITIES: TOAST NOTIFICATIONS & PROGRESS RESET
+       8. TOAST & NOTIFICATIONS
        ======================================================== */
     let toastTimeout;
     function showToast(title, body) {
@@ -2802,33 +1963,24 @@ Ring-fence the development budget	Oddělit a chránit rozpočet na vývoj	Keep m
       }, 3500);
     }
 
-    function confirmResetProgress() {
-      state.score = 100;
-      state.streak = 1;
-      state.masteredIds = [];
-      state.currentCardIdx = 0;
-      state.isFlipped = false;
-      state.habits = {
-        'habit-vocab': false,
-        'habit-roleplay': false,
-        'habit-pitch': false
-      };
-      saveState();
-      renderCurrentFlashcard();
-      showToast('Progress Reset', 'All streak and flashcard states reset to initial values.');
-    }
-
     /* ========================================================
        9. INITIALIZATION
        ======================================================== */
     window.addEventListener('DOMContentLoaded', () => {
-      loadState();
+      updateBankCounts();
+      loadBriefing();
       renderCurrentFlashcard();
       restartRoleplay();
       calculatePrompterMetrics();
-      renderCmsTable();
-      document.getElementById('pitch-text-editor').addEventListener('input', calculatePrompterMetrics);
-      lucide.createIcons();
+
+      const pitchEditor = document.getElementById('pitch-text-editor');
+      if (pitchEditor) {
+        pitchEditor.addEventListener('input', calculatePrompterMetrics);
+      }
+
+      if (window.lucide && typeof lucide.createIcons === 'function') {
+        lucide.createIcons();
+      }
     });
   </script>
 </body>
