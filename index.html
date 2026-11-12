@@ -110,9 +110,13 @@
           <i data-lucide="presentation" class="w-4 h-4"></i>
           <span>Pitch & Prompter</span>
         </button>
+        <button onclick="switchTab('grammar')" id="nav-grammar" class="nav-btn px-3.5 py-2 rounded-lg text-xs font-medium transition flex items-center space-x-2 text-slate-400 hover:text-white hover:bg-slate-800">
+          <i data-lucide="scale" class="w-4 h-4"></i>
+          <span>Executive Grammar</span>
+        </button>
         <button onclick="switchTab('vocab')" id="nav-vocab" class="nav-btn px-3.5 py-2 rounded-lg text-xs font-medium transition flex items-center space-x-2 text-slate-400 hover:text-white hover:bg-slate-800">
           <i data-lucide="layers" class="w-4 h-4"></i>
-          <span>Word Bank (<span id="nav-bank-count">0</span>)</span>
+          <span>Word & Grammar Bank (<span id="nav-bank-count">0</span>)</span>
         </button>
         <button onclick="switchTab('workshop')" id="nav-workshop" class="nav-btn px-3.5 py-2 rounded-lg text-xs font-medium transition flex items-center space-x-2 text-slate-400 hover:text-white hover:bg-slate-800">
           <i data-lucide="users" class="w-4 h-4"></i>
@@ -141,7 +145,8 @@
     <button onclick="switchTab('reading')" class="px-2.5 py-1.5 rounded text-slate-400 whitespace-nowrap">Briefings</button>
     <button onclick="switchTab('roleplay')" class="px-2.5 py-1.5 rounded text-slate-400 whitespace-nowrap">Speaking Simulator</button>
     <button onclick="switchTab('teleprompter')" class="px-2.5 py-1.5 rounded text-slate-400 whitespace-nowrap">Pitch Prompter</button>
-    <button onclick="switchTab('vocab')" class="px-2.5 py-1.5 rounded text-slate-400 whitespace-nowrap">Word Bank</button>
+    <button onclick="switchTab('grammar')" class="px-2.5 py-1.5 rounded text-slate-400 whitespace-nowrap">Grammar</button>
+    <button onclick="switchTab('vocab')" class="px-2.5 py-1.5 rounded text-slate-400 whitespace-nowrap">Word & Grammar Bank</button>
     <button onclick="switchTab('workshop')" class="px-2.5 py-1.5 rounded text-slate-400 whitespace-nowrap">In-Class</button>
   </div>
 
@@ -726,6 +731,31 @@ I will now open the floor for any strategic or operational questions.</textarea>
       </div>
     </div>
 
+    <!-- ==================== TAB 4.5: EXECUTIVE GRAMMAR & SYNTAX ==================== -->
+    <div id="tab-grammar" class="hidden space-y-6">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
+        <div>
+          <h2 class="text-xl font-bold text-white flex items-center space-x-2">
+            <span>Executive Grammar & Boardroom Syntax</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-amber-500/20 text-amber-400 border border-amber-500/30">B1–C1 Precision</span>
+          </h2>
+          <p class="text-xs text-slate-400 mt-0.5">Master diplomatic conditionals, passive distancing, and tense precision. Click <strong>"Add to Practice Bank"</strong> to include any grammar formula in your shared flashcards and review list.</p>
+        </div>
+        <div class="flex items-center space-x-2">
+          <select id="grammar-filter" onchange="renderGrammarModules()" class="bg-slate-900 border border-slate-700 text-white text-xs rounded-xl px-3 py-2 focus:outline-none focus:border-indigo-500">
+            <option value="all">All Grammar Modules</option>
+            <option value="Negotiation & Conditionals">Negotiation & Conditionals</option>
+            <option value="Diplomatic Softening">Diplomatic Softening & Hedging</option>
+            <option value="Reporting & Trends">Reporting & Data Trends</option>
+            <option value="Czech Grammar Traps">Czech-to-English Traps</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Grammar Cards Grid -->
+      <div id="grammar-cards-grid" class="grid md:grid-cols-2 gap-5"></div>
+    </div>
+
     <!-- ==================== TAB 5: IN-CLASS WORKSHOP & ROUTINES ==================== -->
     <div id="tab-workshop" class="hidden space-y-6">
       <div class="border-b border-slate-800 pb-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
@@ -972,6 +1002,113 @@ I will now open the floor for any strategic or operational questions.</textarea>
         czech: 'Optimalizovat průchodnost / kapacitu vychystávání v logistickém centru',
         czenglishTrap: 'Saying "Make packaging faster in our Jirny hall"',
         example: 'Automated sorting lines in our central fulfillment center allow us to optimize warehouse pick-and-pack throughput ahead of Black Friday.'
+      },
+      {
+        id: 'gram_1',
+        phrase: 'Were we to + [Infinitive], we would + [Result]',
+        phonetic: 'Inverted 2nd Conditional (Formal Proposal)',
+        category: 'Grammar • Conditionals',
+        level: 'C1',
+        czech: 'Kdybychom [udělali X], dosáhli bychom [Y] (velmi formální vyjednávání)',
+        czenglishTrap: 'Saying "If we would lower prices, we would sell more" (Double "would" trap)',
+        example: 'Were we to consolidate our regional fulfillment hubs, we would reduce annual logistics OPEX by 14%.'
+      },
+      {
+        id: 'gram_2',
+        phrase: 'Present Perfect Continuous (have/has been + -ing)',
+        phonetic: 'Ongoing Multi-Quarter Trends',
+        category: 'Grammar • Tenses',
+        level: 'B1–B2',
+        czech: 'Průběhový předpřítomný čas (děj začal v minulosti a stále trvá)',
+        czenglishTrap: 'Saying "We are negotiating with Samsung since October" (Using present simple/continuous instead of Present Perfect)',
+        example: 'Our procurement team has been renegotiating volume rebates with major suppliers since Q3.'
+      }
+    ];
+
+    const GRAMMAR_MODULES = [
+      {
+        id: 'gm_inv_cond',
+        category: 'Negotiation & Conditionals',
+        level: 'C1',
+        title: 'Inverted Conditionals for High-Stakes Proposals',
+        formula: 'Were [Subject] to + [Base Verb], [Subject] would/could + [Base Verb]',
+        czechExplanation: 'Formální podmíněná věta bez použití "If". V boardroomu zní mnohem diplomatičtěji a strategičtěji než běžné "If we...".',
+        czenglishTrap: 'If we would commit to 50,000 units, we would get a better rebate. (Nikdy nedávejte "would" po "if"!)',
+        corporateExample: 'Were we to commit to an annual volume of 50,000 units, we would expect an additional 3% back-end rebate.',
+        quickDrill: {
+          prompt: 'Rewrite formally: "If we expanded into Poland next year, we would need a local warehouse."',
+          answer: 'Were we to expand into Poland next year, we would need a local warehouse.'
+        }
+      },
+      {
+        id: 'gm_hedging',
+        category: 'Diplomatic Softening',
+        level: 'B2–C1',
+        title: 'Past Continuous & Modal Hedging for Pushback',
+        formula: 'I was wondering if we could... / It might be worth considering...',
+        czechExplanation: 'Použití minulého průběhového času ("I was hoping / wondering") změkčuje přímý požadavek a odstraňuje českou přímost, která v angličtině zní jako rozkaz.',
+        czenglishTrap: 'I want that you change the delivery SLA before Friday. (Příliš přímé + chybná vazba "want that")',
+        corporateExample: 'I was wondering if we might revisit the delivery SLA before finalizing Friday’s contract.',
+        quickDrill: {
+          prompt: 'Soften this demand: "We must delay the launch by two weeks."',
+          answer: 'It might be prudent to delay the launch by two weeks to ensure full QA compliance.'
+        }
+      },
+      {
+        id: 'gm_passive_dist',
+        category: 'Diplomatic Softening',
+        level: 'B2–C1',
+        title: 'Impersonal Passive for Delivering Bad News',
+        formula: 'It has been observed that... / Delays were encountered in...',
+        czechExplanation: 'Neosobní trpný rod přesouvá pozornost od viníka ("vy jste to pokazili") k samotnému faktu nebo procesu, což chrání obchodní vztahy.',
+        czenglishTrap: 'Your logistics team sent the shipment late again.',
+        corporateExample: 'Regrettably, unforeseen bottlenecks were encountered during customs clearance.',
+        quickDrill: {
+          prompt: 'Make diplomatic: "Your department miscalculated the Q2 margin."',
+          answer: 'It appears a discrepancy occurred in the Q2 margin projections.'
+        }
+      },
+      {
+        id: 'gm_present_perf',
+        category: 'Czech Grammar Traps',
+        level: 'B1–B2',
+        title: 'Present Perfect vs. Present Simple ("Since / For")',
+        formula: 'Subject + have/has + been + -ing (for/since)',
+        czechExplanation: 'Čeština používá přítomný čas ("Jsme na trhu 30 let"). Angličtina vyžaduje předpřítomný čas pro děje spojující minulost se současností.',
+        czenglishTrap: 'HP TRONIC operates in the Czech market since 1990.',
+        corporateExample: 'HP TRONIC has been operating across the Central European retail market for over three decades.',
+        quickDrill: {
+          prompt: 'Fix the tense: "We wait for vendor approval since Tuesday."',
+          answer: 'We have been waiting for vendor approval since Tuesday.'
+        }
+      },
+      {
+        id: 'gm_gerund_inf',
+        category: 'Czech Grammar Traps',
+        level: 'B2',
+        title: 'Verbs + Gerund (-ing) vs. Infinitive in Business',
+        formula: 'consider / postpone / avoid / risk + [Verb-ing]',
+        czechExplanation: 'Po slovesech jako consider (zvažovat), postpone (odložit) nebo risk (riskovat) následuje vždy tvar s koncovkou -ing, nikoliv infinitiv s "to".',
+        czenglishTrap: 'We are considering to open three new flagship stores in Prague.',
+        corporateExample: 'We are considering opening three new experiential flagship stores in Prague.',
+        quickDrill: {
+          prompt: 'Choose the right form: "We cannot risk (to lose / losing) market share."',
+          answer: 'We cannot risk losing market share to cross-border marketplaces.'
+        }
+      },
+      {
+        id: 'gm_trends',
+        category: 'Reporting & Trends',
+        level: 'B1–C1',
+        title: 'Prepositions of Change in Financial Reporting',
+        formula: 'increase BY [difference] / increase TO [new total] / peak AT [level]',
+        czechExplanation: 'Přesné předložky u čísel: "by" vyjadřuje rozdíl (o 5 %), zatímco "to" vyjadřuje cílovou hodnotu (na 25 %). Záměna mění význam celého finančního reportu.',
+        czenglishTrap: 'Our online revenue grew on 18% this quarter.',
+        corporateExample: 'Our online revenue grew by 18%, bringing total digital share to 42% of group turnover.',
+        quickDrill: {
+          prompt: 'Fill in prepositions: "Margin rose ___ 2.5 percentage points, reaching ___ 19.5%."',
+          answer: 'Margin rose by 2.5 percentage points, reaching 19.5% (no preposition after reach).'
+        }
       }
     ];
 
@@ -1241,6 +1378,18 @@ I welcome your strategic questions regarding project timeline and capital alloca
     let userWordBank = [...VOCAB_DATABASE];
     let currentlyInspectedWord = null;
 
+    /* ========================================================
+       3. SPEECH SYNTHESIS & CORE HELPERS
+       ======================================================== */
+    function speakText(text) {
+      if (!text || !('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'en-GB';
+      utterance.rate = 0.96;
+      window.speechSynthesis.speak(utterance);
+    }
+
     function updateBankCounts() {
       const count = userWordBank.length;
       const navBankEl = document.getElementById('nav-bank-count');
@@ -1253,7 +1402,7 @@ I welcome your strategic questions regarding project timeline and capital alloca
     }
 
     function switchTab(tabId) {
-      const tabs = ['dashboard', 'reading', 'roleplay', 'teleprompter', 'vocab', 'workshop'];
+      const tabs = ['dashboard', 'reading', 'roleplay', 'teleprompter', 'grammar', 'vocab', 'workshop'];
       tabs.forEach(t => {
         const page = document.getElementById(`tab-${t}`);
         const navBtn = document.getElementById(`nav-${t}`);
@@ -1273,53 +1422,63 @@ I welcome your strategic questions regarding project timeline and capital alloca
       }
 
       if (tabId === 'reading') loadBriefing();
+      if (tabId === 'grammar') renderGrammarModules();
+      if (tabId === 'vocab') {
+        renderCurrentFlashcard();
+        filterVocabList();
+      }
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     /* ========================================================
-       3. BRIEFINGS & CLICK-TO-SAVE
+       4. EXECUTIVE BRIEFINGS & CLICK-TO-SAVE WORD INSPECTOR
        ======================================================== */
-    let currentBriefingKey = 'brief_mna';
+    let briefingRecognition = null;
+    let isReadingRecording = false;
 
     function loadBriefing() {
-      const sel = document.getElementById('briefing-select');
-      if (sel) currentBriefingKey = sel.value;
-      const b = EXECUTIVE_BRIEFINGS[currentBriefingKey];
-      if (!b) return;
+      const selectEl = document.getElementById('briefing-select');
+      if (!selectEl) return;
+      const key = selectEl.value;
+      const brief = EXECUTIVE_BRIEFINGS[key] || EXECUTIVE_BRIEFINGS.brief_mna;
 
-      document.getElementById('briefing-domain').innerText = b.domain;
-      document.getElementById('briefing-title').innerText = b.title;
+      document.getElementById('briefing-domain').innerText = brief.domain;
+      document.getElementById('briefing-title').innerText = brief.title;
 
       const container = document.getElementById('interactive-text-container');
       container.innerHTML = '';
 
-      const words = b.text.split(' ');
-      words.forEach((w) => {
-        const cleanWord = w.toLowerCase().replace(/[^a-z0-9-]/g, '');
-        const isGlossed = b.glossary && b.glossary[cleanWord];
-
+      const tokens = brief.text.split(/(\s+)/);
+      tokens.forEach(token => {
+        if (/^\s+$/.test(token)) {
+          container.appendChild(document.createTextNode(token));
+          return;
+        }
+        const cleanKey = token.toLowerCase().replace(/[^a-z0-9-]/g, '');
+        const isGlossary = brief.glossary && brief.glossary[cleanKey];
         const span = document.createElement('span');
-        span.className = isGlossed 
-          ? 'cursor-pointer px-1 py-0.5 rounded bg-indigo-500/20 text-indigo-200 border-b border-indigo-400 hover:bg-amber-400/20 hover:text-amber-300 font-semibold transition'
-          : 'cursor-pointer hover:text-amber-300 hover:underline transition';
-        span.innerText = w + ' ';
-        span.onclick = () => inspectWord(cleanWord, w.replace(/[^a-zA-Z0-9-]/g, ''), isGlossed ? b.glossary[cleanWord] : null);
+        span.innerText = token;
+        span.className = isGlossary
+          ? 'cursor-pointer px-1 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border-b border-indigo-400 hover:bg-indigo-500/40 transition font-medium'
+          : 'cursor-pointer hover:bg-slate-800 hover:text-amber-300 rounded px-0.5 transition';
+        span.onclick = () => inspectToken(cleanKey, token.replace(/[^a-zA-Z0-9-]/g, ''), brief);
         container.appendChild(span);
       });
 
-      const firstKey = Object.keys(b.glossary)[0];
-      if (firstKey) inspectWord(firstKey, firstKey, b.glossary[firstKey]);
+      const firstKey = Object.keys(brief.glossary)[0];
+      if (firstKey) inspectToken(firstKey, firstKey, brief);
     }
 
-    function inspectWord(cleanWord, displayWord, glossaryEntry) {
+    function inspectToken(cleanKey, rawWord, brief) {
+      const entry = brief.glossary && brief.glossary[cleanKey];
       currentlyInspectedWord = {
-        phrase: glossaryEntry ? cleanWord : displayWord,
-        czech: glossaryEntry ? glossaryEntry.czech : `Klíčový termín: ${displayWord}`,
-        phonetic: glossaryEntry ? glossaryEntry.phonetic : `/${cleanWord}/`,
-        trap: glossaryEntry ? glossaryEntry.trap : 'Pozor na doslovný překlad do češtiny',
-        example: glossaryEntry ? glossaryEntry.example : `In an executive meeting: "...focus on ${cleanWord}..."`,
-        category: EXECUTIVE_BRIEFINGS[currentBriefingKey].domain,
-        level: 'B2–C1'
+        phrase: rawWord,
+        phonetic: entry ? entry.phonetic : `/${cleanKey}/`,
+        czech: entry ? entry.czech : 'Klíčový obchodní výraz z kontextu (klikněte pro uložení)',
+        trap: entry ? entry.trap : 'Avoid translating word-for-word from Czech; keep the executive collocation intact.',
+        example: entry ? entry.example : brief.text,
+        level: 'B2–C1',
+        category: brief.domain
       };
 
       document.getElementById('inspect-phrase').innerText = currentlyInspectedWord.phrase;
@@ -1327,171 +1486,131 @@ I welcome your strategic questions regarding project timeline and capital alloca
       document.getElementById('inspect-czech').innerText = currentlyInspectedWord.czech;
       document.getElementById('inspect-trap').innerText = currentlyInspectedWord.trap;
       document.getElementById('inspect-example').innerText = `"${currentlyInspectedWord.example}"`;
-
-      const inBank = userWordBank.some(item => item.phrase.toLowerCase() === currentlyInspectedWord.phrase.toLowerCase());
-      const btn = document.getElementById('inspect-save-btn');
-      if (inBank) {
-        btn.innerHTML = `<i data-lucide="check" class="w-4 h-4"></i><span>Saved in Word Bank</span>`;
-        btn.className = 'w-full py-2.5 rounded-xl bg-emerald-700 text-white font-semibold text-xs flex items-center justify-center space-x-2 transition';
-      } else {
-        btn.innerHTML = `<i data-lucide="bookmark-plus" class="w-4 h-4"></i><span>Save to Word Bank</span>`;
-        btn.className = 'w-full py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs flex items-center justify-center space-x-2 transition shadow-lg shadow-indigo-600/30';
-      }
-      lucide.createIcons();
+      document.getElementById('inspect-level').innerText = currentlyInspectedWord.level;
     }
 
     function saveInspectedWordToBank() {
       if (!currentlyInspectedWord) return;
-      const exists = userWordBank.some(item => item.phrase.toLowerCase() === currentlyInspectedWord.phrase.toLowerCase());
-
+      const exists = userWordBank.some(w => w.phrase.toLowerCase() === currentlyInspectedWord.phrase.toLowerCase());
       if (exists) {
-        showToast('Already Banked', `"${currentlyInspectedWord.phrase}" is already in your Word Bank.`);
+        showToast('Already Saved', `"${currentlyInspectedWord.phrase}" is already in your Word & Grammar Bank.`);
         return;
       }
-
-      const newEntry = {
+      userWordBank.unshift({
         id: 'bank_' + Date.now(),
         phrase: currentlyInspectedWord.phrase,
         phonetic: currentlyInspectedWord.phonetic,
         category: currentlyInspectedWord.category,
-        level: 'B2–C1',
+        level: currentlyInspectedWord.level,
         czech: currentlyInspectedWord.czech,
         czenglishTrap: currentlyInspectedWord.trap,
         example: currentlyInspectedWord.example
-      };
-
-      userWordBank.unshift(newEntry);
+      });
       updateBankCounts();
-
-      const btn = document.getElementById('inspect-save-btn');
-      btn.innerHTML = `<i data-lucide="check" class="w-4 h-4"></i><span>Saved in Word Bank</span>`;
-      btn.className = 'w-full py-2.5 rounded-xl bg-emerald-700 text-white font-semibold text-xs flex items-center justify-center space-x-2 transition';
-      lucide.createIcons();
-
-      showToast('Word Banked!', `Added "${newEntry.phrase}" to your active practice deck.`);
+      showToast('Added to Bank', `"${currentlyInspectedWord.phrase}" saved for flashcard & recall practice.`);
     }
 
     function readBriefingAloud() {
-      const b = EXECUTIVE_BRIEFINGS[currentBriefingKey];
-      if (b) speakText(b.text);
+      const key = document.getElementById('briefing-select').value;
+      const brief = EXECUTIVE_BRIEFINGS[key];
+      if (brief) speakText(brief.text);
     }
 
-    let readingRecognition = null;
-    let isReadingSpeech = false;
     function toggleBriefingSpeechRecord() {
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       if (!SpeechRecognition) {
-        showToast('Speech Not Supported', 'Web Speech API is not supported in this browser. Please use Chrome or Edge.');
+        showToast('Browser Notice', 'Live speech recognition works best in Google Chrome or Microsoft Edge.');
         return;
       }
-
       const statusBox = document.getElementById('reading-speech-status');
       const label = document.getElementById('briefing-rec-label');
 
-      if (isReadingSpeech) {
-        if (readingRecognition) readingRecognition.stop();
-        isReadingSpeech = false;
+      if (isReadingRecording && briefingRecognition) {
+        briefingRecognition.stop();
+        isReadingRecording = false;
         statusBox.classList.add('hidden');
         label.innerText = 'Read Aloud (Voice Check)';
         return;
       }
 
-      readingRecognition = new SpeechRecognition();
-      readingRecognition.lang = 'en-US';
-      readingRecognition.continuous = true;
-      readingRecognition.interimResults = true;
+      briefingRecognition = new SpeechRecognition();
+      briefingRecognition.lang = 'en-US';
+      briefingRecognition.continuous = true;
+      briefingRecognition.interimResults = true;
 
-      const targetText = EXECUTIVE_BRIEFINGS[currentBriefingKey].text.toLowerCase();
+      const targetWords = document.getElementById('interactive-text-container').innerText.toLowerCase().split(/\W+/).filter(Boolean);
 
-      readingRecognition.onstart = () => {
-        isReadingSpeech = true;
-        statusBox.classList.remove('hidden');
-        label.innerText = 'Stop Voice Check';
-      };
-
-      readingRecognition.onresult = (e) => {
-        let transcript = '';
-        for (let i = e.resultIndex; i < e.results.length; ++i) {
-          transcript += e.results[i][0].transcript;
+      briefingRecognition.onresult = (event) => {
+        let spoken = '';
+        for (let i = 0; i < event.results.length; i++) {
+          spoken += event.results[i][0].transcript + ' ';
         }
-        const spokenWords = transcript.toLowerCase().split(/\s+/);
-        let matchCount = 0;
-        spokenWords.forEach(sw => {
-          if (targetText.includes(sw) && sw.length > 3) matchCount++;
-        });
-        const matchPct = Math.min(Math.round((matchCount / (targetText.split(/\s+/).length * 0.4)) * 100), 100);
-        document.getElementById('reading-match-score').innerText = `Pacing Match: ${matchPct}%`;
+        const spokenWords = new Set(spoken.toLowerCase().split(/\W+/).filter(Boolean));
+        let matched = 0;
+        targetWords.forEach(w => { if (spokenWords.has(w)) matched++; });
+        const pct = Math.min(100, Math.round((matched / Math.max(1, targetWords.length)) * 100));
+        document.getElementById('reading-match-score').innerText = `Match: ${pct}%`;
       };
 
-      readingRecognition.onerror = () => {
-        isReadingSpeech = false;
+      briefingRecognition.onend = () => {
+        isReadingRecording = false;
         statusBox.classList.add('hidden');
         label.innerText = 'Read Aloud (Voice Check)';
       };
 
-      readingRecognition.onend = () => {
-        isReadingSpeech = false;
-        statusBox.classList.add('hidden');
-        label.innerText = 'Read Aloud (Voice Check)';
-      };
-
-      readingRecognition.start();
+      briefingRecognition.start();
+      isReadingRecording = true;
+      statusBox.classList.remove('hidden');
+      label.innerText = 'Stop Voice Check';
     }
 
     /* ========================================================
-       4. WORD BANK & FLASHCARDS
+       5. WORD & GRAMMAR BANK (FLASHCARDS, QUIZ, LIST)
        ======================================================== */
     function setVocabMode(mode) {
-      document.getElementById('vocab-flashcards-subview').classList.add('hidden');
-      document.getElementById('vocab-quiz-subview').classList.add('hidden');
-      document.getElementById('vocab-list-subview').classList.add('hidden');
-
       ['flashcards', 'quiz', 'list'].forEach(m => {
+        document.getElementById(`vocab-${m}-subview`).classList.add('hidden');
         const btn = document.getElementById(`vocab-view-${m}`);
-        btn.classList.remove('bg-indigo-600', 'text-white');
-        btn.classList.add('text-slate-400');
+        btn.classList.remove('bg-indigo-600', 'text-white', 'font-semibold');
+        btn.classList.add('text-slate-400', 'font-medium');
       });
-
       document.getElementById(`vocab-${mode}-subview`).classList.remove('hidden');
-      const activeBtn = document.getElementById(`vocab-view-${mode}`);
-      activeBtn.classList.add('bg-indigo-600', 'text-white');
-      activeBtn.classList.remove('text-slate-400');
+      const active = document.getElementById(`vocab-view-${mode}`);
+      active.classList.add('bg-indigo-600', 'text-white', 'font-semibold');
+      active.classList.remove('text-slate-400', 'font-medium');
 
       if (mode === 'flashcards') renderCurrentFlashcard();
-      if (mode === 'quiz') startVocabQuiz();
-      if (mode === 'list') renderVocabDictionary();
+      if (mode === 'quiz') renderQuizQuestion();
+      if (mode === 'list') filterVocabList();
     }
 
     function renderCurrentFlashcard() {
+      if (!userWordBank.length) return;
       if (currentCardIdx >= userWordBank.length) currentCardIdx = 0;
       if (currentCardIdx < 0) currentCardIdx = userWordBank.length - 1;
+
       const card = userWordBank[currentCardIdx];
-      if (!card) return;
-
-      const inner = document.getElementById('flashcard-inner');
-      inner.classList.remove('flipped');
-      isFlipped = false;
-
       document.getElementById('card-current-idx').innerText = currentCardIdx + 1;
       document.getElementById('card-total-idx').innerText = userWordBank.length;
       document.getElementById('card-category').innerText = card.category;
       document.getElementById('card-phrase').innerText = card.phrase;
-      document.getElementById('card-phonetic').innerText = card.phonetic || '/.../';
+      document.getElementById('card-phonetic').innerText = card.phonetic || '';
       document.getElementById('card-level').innerText = card.level || 'B2–C1';
       document.getElementById('card-czech').innerText = card.czech;
-      document.getElementById('card-trap').innerText = `"${card.czenglishTrap || 'Literal translation'}"`;
-      document.getElementById('card-example').innerText = `"${card.example || ''}"`;
+      document.getElementById('card-trap').innerText = card.czenglishTrap;
+      document.getElementById('card-example').innerText = `"${card.example}"`;
+
+      isFlipped = false;
+      document.getElementById('flashcard-inner').classList.remove('flipped');
     }
 
     function toggleCardFlip() {
-      const inner = document.getElementById('flashcard-inner');
       isFlipped = !isFlipped;
-      if (isFlipped) inner.classList.add('flipped');
-      else inner.classList.remove('flipped');
+      document.getElementById('flashcard-inner').classList.toggle('flipped', isFlipped);
     }
 
-    function handleCardNav(direction) {
-      currentCardIdx = (currentCardIdx + direction + userWordBank.length) % userWordBank.length;
+    function handleCardNav(delta) {
+      currentCardIdx += delta;
       renderCurrentFlashcard();
     }
 
@@ -1500,304 +1619,228 @@ I welcome your strategic questions regarding project timeline and capital alloca
       if (card) speakText(card.phrase);
     }
 
-    function speakText(text) {
-      if (!('speechSynthesis' in window)) {
-        showToast('Speech Not Available', 'Browser does not support SpeechSynthesis.');
-        return;
-      }
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = 'en-GB';
-      utterance.rate = 0.95;
-      utterance.pitch = 1.0;
-      window.speechSynthesis.speak(utterance);
-    }
-
     let currentQuizIdx = 0;
-    function startVocabQuiz() {
-      currentQuizIdx = 0;
-      loadQuizQuestion(0);
-    }
-
-    function loadQuizQuestion(idx) {
-      const q = QUIZ_QUESTIONS[idx];
-      document.getElementById('quiz-question-num').innerText = idx + 1;
+    function renderQuizQuestion() {
+      const q = QUIZ_QUESTIONS[currentQuizIdx % QUIZ_QUESTIONS.length];
+      document.getElementById('quiz-question-num').innerText = (currentQuizIdx % QUIZ_QUESTIONS.length) + 1;
       document.getElementById('quiz-prompt').innerText = q.question;
       document.getElementById('quiz-feedback-box').classList.add('hidden');
       document.getElementById('quiz-next-btn').classList.add('hidden');
 
       const container = document.getElementById('quiz-options-container');
       container.innerHTML = '';
-
-      q.options.forEach((opt, index) => {
+      q.options.forEach((opt, idx) => {
         const btn = document.createElement('button');
-        btn.className = 'w-full text-left p-3.5 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-800 text-xs font-medium text-slate-200 transition flex items-center justify-between';
-        btn.innerHTML = `<span>${opt}</span><span class="text-slate-600 font-mono text-[10px]">${index + 1}</span>`;
-        btn.onclick = () => selectQuizOption(index, q.correctIdx, q.explanation);
+        btn.className = 'w-full text-left p-3.5 rounded-xl bg-slate-950 border border-slate-800 hover:border-indigo-500 text-xs text-slate-200 transition';
+        btn.innerText = opt;
+        btn.onclick = () => checkQuizAnswer(idx, q);
         container.appendChild(btn);
       });
     }
 
-    function selectQuizOption(selectedIdx, correctIdx, explanation) {
-      const feedback = document.getElementById('quiz-feedback-box');
-      feedback.classList.remove('hidden');
-
-      if (selectedIdx === correctIdx) {
-        feedback.className = 'p-3.5 rounded-xl text-xs bg-emerald-950/40 border border-emerald-900/60 text-emerald-200';
-        feedback.innerHTML = `<strong>✅ Executive Standard!</strong> ${explanation}`;
+    function checkQuizAnswer(selectedIdx, q) {
+      const fb = document.getElementById('quiz-feedback-box');
+      fb.classList.remove('hidden', 'bg-emerald-950/40', 'border-emerald-500/40', 'text-emerald-200', 'bg-rose-950/40', 'border-rose-500/40', 'text-rose-200');
+      if (selectedIdx === q.correctIdx) {
+        fb.classList.add('bg-emerald-950/40', 'border', 'border-emerald-500/40', 'text-emerald-200');
+        fb.innerHTML = `<strong>Executive Standard:</strong> ${q.explanation}`;
       } else {
-        feedback.className = 'p-3.5 rounded-xl text-xs bg-rose-950/40 border border-rose-900/60 text-rose-200';
-        feedback.innerHTML = `<strong>❌ Czenglish / Sub-optimal.</strong> ${explanation}`;
+        fb.classList.add('bg-rose-950/40', 'border', 'border-rose-500/40', 'text-rose-200');
+        fb.innerHTML = `<strong>Refinement Needed:</strong> ${q.explanation}`;
       }
-
       document.getElementById('quiz-next-btn').classList.remove('hidden');
     }
 
     function nextQuizQuestion() {
-      currentQuizIdx = (currentQuizIdx + 1) % QUIZ_QUESTIONS.length;
-      loadQuizQuestion(currentQuizIdx);
-    }
-
-    function renderVocabDictionary() {
-      const grid = document.getElementById('vocab-terms-grid');
-      grid.innerHTML = '';
-
-      userWordBank.forEach(item => {
-        const card = document.createElement('div');
-        card.className = 'p-4 rounded-xl bg-slate-900 border border-slate-800 flex flex-col justify-between';
-        card.innerHTML = `
-          <div>
-            <div class="flex items-center justify-between">
-              <span class="text-[10px] px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-400 font-semibold">${item.category}</span>
-              <span class="text-slate-500 text-[10px] font-mono">${item.level || 'B2–C1'}</span>
-            </div>
-            <h4 class="font-bold text-white text-sm mt-2">${item.phrase}</h4>
-            <p class="text-xs text-amber-300/90 mt-1 font-medium">${item.czech}</p>
-            <p class="text-[11px] text-slate-400 mt-2 italic">"${item.example || ''}"</p>
-          </div>
-          <div class="mt-3 pt-2 border-t border-slate-800 flex justify-end items-center text-xs">
-            <button onclick="speakText('${item.phrase.replace(/'/g, "\\'")}')" class="text-indigo-400 hover:text-white flex items-center gap-1">
-              <i data-lucide="volume-2" class="w-3.5 h-3.5"></i>
-              <span>Listen</span>
-            </button>
-          </div>
-        `;
-        grid.appendChild(card);
-      });
-      lucide.createIcons();
+      currentQuizIdx++;
+      renderQuizQuestion();
     }
 
     function filterVocabList() {
-      const q = document.getElementById('vocab-search-input').value.toLowerCase();
+      const query = (document.getElementById('vocab-search-input')?.value || '').toLowerCase();
       const grid = document.getElementById('vocab-terms-grid');
-      const cards = grid.children;
-      Array.from(cards).forEach(card => {
-        const text = card.innerText.toLowerCase();
-        card.style.display = text.includes(q) ? 'flex' : 'none';
-      });
+      if (!grid) return;
+      grid.innerHTML = '';
+
+      userWordBank
+        .filter(item =>
+          item.phrase.toLowerCase().includes(query) ||
+          item.czech.toLowerCase().includes(query) ||
+          item.category.toLowerCase().includes(query)
+        )
+        .forEach(item => {
+          const div = document.createElement('div');
+          div.className = 'p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-2';
+          div.innerHTML = `
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-400">${item.category}</span>
+              <button onclick="speakText('${item.phrase.replace(/'/g, "\\'")}')" class="text-slate-400 hover:text-indigo-400"><i data-lucide="volume-2" class="w-4 h-4"></i></button>
+            </div>
+            <div class="font-bold text-sm text-white">${item.phrase}</div>
+            <div class="text-xs text-amber-300">${item.czech}</div>
+            <div class="text-[11px] text-slate-400 italic">"${item.example}"</div>
+          `;
+          grid.appendChild(div);
+        });
+
+      if (window.lucide && typeof lucide.createIcons === 'function') lucide.createIcons();
     }
 
     /* ========================================================
-       5. ROLEPLAY SIMULATOR
+       6. BOARDROOM ROLEPLAY SIMULATOR
        ======================================================== */
-    let currentScenarioKey = 'cfo_budget';
+    let roleplayTurn = 0;
+    let roleplayRecognition = null;
+    let isRoleplayRecording = false;
 
     function changeScenario() {
-      const sel = document.getElementById('scenario-select').value;
-      currentScenarioKey = sel;
-      const s = SCENARIOS[sel];
-      document.getElementById('persona-name').innerText = s.name;
-      document.getElementById('persona-role').innerText = s.role;
-      document.getElementById('persona-mood').innerText = `Mood: ${s.mood}`;
-      document.getElementById('persona-avatar').innerText = s.avatar;
-      document.getElementById('scenario-tip').innerText = s.czechTip;
       restartRoleplay();
     }
 
     function restartRoleplay() {
-      const s = SCENARIOS[currentScenarioKey];
-      const chatContainer = document.getElementById('chat-messages');
-      chatContainer.innerHTML = '';
-      appendChatMessage(s.name, s.initialMessage, 'partner');
-      speakText(s.initialMessage);
+      const key = document.getElementById('scenario-select')?.value || 'cfo_budget';
+      const sc = SCENARIOS[key] || SCENARIOS.cfo_budget;
+      roleplayTurn = 0;
+
+      document.getElementById('persona-avatar').innerText = sc.avatar;
+      document.getElementById('persona-name').innerText = sc.name;
+      document.getElementById('persona-role').innerText = sc.role;
+      document.getElementById('persona-mood').innerText = `Mood: ${sc.mood}`;
+      document.getElementById('scenario-tip').innerText = sc.czechTip;
+
+      const chat = document.getElementById('chat-messages');
+      chat.innerHTML = '';
+      appendChatBubble('ai', sc.name, sc.initialMessage);
     }
 
-    function appendChatMessage(sender, text, type) {
-      const container = document.getElementById('chat-messages');
-      const msgDiv = document.createElement('div');
-      msgDiv.className = `flex ${type === 'user' ? 'justify-end' : 'justify-start'}`;
+    function appendChatBubble(sender, name, text) {
+      const chat = document.getElementById('chat-messages');
+      const wrap = document.createElement('div');
+      wrap.className = sender === 'user' ? 'flex justify-end' : 'flex justify-start';
+      wrap.innerHTML = `
+        <div class="max-w-[82%] rounded-2xl p-3.5 ${sender === 'user' ? 'bg-indigo-600 text-white' : 'bg-slate-800 border border-slate-700 text-slate-200'} space-y-1">
+          <div class="flex items-center justify-between gap-3 text-[10px] opacity-75 font-semibold">
+            <span>${name}</span>
+            ${sender === 'ai' ? `<button onclick="speakText('${text.replace(/'/g, "\\'")}')" class="hover:text-amber-300">🔊 Listen</button>` : ''}
+          </div>
+          <p class="leading-relaxed">${text}</p>
+        </div>
+      `;
+      chat.appendChild(wrap);
+      chat.scrollTop = chat.scrollHeight;
+    }
 
-      if (type === 'partner') {
-        msgDiv.innerHTML = `
-          <div class="max-w-[85%] bg-slate-800 text-slate-100 p-3.5 rounded-2xl rounded-tl-none border border-slate-700/80 space-y-1">
-            <div class="text-[10px] font-bold text-indigo-400">${sender}</div>
-            <div class="leading-relaxed text-xs">${text}</div>
-            <div class="text-right pt-1">
-              <button onclick="speakText('${text.replace(/'/g, "\\'")}')" class="text-slate-400 hover:text-white p-1" title="Replay Audio">
-                <i data-lucide="volume-2" class="w-3.5 h-3.5 inline"></i>
-              </button>
-            </div>
-          </div>
-        `;
-      } else {
-        msgDiv.innerHTML = `
-          <div class="max-w-[85%] bg-indigo-600 text-white p-3.5 rounded-2xl rounded-tr-none shadow-md space-y-1">
-            <div class="text-[10px] font-bold text-indigo-200">You (Executive Voice)</div>
-            <div class="leading-relaxed text-xs">${text}</div>
-          </div>
-        `;
+    function insertPrompt(text) {
+      const input = document.getElementById('roleplay-input');
+      if (input) {
+        input.value = text;
+        input.focus();
       }
-
-      container.appendChild(msgDiv);
-      container.scrollTop = container.scrollHeight;
-      lucide.createIcons();
     }
 
     function sendUserMessage() {
       const input = document.getElementById('roleplay-input');
-      const text = input.value.trim();
-      if (!text) return;
+      const msg = input.value.trim();
+      if (!msg) return;
 
-      appendChatMessage('You', text, 'user');
+      appendChatBubble('user', 'You (Executive)', msg);
       input.value = '';
+      roleplayTurn++;
+
+      const key = document.getElementById('scenario-select').value;
+      const sc = SCENARIOS[key];
+
+      const followUps = [
+        "That is a structured rationale. However, how do we ring-fence downside risk if Q4 demand softens across Central Europe?",
+        "Fair point on the unit economics. What specific KPIs will you report to the board at the 90-day milestone to prove traction?",
+        "Understood. If we sign off on this proposal today, what immediate operational bottlenecks need to be cleared next week?"
+      ];
+      const reply = followUps[(roleplayTurn - 1) % followUps.length];
 
       setTimeout(() => {
-        generatePartnerReply(text);
-      }, 1000);
+        appendChatBubble('ai', sc.name, reply);
+        speakText(reply);
+      }, 600);
     }
 
-    function generatePartnerReply(userText) {
-      const s = SCENARIOS[currentScenarioKey];
-      const lower = userText.toLowerCase();
-      let reply = '';
-
-      if (lower.includes('bottleneck') || lower.includes('deliverables') || lower.includes('merit') || lower.includes('unit economics') || lower.includes('bandwidth') || lower.includes('synergies') || lower.includes('margin') || lower.includes('rebate')) {
-        reply = "I appreciate that strategic framing. That addresses my primary concern regarding resource allocation and margin protection. However, how soon do you project this to reflect in our quarterly P&L?";
-      } else if (lower.includes('problem') || lower.includes('we must') || lower.includes('i disagree') || lower.includes('hard')) {
-        reply = "I hear you, but that sounds somewhat reactionary. Let's elevate this discussion: what specific mitigation milestones are you putting in place for the board?";
-      } else {
-        reply = "Understood. If we greenlight this initiative, what specific risk indicators will you be tracking week-over-week?";
-      }
-
-      appendChatMessage(s.name, reply, 'partner');
-      speakText(reply);
-    }
-
-    function insertPrompt(promptText) {
-      const input = document.getElementById('roleplay-input');
-      input.value = promptText;
-      input.focus();
-    }
-
-    let recognition;
-    let isRecognizing = false;
     function toggleSpeechRecognition() {
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       if (!SpeechRecognition) {
-        showToast('Speech Recognition Unavailable', 'Your browser does not support Web Speech Recognition. Use Chrome or Edge.');
+        showToast('Browser Notice', 'Speech-to-text requires Chrome or Edge.');
+        return;
+      }
+      const status = document.getElementById('recording-status');
+      if (isRoleplayRecording && roleplayRecognition) {
+        roleplayRecognition.stop();
+        isRoleplayRecording = false;
+        status.classList.add('hidden');
         return;
       }
 
-      const recStatus = document.getElementById('recording-status');
-      const voiceBtn = document.getElementById('voice-record-btn');
-
-      if (isRecognizing) {
-        recognition.stop();
-        isRecognizing = false;
-        recStatus.classList.add('hidden');
-        voiceBtn.classList.remove('text-rose-500', 'bg-rose-950/40');
-        return;
-      }
-
-      recognition = new SpeechRecognition();
-      recognition.lang = 'en-US';
-      recognition.interimResults = false;
-      recognition.maxAlternatives = 1;
-
-      recognition.onstart = () => {
-        isRecognizing = true;
-        recStatus.classList.remove('hidden');
-        voiceBtn.classList.add('text-rose-500', 'bg-rose-950/40');
-      };
-
-      recognition.onresult = (event) => {
-        const transcript = event.results[0][0].transcript;
+      roleplayRecognition = new SpeechRecognition();
+      roleplayRecognition.lang = 'en-US';
+      roleplayRecognition.onresult = (e) => {
+        const transcript = e.results[0][0].transcript;
         document.getElementById('roleplay-input').value = transcript;
-        showToast('Speech Transcribed', `Recognized: "${transcript.substring(0, 30)}..."`);
       };
-
-      recognition.onerror = () => {
-        recStatus.classList.add('hidden');
-        isRecognizing = false;
+      roleplayRecognition.onend = () => {
+        isRoleplayRecording = false;
+        status.classList.add('hidden');
       };
-
-      recognition.onend = () => {
-        isRecognizing = false;
-        recStatus.classList.add('hidden');
-        voiceBtn.classList.remove('text-rose-500', 'bg-rose-950/40');
-      };
-
-      recognition.start();
+      roleplayRecognition.start();
+      isRoleplayRecording = true;
+      status.classList.remove('hidden');
     }
 
     /* ========================================================
-       6. PITCH PROMPTER & RECORDING
+       7. PITCH PROMPTER & TELEPROMPTER STUDIO
        ======================================================== */
+    let prompterInterval = null;
+    let mediaRecorder = null;
+    let audioChunks = [];
+
     function loadPitchTemplate() {
       const key = document.getElementById('template-select').value;
-      if (PITCH_TEMPLATES[key]) {
-        document.getElementById('pitch-text-editor').value = PITCH_TEMPLATES[key];
+      const editor = document.getElementById('pitch-text-editor');
+      if (editor && PITCH_TEMPLATES[key]) {
+        editor.value = PITCH_TEMPLATES[key];
         calculatePrompterMetrics();
+        resetPrompterScroll();
       }
     }
 
     function insertSignpost(phrase) {
       const editor = document.getElementById('pitch-text-editor');
-      editor.value += `\n\n${phrase}`;
-      editor.scrollTop = editor.scrollHeight;
+      if (!editor) return;
+      editor.value = editor.value.trim() + '\n\n' + phrase;
       calculatePrompterMetrics();
-      showToast('Signpost Inserted', 'Added boardroom transition phrase to your script.');
     }
 
     function calculatePrompterMetrics() {
-      const text = document.getElementById('pitch-text-editor').value.trim();
-      const words = text ? text.split(/\s+/).length : 0;
+      const editor = document.getElementById('pitch-text-editor');
+      if (!editor) return;
+      const words = editor.value.trim().split(/\s+/).filter(Boolean).length;
+      const totalSec = Math.round((words / 130) * 60);
+      const mins = Math.floor(totalSec / 60);
+      const secs = totalSec % 60;
       document.getElementById('word-count').innerText = words;
-
-      const seconds = Math.round((words / 130) * 60);
-      const m = Math.floor(seconds / 60);
-      const s = seconds % 60;
-      document.getElementById('time-estimate').innerText = `${m}m ${s < 10 ? '0' : ''}${s}s`;
+      document.getElementById('time-estimate').innerText = `${mins}m ${secs}s`;
     }
 
-    let prompterInterval = null;
     function togglePrompterScroll() {
       const screen = document.getElementById('prompter-screen');
-      const icon = document.getElementById('prompter-play-icon');
-      const txt = document.getElementById('prompter-play-text');
-
+      const label = document.getElementById('prompter-play-text');
       if (prompterInterval) {
         clearInterval(prompterInterval);
         prompterInterval = null;
-        txt.innerText = 'Resume Teleprompter';
-        icon.setAttribute('data-lucide', 'play');
-        lucide.createIcons();
-      } else {
-        txt.innerText = 'Pause Teleprompter';
-        icon.setAttribute('data-lucide', 'pause');
-        lucide.createIcons();
-
-        const speed = parseInt(document.getElementById('prompter-speed').value, 10);
-        prompterInterval = setInterval(() => {
-          screen.scrollTop += speed * 0.8;
-          if (screen.scrollTop + screen.clientHeight >= screen.scrollHeight - 5) {
-            clearInterval(prompterInterval);
-            prompterInterval = null;
-            txt.innerText = 'Completed Delivery';
-            showToast('Rehearsal Completed', 'Great pacing! Review your audio recording or run it again.');
-          }
-        }, 50);
+        label.innerText = 'Start Teleprompter';
+        return;
       }
+      label.innerText = 'Pause Teleprompter';
+      prompterInterval = setInterval(() => {
+        const speed = parseInt(document.getElementById('prompter-speed').value || '2', 10);
+        screen.scrollTop += speed;
+      }, 40);
     }
 
     function resetPrompterScroll() {
@@ -1809,117 +1852,134 @@ I welcome your strategic questions regarding project timeline and capital alloca
       document.getElementById('prompter-screen').scrollTop = 0;
     }
 
-    let mediaRecorder;
-    let audioChunks = [];
-    let isRecordingAudio = false;
-
     async function togglePitchRecording() {
       const btnText = document.getElementById('rec-btn-text');
-      const dot = document.getElementById('rec-dot');
       const audioEl = document.getElementById('recorded-audio');
 
-      if (isRecordingAudio) {
+      if (mediaRecorder && mediaRecorder.state === 'recording') {
         mediaRecorder.stop();
-        isRecordingAudio = false;
         btnText.innerText = 'Record Voice';
-        dot.classList.remove('recording-pulse');
-        return;
-      }
-
-      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-        showToast('Microphone Unavailable', 'Your browser does not support voice recording.');
         return;
       }
 
       try {
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        mediaRecorder = new MediaRecorder(stream);
         audioChunks = [];
-
-        mediaRecorder.ondataavailable = (e) => {
-          audioChunks.push(e.data);
-        };
-
+        mediaRecorder = new MediaRecorder(stream);
+        mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
         mediaRecorder.onstop = () => {
-          const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
-          const audioUrl = URL.createObjectURL(audioBlob);
-          audioEl.src = audioUrl;
+          const blob = new Blob(audioChunks, { type: 'audio/webm' });
+          audioEl.src = URL.createObjectURL(blob);
           audioEl.classList.remove('hidden');
-          showToast('Recording Saved', 'Click play to review your executive tone and pace.');
+          stream.getTracks().forEach(t => t.stop());
         };
-
         mediaRecorder.start();
-        isRecordingAudio = true;
         btnText.innerText = 'Stop Recording';
-        dot.classList.add('recording-pulse');
       } catch (err) {
-        console.error('Audio capture error', err);
-        showToast('Permission Denied', 'Please grant microphone access to record practice pitches.');
+        showToast('Microphone Access', 'Please allow microphone permissions in your browser to record.');
       }
     }
 
     /* ========================================================
-       7. WORKSHOP & TIMED DEBATES
+       7.5 EXECUTIVE GRAMMAR STUDIO & BANK INTEGRATION
        ======================================================== */
-    let debatePromptIdx = 0;
-    function nextDebatePrompt() {
-      debatePromptIdx = (debatePromptIdx + 1) % DEBATE_PROMPTS.length;
-      const d = DEBATE_PROMPTS[debatePromptIdx];
-      document.getElementById('debate-prompt-text').innerText = `"${d.topic}"`;
-      document.getElementById('debate-team-a').innerText = d.teamA;
-      document.getElementById('debate-team-b').innerText = d.teamB;
-      resetDebateTimer();
-    }
+    function renderGrammarModules() {
+      const grid = document.getElementById('grammar-cards-grid');
+      if (!grid) return;
+      const filter = document.getElementById('grammar-filter').value;
+      grid.innerHTML = '';
 
-    let debateTimerSeconds = 300;
-    let debateTimerInterval = null;
-    function toggleDebateTimer() {
-      const btn = document.getElementById('timer-toggle-btn');
-      if (debateTimerInterval) {
-        clearInterval(debateTimerInterval);
-        debateTimerInterval = null;
-        btn.innerText = 'Resume Timer';
-      } else {
-        btn.innerText = 'Pause Timer';
-        debateTimerInterval = setInterval(() => {
-          if (debateTimerSeconds > 0) {
-            debateTimerSeconds--;
-            const m = Math.floor(debateTimerSeconds / 60);
-            const s = debateTimerSeconds % 60;
-            document.getElementById('debate-timer-display').innerText = `${m < 10 ? '0' : ''}${m}:${s < 10 ? '0' : ''}${s}`;
-          } else {
-            clearInterval(debateTimerInterval);
-            debateTimerInterval = null;
-            btn.innerText = 'Time Up!';
-            showToast('Time Expired!', 'Debate round finished.');
-          }
-        }, 1000);
+      const filtered = filter === 'all'
+        ? GRAMMAR_MODULES
+        : GRAMMAR_MODULES.filter(g => g.category === filter);
+
+      filtered.forEach(mod => {
+        const isSaved = userWordBank.some(item => item.phrase.toLowerCase() === mod.formula.toLowerCase());
+        const card = document.createElement('div');
+        card.className = 'bg-slate-900 border border-slate-800 rounded-2xl p-5 flex flex-col justify-between space-y-4 shadow-xl';
+        card.innerHTML = `
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">${mod.category}</span>
+              <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-amber-400">${mod.level}</span>
+            </div>
+
+            <div>
+              <h3 class="text-base font-bold text-white">${mod.title}</h3>
+              <div class="mt-2 p-2.5 rounded-xl bg-slate-950 border border-indigo-500/30 font-mono text-xs text-indigo-300 flex items-center justify-between">
+                <span>${mod.formula}</span>
+                <button onclick="speakText('${mod.corporateExample.replace(/'/g, "\\'")}')" class="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-indigo-400 transition shrink-0 ml-2" title="Listen to Example">
+                  <i data-lucide="volume-2" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+            </div>
+
+            <p class="text-xs text-slate-300 leading-relaxed">${mod.czechExplanation}</p>
+
+            <div class="p-2.5 rounded-lg bg-rose-950/25 border border-rose-900/40 text-xs">
+              <span class="font-bold text-rose-400">Czech Trap:</span>
+              <span class="text-slate-300"> "${mod.czenglishTrap}"</span>
+            </div>
+
+            <div class="p-2.5 rounded-lg bg-slate-950 border border-slate-800 text-xs">
+              <span class="font-bold text-emerald-400 block mb-0.5">Boardroom Standard:</span>
+              <span class="text-slate-200 italic">"${mod.corporateExample}"</span>
+            </div>
+
+            <div class="p-3 rounded-xl bg-slate-800/50 border border-slate-700/60 text-xs space-y-1.5">
+              <div class="font-semibold text-amber-300">Quick Transformation Drill:</div>
+              <div class="text-slate-300">${mod.quickDrill.prompt}</div>
+              <button onclick="this.nextElementSibling.classList.toggle('hidden')" class="text-[11px] text-indigo-400 hover:underline font-medium">Toggle Solution &darr;</button>
+              <div class="hidden pt-1 text-emerald-300 font-medium border-t border-slate-700/60 mt-1">✅ ${mod.quickDrill.answer}</div>
+            </div>
+          </div>
+
+          <button onclick="addGrammarToBank('${mod.id}')" class="w-full py-2.5 rounded-xl ${isSaved ? 'bg-emerald-700 text-white' : 'bg-indigo-600 hover:bg-indigo-500 text-white'} font-semibold text-xs flex items-center justify-center space-x-2 transition">
+            <i data-lucide="${isSaved ? 'check' : 'bookmark-plus'}" class="w-4 h-4"></i>
+            <span>${isSaved ? 'In Word & Grammar Bank' : 'Add Grammar Point to Word Bank'}</span>
+          </button>
+        `;
+        grid.appendChild(card);
+      });
+
+      if (window.lucide && typeof lucide.createIcons === 'function') {
+        lucide.createIcons();
       }
     }
 
-    function resetDebateTimer() {
-      if (debateTimerInterval) {
-        clearInterval(debateTimerInterval);
-        debateTimerInterval = null;
+    function addGrammarToBank(modId) {
+      const mod = GRAMMAR_MODULES.find(m => m.id === modId);
+      if (!mod) return;
+
+      const exists = userWordBank.some(item => item.phrase.toLowerCase() === mod.formula.toLowerCase());
+      if (exists) {
+        showToast('Already in Bank', 'This grammar structure is already in your Word & Grammar Bank.');
+        return;
       }
-      debateTimerSeconds = 300;
-      document.getElementById('debate-timer-display').innerText = '05:00';
-      document.getElementById('timer-toggle-btn').innerText = 'Start Timer';
+
+      userWordBank.unshift({
+        id: 'gram_' + Date.now(),
+        phrase: mod.formula,
+        phonetic: mod.title,
+        category: `Grammar • ${mod.category}`,
+        level: mod.level,
+        czech: mod.czechExplanation,
+        czenglishTrap: mod.czenglishTrap,
+        example: mod.corporateExample
+      });
+
+      updateBankCounts();
+      renderGrammarModules();
+      showToast('Grammar Point Added', `"${mod.title}" is now available in Flashcards and the All Terms list.`);
     }
 
-    let shootoutIdx = 0;
-    function drawShootoutCard() {
-      shootoutIdx = (shootoutIdx + 1) % SHOOTOUT_PAIRS.length;
-      document.getElementById('shootout-czech').innerText = `"${SHOOTOUT_PAIRS[shootoutIdx].cz}"`;
-      document.getElementById('shootout-answer').innerText = SHOOTOUT_PAIRS[shootoutIdx].en;
-      document.getElementById('shootout-answer').classList.add('hidden');
-      document.getElementById('shootout-placeholder').classList.remove('hidden');
-    }
-
-    function toggleShootoutAnswer() {
-      document.getElementById('shootout-answer').classList.remove('hidden');
-      document.getElementById('shootout-placeholder').classList.add('hidden');
-    }
+    /* ========================================================
+       7.8 IN-CLASS WORKSHOP (DEBATE TIMER & SHOOTOUT)
+       ======================================================== */
+    let debateSeconds = 300;
+    let debateInterval = null;
+    let currentDebateIdx = 0;
+    let currentShootoutIdx = 0;
 
     function switchWorkshopMode(mode) {
       const classView = document.getElementById('workshop-class-view');
@@ -1931,17 +1991,71 @@ I welcome your strategic questions regarding project timeline and capital alloca
         classView.classList.remove('hidden');
         selfView.classList.add('hidden');
         btnClass.classList.add('bg-indigo-600', 'text-white');
-        btnClass.classList.remove('text-slate-400');
         btnSelf.classList.remove('bg-indigo-600', 'text-white');
-        btnSelf.classList.add('text-slate-400');
       } else {
         classView.classList.add('hidden');
         selfView.classList.remove('hidden');
         btnSelf.classList.add('bg-indigo-600', 'text-white');
-        btnSelf.classList.remove('text-slate-400');
         btnClass.classList.remove('bg-indigo-600', 'text-white');
-        btnClass.classList.add('text-slate-400');
       }
+    }
+
+    function updateDebateTimerDisplay() {
+      const m = String(Math.floor(debateSeconds / 60)).padStart(2, '0');
+      const s = String(debateSeconds % 60).padStart(2, '0');
+      document.getElementById('debate-timer-display').innerText = `${m}:${s}`;
+    }
+
+    function toggleDebateTimer() {
+      const btn = document.getElementById('timer-toggle-btn');
+      if (debateInterval) {
+        clearInterval(debateInterval);
+        debateInterval = null;
+        btn.innerText = 'Resume Timer';
+        return;
+      }
+      btn.innerText = 'Pause Timer';
+      debateInterval = setInterval(() => {
+        if (debateSeconds > 0) {
+          debateSeconds--;
+          updateDebateTimerDisplay();
+        } else {
+          clearInterval(debateInterval);
+          debateInterval = null;
+          btn.innerText = 'Time Up';
+        }
+      }, 1000);
+    }
+
+    function resetDebateTimer() {
+      clearInterval(debateInterval);
+      debateInterval = null;
+      debateSeconds = 300;
+      updateDebateTimerDisplay();
+      document.getElementById('timer-toggle-btn').innerText = 'Start Timer';
+    }
+
+    function nextDebatePrompt() {
+      currentDebateIdx = (currentDebateIdx + 1) % DEBATE_PROMPTS.length;
+      const item = DEBATE_PROMPTS[currentDebateIdx];
+      document.getElementById('debate-prompt-text').innerText = `"${item.topic}"`;
+      document.getElementById('debate-team-a').innerText = item.teamA;
+      document.getElementById('debate-team-b').innerText = item.teamB;
+      resetDebateTimer();
+    }
+
+    function drawShootoutCard() {
+      currentShootoutIdx = (currentShootoutIdx + 1) % SHOOTOUT_PAIRS.length;
+      const pair = SHOOTOUT_PAIRS[currentShootoutIdx];
+      document.getElementById('shootout-czech').innerText = `"${pair.cz}"`;
+      document.getElementById('shootout-answer').innerText = `"${pair.en}"`;
+      document.getElementById('shootout-answer').classList.add('hidden');
+      document.getElementById('shootout-placeholder').classList.remove('hidden');
+    }
+
+    function toggleShootoutAnswer() {
+      document.getElementById('shootout-answer').classList.toggle('hidden');
+      document.getElementById('shootout-placeholder').classList.toggle('hidden');
     }
 
     /* ========================================================
@@ -1969,6 +2083,7 @@ I welcome your strategic questions regarding project timeline and capital alloca
     window.addEventListener('DOMContentLoaded', () => {
       updateBankCounts();
       loadBriefing();
+      renderGrammarModules();
       renderCurrentFlashcard();
       restartRoleplay();
       calculatePrompterMetrics();
