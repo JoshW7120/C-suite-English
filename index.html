@@ -126,6 +126,16 @@
 
       <!-- Right Profile Pill -->
       <div class="flex items-center space-x-3">
+        <!-- Global CEFR Level Selector -->
+        <div class="flex items-center space-x-1.5 bg-slate-950 border border-slate-700/80 rounded-xl px-2.5 py-1.5 shadow-inner">
+          <i data-lucide="sliders" class="w-3.5 h-3.5 text-amber-400"></i>
+          <label for="global-level-select" class="text-[10px] font-bold uppercase tracking-wider text-slate-400 hidden lg:inline">Level:</label>
+          <select id="global-level-select" onchange="changeGlobalLevel(this.value)" class="bg-transparent text-xs font-bold text-amber-300 focus:outline-none cursor-pointer">
+            <option value="C1" class="bg-slate-900 text-white">B2–C1 (C-Suite)</option>
+            <option value="B1" class="bg-slate-900 text-white">B1–B2 (Operational)</option>
+          </select>
+        </div>
+
         <div id="user-profile-badge" class="flex items-center space-x-2 px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800">
           <div class="w-7 h-7 rounded-full bg-gradient-to-tr from-indigo-600 to-amber-500 flex items-center justify-center text-xs font-bold text-white shadow" id="auth-avatar">
             EX
@@ -286,6 +296,7 @@
             <div class="flex items-center justify-between border-b border-slate-800 pb-3">
               <div class="flex items-center space-x-3">
                 <span class="px-2.5 py-1 rounded-md text-[11px] font-bold uppercase tracking-wider bg-indigo-500/10 text-indigo-400 border border-indigo-500/20" id="briefing-domain">Corporate Strategy</span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/10 text-amber-300 border border-amber-500/20" id="briefing-level-badge">B2–C1</span>
                 <span class="text-xs text-slate-400" id="briefing-target-read">Target Pace: 130 WPM</span>
               </div>
               <div class="flex items-center space-x-2">
@@ -904,6 +915,16 @@ I will now open the floor for any strategic or operational questions.</textarea>
         example: 'Before expanding manufacturing, we have to address the supply chain bottleneck.'
       },
       {
+        id: '1_b1',
+        phrase: 'Fix the supply delay',
+        phonetic: '/fɪks ðə səˈplaɪ dɪˈleɪ/',
+        category: 'Operations',
+        level: 'B1–B2',
+        czech: 'Vyřešit zpoždění v dodávkách',
+        czenglishTrap: 'Saying "Solve late transport"',
+        example: 'Before we increase production, we need to fix the supply delay in our main warehouse.'
+      },
+      {
         id: '2',
         phrase: 'Align on deliverables',
         phonetic: '/əˈlaɪn ɒn dɪˈlɪv.ər.ə.bəlz/',
@@ -924,6 +945,16 @@ I will now open the floor for any strategic or operational questions.</textarea>
         example: 'We hedged our foreign exchange contracts to mitigate risk exposure in Central Europe.'
       },
       {
+        id: '3_b1',
+        phrase: 'Reduce financial risk',
+        phonetic: '/rɪˈdjuːs faɪˈnæn.ʃəl rɪsk/',
+        category: 'Risk Management',
+        level: 'B1–B2',
+        czech: 'Snížit finanční riziko',
+        czenglishTrap: 'Saying "Make danger smaller"',
+        example: 'We signed fixed currency contracts to reduce financial risk in Central Europe.'
+      },
+      {
         id: '4',
         phrase: 'Streamline operational overhead',
         phonetic: '/ˈstriːm.laɪn ˌɒp.ərˈeɪ.ʃən.əl ˈəʊ.və.hed/',
@@ -932,6 +963,16 @@ I will now open the floor for any strategic or operational questions.</textarea>
         czech: 'Zefektivnit a snížit provozní režijní náklady',
         czenglishTrap: 'Saying "Make costs smaller"',
         example: 'By consolidating our Brno and Prague warehouses, we can streamline operational overhead by 12%.'
+      },
+      {
+        id: '4_b1',
+        phrase: 'Lower operating costs',
+        phonetic: '/ˈləʊ.ər ˈɒp.ər.eɪ.tɪŋ kɒsts/',
+        category: 'Finance & OPEX',
+        level: 'B1–B2',
+        czech: 'Snížit provozní náklady',
+        czenglishTrap: 'Saying "Make spending cheaper"',
+        example: 'By combining our Brno and Prague warehouses, we can lower operating costs by 12%.'
       },
       {
         id: '5',
@@ -952,6 +993,16 @@ I will now open the floor for any strategic or operational questions.</textarea>
         czech: 'Kapacita / čas je plně vyčerpán (diplomatické odmítnutí)',
         czenglishTrap: 'Saying "I do not have time for this now"',
         example: 'Our engineering bandwidth is fully allocated toward the enterprise rollout this month.'
+      },
+      {
+        id: '6_b1',
+        phrase: 'Our team capacity is fully booked',
+        phonetic: '/aʊər tiːm kəˈpæs.ə.ti ɪz ˈfʊl.i bʊkt/',
+        category: 'Executive Presence',
+        level: 'B1–B2',
+        czech: 'Kapacita našeho týmu je plně obsazená',
+        czenglishTrap: 'Saying "We have zero free hours"',
+        example: 'Our team capacity is fully booked on the main store rollout this month.'
       },
       {
         id: '7',
@@ -984,6 +1035,16 @@ I will now open the floor for any strategic or operational questions.</textarea>
         example: 'Our Click & Collect network in Datart stores enables us to drive omnichannel synergies that pure-play e-shops cannot match.'
       },
       {
+        id: 'term_ecom_1_b1',
+        phrase: 'Connect online and in-store sales',
+        phonetic: '/kəˈnekt ˈɒn.laɪn ænd ɪn-stɔːr seɪlz/',
+        category: 'Omnichannel Retail',
+        level: 'B1–B2',
+        czech: 'Propojit online prodej s kamennými prodejnami',
+        czenglishTrap: 'Saying "Join web and physical shop"',
+        example: 'Our Click & Collect service in Datart stores helps us connect online and in-store sales smoothly.'
+      },
+      {
         id: 'term_ecom_2',
         phrase: 'Protect margin against marketplace price erosion',
         phonetic: '/prəˈtekt ˈmɑː.dʒɪn əˈɡenst ˈmɑː.kɪt.pleɪs praɪs ɪˈrəʊ.ʒən/',
@@ -992,6 +1053,16 @@ I will now open the floor for any strategic or operational questions.</textarea>
         czech: 'Chránit marži před cenovou erozí / podbízením na online tržištích',
         czenglishTrap: 'Saying "Keep our margin when Allegro sells cheap"',
         example: 'Instead of engaging in a race to the bottom on price, we bundle premium delivery and installation to protect margin against marketplace price erosion.'
+      },
+      {
+        id: 'term_ecom_2_b1',
+        phrase: 'Protect profit margins from online price cuts',
+        phonetic: '/prəˈtekt ˈprɒf.ɪt ˈmɑː.dʒɪnz frɒm ˈɒn.laɪn praɪs kʌts/',
+        category: 'Pricing Strategy',
+        level: 'B1–B2',
+        czech: 'Chránit ziskové marže před snižováním cen na internetu',
+        czenglishTrap: 'Saying "Save profit when competitors make cheap prices"',
+        example: 'We include free installation and extended warranty to protect profit margins from online price cuts.'
       },
       {
         id: 'term_ecom_3',
@@ -1117,6 +1188,7 @@ I will now open the floor for any strategic or operational questions.</textarea>
         title: "Navigating Cross-Border M&A and Retaining Executive Buy-in",
         domain: "Corporate Governance & M&A",
         text: "When executing cross-border acquisitions across Central and Eastern Europe, the priority is to streamline operational overhead while actively mitigating risk exposure. Many executives mistakenly assume cost synergies will materialize automatically. To gain stakeholder buy-in, leadership must align on deliverables during initial due diligence and ring-fence legacy liabilities before closing the transaction.",
+        textB1: "When buying companies across Central and Eastern Europe, our main goal is to lower operating costs while reducing financial risks. Many managers wrongly assume that cost savings will happen automatically. To get support from key partners, leaders must agree on clear project goals during the initial company review and separate old debts before signing the final deal.",
         glossary: {
           "acquisitions": { czech: "Akvizice / nákup firem", phonetic: "/ˌæk.wɪˈzɪʃ.ənz/", trap: "Saying 'company buying'", example: "The syndicate completed two strategic acquisitions in Munich." },
           "streamline": { czech: "Zjednodušit / zefektivnit", phonetic: "/ˈstriːm.laɪn/", trap: "Saying 'make smaller'", example: "We will streamline management layers." },
@@ -1128,12 +1200,21 @@ I will now open the floor for any strategic or operational questions.</textarea>
           "deliverables": { czech: "Konkrétní výstupy projektu", phonetic: "/dɪˈlɪv.ər.ə.bəlz/", trap: "Saying 'things we must give'", example: "Align on Q4 deliverables." },
           "diligence": { czech: "Prověrka společnosti", phonetic: "/ˈdɪl.ɪ.dʒəns/", trap: "Saying 'company check'", example: "Legal is finalizing due diligence." },
           "ring-fence": { czech: "Oddělit a právně chránit", phonetic: "/rɪŋ fens/", trap: "Saying 'put wall around'", example: "We will ring-fence this budget." }
+        },
+        glossaryB1: {
+          "operating": { czech: "Provozní", phonetic: "/ˈɒp.ər.eɪ.tɪŋ/", trap: "Saying 'working costs'", example: "We reduced operating costs by 10%." },
+          "reducing": { czech: "Snižování", phonetic: "/rɪˈdjuː.sɪŋ/", trap: "Saying 'making smaller'", example: "Reducing delivery delays is our priority." },
+          "assume": { czech: "Předpokládat", phonetic: "/əˈsjuːm/", trap: "Saying 'think without proof'", example: "Do not assume sales will grow automatically." },
+          "savings": { czech: "Úspory", phonetic: "/ˈseɪ.vɪŋz/", trap: "Saying 'saved money'", example: "The new warehouse brings major cost savings." },
+          "partners": { czech: "Partneři / zainteresované strany", phonetic: "/ˈpɑːt.nəz/", trap: "Saying 'company people'", example: "We presented the plan to our key partners." },
+          "review": { czech: "Kontrola / prověrka", phonetic: "/rɪˈvjuː/", trap: "Saying 'check-up'", example: "The legal review took three weeks." }
         }
       },
       brief_earnings: {
         title: "Q3 Earnings Call: Defending Margins Under Headwinds",
         domain: "Investor Relations & Finance",
         text: "The objective of today's briefing is to address our margin compression with complete transparency. While we encountered macroeconomic headwinds across DACH distribution channels, our underlying customer retention remains resilient. We have initiated proactive cost-containment measures to safeguard gross margin, and our operational bandwidth is now fully focused on high-margin enterprise accounts.",
+        textB1: "The goal of today's meeting is to explain the pressure on our profit margins openly. Although we faced tough economic conditions in Germany and Austria, our regular customer loyalty remains very strong. We have started strict cost-control steps to protect our gross profit, and our team capacity is now fully focused on high-profit business clients.",
         glossary: {
           "objective": { czech: "Cíl jednání / záměr", phonetic: "/əbˈdʒek.tɪv/", trap: "Saying 'what we want today'", example: "The primary objective is clear." },
           "compression": { czech: "Tlak na pokles / stlačení marží", phonetic: "/kəmˈpreʃ.ən/", trap: "Saying 'margin falling down'", example: "We face severe margin compression." },
@@ -1142,12 +1223,20 @@ I will now open the floor for any strategic or operational questions.</textarea>
           "resilient": { czech: "Odolný / pružný", phonetic: "/rɪˈzɪl.i.ənt/", trap: "Saying 'holding strong'", example: "Our unit economics remain resilient." },
           "cost-containment": { czech: "Kontrola a omezení nákladů", phonetic: "/kɒst kənˈteɪn.mənt/", trap: "Saying 'stop spending money'", example: "Immediate cost-containment directives." },
           "bandwidth": { czech: "Kapacita / čas týmu", phonetic: "/ˈbænd.wɪtθ/", trap: "Saying 'time we have to work'", example: "Our engineering bandwidth is committed." }
+        },
+        glossaryB1: {
+          "margins": { czech: "Marže / ziskové rozpětí", phonetic: "/ˈmɑː.dʒɪnz/", trap: "Saying 'profit percentage'", example: "Our gross margins improved in Q4." },
+          "conditions": { czech: "Podmínky (ekonomické)", phonetic: "/kənˈdɪʃ.ənz/", trap: "Saying 'situation'", example: "Market conditions remain challenging." },
+          "loyalty": { czech: "Věrnost zákazníků", phonetic: "/ˈlɔɪ.əl.ti/", trap: "Saying 'customers staying'", example: "High customer loyalty drives repeat orders." },
+          "cost-control": { czech: "Kontrola nákladů", phonetic: "/kɒst kənˈtrəʊl/", trap: "Saying 'watching money'", example: "Strict cost-control measures are in place." },
+          "capacity": { czech: "Kapacita týmu", phonetic: "/kəˈpæs.ə.ti/", trap: "Saying 'free time'", example: "Our warehouse capacity is at 90%." }
         }
       },
       brief_tech: {
-        title: "Modernizing Core Banking: Deprecating Legacy Systems",
+        title: "Modernizing Core Systems: Replacing Legacy Software",
         domain: "Enterprise Tech & Operations",
         text: "Maintaining legacy architecture generates immense technical debt and slows our deployment velocity. To protect compliance and ensure backward compatibility, we are structuring a phased migration. Our engineering leads must address the data pipeline bottleneck before decommissioning on-premise infrastructure.",
+        textB1: "Maintaining old IT systems creates high maintenance costs and slows down our software updates. To protect data security and make sure old and new tools work together, we are planning a step-by-step upgrade. Our IT managers must fix the data transfer delay before shutting down our local servers.",
         glossary: {
           "legacy": { czech: "Zastaralý / zděděný systém", phonetic: "/ˈleɡ.ə.si/", trap: "Saying 'old software'", example: "Phasing out legacy ERP servers." },
           "architecture": { czech: "Systémová architektura", phonetic: "/ˈɑː.kɪ.tek.tʃər/", trap: "Saying 'structure'", example: "Cloud-native microservice architecture." },
@@ -1156,12 +1245,20 @@ I will now open the floor for any strategic or operational questions.</textarea>
           "backward": { czech: "Zpětná kompatibilita", phonetic: "/ˈbæk.wəd/", trap: "Saying 'working with old'", example: "Strict backward compatibility tests." },
           "bottleneck": { czech: "Úzké hrdlo", phonetic: "/ˈbɒt.əl.nek/", trap: "Saying 'slow point'", example: "Eliminate the testing bottleneck." },
           "decommissioning": { czech: "Vyřazení z provozu", phonetic: "/ˌdiː.kəˈmɪʃ.ən.ɪŋ/", trap: "Saying 'shutting down old things'", example: "Decommissioning redundant mainframes." }
+        },
+        glossaryB1: {
+          "maintaining": { czech: "Udržování v provozu", phonetic: "/meɪnˈteɪ.nɪŋ/", trap: "Saying 'keeping alive'", example: "Maintaining old servers is expensive." },
+          "updates": { czech: "Aktualizace systému", phonetic: "/ˈʌp.deɪts/", trap: "Saying 'new versions'", example: "We release system updates every month." },
+          "step-by-step": { czech: "Postupný / fázovaný", phonetic: "/ˌstep.baɪˈstep/", trap: "Saying 'piece by piece'", example: "We chose a step-by-step migration." },
+          "upgrade": { czech: "Modernizace / přechod na novou verzi", phonetic: "/ˈʌp.ɡreɪd/", trap: "Saying 'making better'", example: "The ERP upgrade finishes in May." },
+          "servers": { czech: "Servery", phonetic: "/ˈsɜː.vəz/", trap: "Saying 'big computers'", example: "Moving data from local servers to the cloud." }
         }
       },
       brief_omnichannel: {
         title: "Omnichannel Defense: Competing with Cross-Border Marketplaces",
         domain: "E-Commerce Strategy & Retail",
         text: "As international marketplaces intensify price competition across the Czech digital landscape, domestic electronics retailers like HP TRONIC and Datart must leverage their physical retail footprint as a strategic moat. Pure-play e-commerce platforms struggle with last-mile economics on large domestic appliances. By integrating automated central distribution with same-day store pickup and white-glove installation services, traditional retail leaders can defend customer lifetime value and insulate gross margins from aggressive cross-border discounting.",
+        textB1: "As foreign online marketplaces increase price competition in the Czech market, local electronics retailers like HP TRONIC and Datart must use their network of physical stores as a key advantage. Online-only shops struggle with high delivery costs for large home appliances. By connecting our automated central warehouse with same-day store pickup and home installation services, retail leaders can keep loyal customers and protect profit margins from heavy foreign price discounts.",
         glossary: {
           "footprint": { czech: "Síť poboček / fyzická přítomnost", phonetic: "/ˈfʊt.prɪnt/", trap: "Saying 'all our shops'", example: "Expanding our urban store footprint." },
           "moat": { czech: "Konkurenční výhoda / ochranný val", phonetic: "/məʊt/", trap: "Saying 'our big wall against competitors'", example: "Our store network serves as a defensible moat." },
@@ -1169,12 +1266,20 @@ I will now open the floor for any strategic or operational questions.</textarea>
           "last-mile": { czech: "Doručení na poslední míli ke koncovému zákazníkovi", phonetic: "/lɑːst maɪl/", trap: "Saying 'end transport'", example: "Optimizing last-mile freight costs." },
           "white-glove": { czech: "Prémiová služba s výnosem do patra a instalací", phonetic: "/waɪt ɡlʌv/", trap: "Saying 'service with gloves'", example: "White-glove appliance installation drives repeat orders." },
           "insulate": { czech: "Ochránit / izolovat od negativních vlivů", phonetic: "/ˈɪn.sjə.leɪt/", trap: "Saying 'make safe from'", example: "Insulate margins from price drops." }
+        },
+        glossaryB1: {
+          "competition": { czech: "Konkurence", phonetic: "/ˌkɒm.pəˈtɪʃ.ən/", trap: "Saying 'rivals fighting'", example: "Price competition is very strong in Q4." },
+          "retailers": { czech: "Maloobchodní prodejci", phonetic: "/ˈriː.teɪ.ləz/", trap: "Saying 'shop companies'", example: "Electronics retailers rely on fast delivery." },
+          "advantage": { czech: "Konkurenční výhoda", phonetic: "/ədˈvɑːn.tɪdʒ/", trap: "Saying 'good plus'", example: "Our store network is a major advantage." },
+          "appliances": { czech: "Domácí spotřebiče", phonetic: "/əˈplaɪ.ən.sɪz/", trap: "Saying 'home machines'", example: "Large kitchen appliances require two-man delivery." },
+          "pickup": { czech: "Osobní odběr na prodejně", phonetic: "/ˈpɪk.ʌp/", trap: "Saying 'taking in shop'", example: "Same-day store pickup is free for customers." }
         }
       },
       brief_consolidation: {
         title: "Post-Merger Logistics Consolidation in Central Europe",
         domain: "Supply Chain & Operations",
         text: "Consolidating major electronics retail operations requires rigorous alignment between procurement teams and automated fulfillment centers. Redundant SKU overlap across acquired banners must be rationalized to prevent working capital from stagnating in slow-moving inventory. When scaling warehouse capacity in logistical hubs, operations directors must safeguard delivery SLAs while negotiating volume rebates with multinational consumer electronics brands.",
+        textB1: "Combining large electronics retail operations requires close cooperation between buying teams and automated warehouses. Duplicate products across merged retail brands must be reduced so company cash is not stuck in slow-selling stock. When expanding warehouse space in major transport hubs, operations managers must protect fast delivery promises while negotiating volume bonuses with global electronics brands.",
         glossary: {
           "consolidation": { czech: "Konsolidace / sloučení provozů", phonetic: "/kənˌsɒl.ɪˈdeɪ.ʃən/", trap: "Saying 'putting together'", example: "Post-merger warehouse consolidation." },
           "procurement": { czech: "Nákupní oddělení / strategický nákup", phonetic: "/prəˈkjʊə.mənt/", trap: "Saying 'buying department'", example: "Procurement negotiated better vendor terms." },
@@ -1182,6 +1287,13 @@ I will now open the floor for any strategic or operational questions.</textarea>
           "overlap": { czech: "Překryv / duplicita v nabídce", phonetic: "/ˈəʊ.və.læp/", trap: "Saying 'having same things twice'", example: "Eliminating brand catalog overlap." },
           "stagnating": { czech: "Zadržování / váznutí kapitálu", phonetic: "/stæɡˈneɪ.tɪŋ/", trap: "Saying 'money staying in boxes'", example: "Prevent working capital from stagnating." },
           "rebates": { czech: "Zpětné bonusy / objemové slevy od dodavatelů", phonetic: "/ˈriː.beɪts/", trap: "Saying 'money back from producers'", example: "Securing quarterly volume rebates from Samsung." }
+        },
+        glossaryB1: {
+          "cooperation": { czech: "Spolupráce", phonetic: "/kəʊˌɒp.ərˈeɪ.ʃən/", trap: "Saying 'working together'", example: "Close cooperation between sales and logistics." },
+          "warehouses": { czech: "Sklady / logistická centra", phonetic: "/ˈweə.haʊ.zɪz/", trap: "Saying 'storage halls'", example: "Our automated warehouses dispatch 50,000 parcels daily." },
+          "duplicate": { czech: "Duplicitní / zdvojený", phonetic: "/ˈdʒuː.plɪ.kət/", trap: "Saying 'two same'", example: "We removed duplicate items from the catalog." },
+          "inventory": { czech: "Skladové zásoby", phonetic: "/ˈɪn.vən.tər.i/", trap: "Saying 'things in warehouse'", example: "High inventory levels tie up working capital." },
+          "bonuses": { czech: "Zpětné bonusy / slevy", phonetic: "/ˈbəʊ.nə.sɪz/", trap: "Saying 'extra money back'", example: "We negotiated annual volume bonuses with suppliers." }
         }
       }
     };
@@ -1193,7 +1305,9 @@ I will now open the floor for any strategic or operational questions.</textarea>
         mood: 'Analytical, questioning non-essential CAPEX',
         avatar: 'MF',
         initialMessage: "Good morning. I've been reviewing your branch OPEX proposal for next quarter. You're asking for a 15% increase in engineering headcount. In this macroeconomic climate, that seems difficult to defend. Walk me through the numbers.",
-        czechTip: "Czech managers often sound too direct ('We need people because we have projects'). Open by recognizing fiduciary pressure, then frame it around ROI and customer churn reduction."
+        initialMessageB1: "Good morning. I checked your operating budget plan for next quarter. You are asking for 15% more money to hire new IT staff. Because the economy is slowing down, this is hard to approve. Please explain why we need this budget.",
+        czechTip: "Czech managers often sound too direct ('We need people because we have projects'). Open by recognizing fiduciary pressure, then frame it around ROI and customer churn reduction.",
+        czechTipB1: "Start politely: 'I understand we need to control costs, however...' Then give two clear reasons why hiring now saves money later."
       },
       board_disagree: {
         name: 'Elena Rostova',
@@ -1201,7 +1315,9 @@ I will now open the floor for any strategic or operational questions.</textarea>
         mood: 'Skeptical, risk-averse',
         avatar: 'ER',
         initialMessage: "I see your recommendation to postpone the legacy ERP migration. Frankly, this delay exposes us to operational risk. Why should the board back another rescheduling?",
-        czechTip: "Avoid defensive words like 'It is not our fault'. Frame the postponement as a calculated risk-mitigation move to safeguard revenue."
+        initialMessageB1: "I see your plan to delay the old ERP system upgrade. Honestly, this delay creates operational risks for our stores. Why should the board agree to change the schedule again?",
+        czechTip: "Avoid defensive words like 'It is not our fault'. Frame the postponement as a calculated risk-mitigation move to safeguard revenue.",
+        czechTipB1: "Do not say 'It is not our fault.' Explain that waiting 4 weeks protects peak sales and avoids system crashes."
       },
       pitch_hostile: {
         name: 'David Vance',
@@ -1209,7 +1325,9 @@ I will now open the floor for any strategic or operational questions.</textarea>
         mood: 'Fast-paced, aggressive Q&A',
         avatar: 'DV',
         initialMessage: "Your unit economics look attractive on slide 3, but Central European tech founders frequently underestimate international enterprise CAC. What gives you the conviction you can scale into the DACH region?",
-        czechTip: "Acknowledge the DACH sales cycle reality with gravitas: 'That is a pertinent critique. However, our initial pilot conversion in Munich demonstrates...'"
+        initialMessageB1: "Your profit numbers look good on slide 3, but Central European companies often underestimate the cost of winning new clients in Germany and Austria. Why are you confident you can grow in the DACH market?",
+        czechTip: "Acknowledge the DACH sales cycle reality with gravitas: 'That is a pertinent critique. However, our initial pilot conversion in Munich demonstrates...'",
+        czechTipB1: "Agree that Germany is competitive first ('That is a fair point, however...'), then mention your existing partner network and test results."
       },
       vendor_rebate_dispute: {
         name: 'Christoph Becker',
@@ -1217,7 +1335,9 @@ I will now open the floor for any strategic or operational questions.</textarea>
         mood: 'Tough supplier, resistant to giving discounts',
         avatar: 'CB',
         initialMessage: "Good morning. I've analyzed your sell-out numbers across the Czech and Slovak networks for our premium OLED TVs. Your volumes are down 8% compared to target, yet your buying team is demanding the full 5% back-end rebate. Why should we grant full rebates when your store network missed the target?",
-        czechTip: "Do not blame inflation or consumer mood. Reframe around your promotional spend, front-row store placement in Datart, and your defense against gray imports."
+        initialMessageB1: "Good morning. I checked your sales numbers in Czechia and Slovakia for our premium OLED TVs. Your sales volume is 8% below target, yet your buyers are asking for the full 5% annual bonus. Why should we pay the full bonus when your stores missed the target?",
+        czechTip: "Do not blame inflation or consumer mood. Reframe around your promotional spend, front-row store placement in Datart, and your defense against gray imports.",
+        czechTipB1: "Do not complain about weak customer demand. Highlight your marketing campaigns, prime display space in Datart stores, and strong Q4 orders."
       },
       marketplace_expansion: {
         name: 'Karolína Dvořáková',
@@ -1225,7 +1345,9 @@ I will now open the floor for any strategic or operational questions.</textarea>
         mood: 'Data-driven, concerned about brand dilution',
         avatar: 'KD',
         initialMessage: "Our board is pressing us to open an official storefront on foreign digital marketplaces like Allegro and Amazon. I'm worried we'll cannibalize our own direct-to-consumer traffic and destroy our premium service positioning. How do you propose we approach this channel without triggering a pricing war with our own e-shop?",
-        czechTip: "Acknowledge the cannibalization risk immediately ('That is a valid apprehension...'). Suggest listing only high-turnover refurbished items or specific private-label SKUs (e.g., ETA products) while ring-fencing core premium lines for your own domain."
+        initialMessageB1: "Our board wants us to open an official shop on online marketplaces like Allegro and Amazon. I am worried we will steal customers from our own e-shop and hurt our premium service brand. How can we sell on marketplaces without starting a price war with our own website?",
+        czechTip: "Acknowledge the cannibalization risk immediately ('That is a valid apprehension...'). Suggest listing only high-turnover refurbished items or specific private-label SKUs (e.g., ETA products) while ring-fencing core premium lines for your own domain.",
+        czechTipB1: "Agree with her concern first ('I understand that risk completely...'). Suggest selling only selected products or private brands (like ETA) on marketplaces while keeping premium models on our own website."
       }
     };
 
@@ -1240,6 +1362,16 @@ While we encountered supply chain friction earlier this year, our core unit econ
 
 I will now open the floor for any strategic or operational questions.`,
 
+      board_update_b1: `The goal of today's meeting is to present our updated strategy and Q3 financial results.
+
+To put these numbers in context, despite tough economic conditions in Europe, our business contract sales grew by 24% compared to last quarter.
+
+If you look at slide 4, the cost of winning new customers dropped significantly, mainly because of faster online onboarding and client referrals.
+
+Although we had some supply chain delays earlier this year, our core profit margins remain very strong.
+
+I am now happy to answer your questions about our strategy or operations.`,
+
       pitch_deck: `Good morning. We are here today to discuss our Series A expansion round.
 
 Our platform eliminates operational friction for Central European exporters by automating cross-border compliance.
@@ -1249,6 +1381,16 @@ To put this opportunity into perspective, the addressable B2B market in the CEE 
 Our team has demonstrated exceptional capital efficiency, maintaining an 18-month runway with positive unit economics.
 
 We are actively seeking strategic partners who share our conviction for scaling enterprise software across Europe.`,
+
+      pitch_deck_b1: `Good morning. We are here today to present our investment plan for international growth.
+
+Our platform removes daily paperwork delays for Central European exporters by automating cross-border rules.
+
+To show the size of this opportunity, the B2B market in Central and Eastern Europe is worth 4.2 billion euros.
+
+Our team uses capital very efficiently, with 18 months of cash reserves and profitable customer orders.
+
+We are looking for strategic partners who want to help us grow our business software across Europe.`,
 
       bad_news: `Thank you for joining this emergency briefing.
 
@@ -1260,6 +1402,16 @@ We have already instituted strict cost-containment measures to streamline our op
 
 Our leadership team is fully mobilized to safeguard margin stability heading into Q4.`,
 
+      bad_news_b1: `Thank you for joining this urgent update meeting.
+
+I want to be completely open with you about our Q2 operating profit results.
+
+Although we faced unexpected problems after supplier contracts were canceled in Germany, our regular customer loyalty remains very strong at 94%.
+
+We have already started strict cost-control steps to lower our operating expenses and protect our cash reserves.
+
+Our management team is working hard to keep profit margins stable as we enter Q4.`,
+
       peak_season_pitch: `The purpose of today's operational briefing is to review our peak Q4 readiness across our retail and fulfillment network.
 
 To put this into perspective, we anticipate dispatching over 120,000 orders daily through our automated logistics hubs during Black Friday week.
@@ -1269,6 +1421,16 @@ If you look at our delivery projections, over 65% of customer transactions will 
 While we anticipate aggressive discounting from cross-border marketplaces, our bundled warranty and certified premium delivery will preserve our gross margin.
 
 I will now open the floor to address any supply chain or inventory inquiries.`,
+
+      peak_season_pitch_b1: `The goal of today's operations meeting is to review our Q4 peak season plan across our stores and warehouses.
+
+To give you an idea of the volume, we expect to ship over 120,000 orders every day from our automated logistics centers during Black Friday week.
+
+If you look at our delivery plan, over 65% of customers will pick up their orders in-store using our fast collection service, which prevents courier delivery delays.
+
+Although foreign marketplaces will offer heavy price discounts, our extended warranty and home installation services will protect our profit margins.
+
+I am now ready to answer any questions about our supply chain or stock levels.`,
 
       store_remodeling_pitch: `Good afternoon members of the investment committee.
 
@@ -1280,7 +1442,19 @@ Furthermore, integrating real-time inventory displays allows store associates to
 
 This project delivers payback within 14 months while cementing our local brand leadership.
 
-I welcome your strategic questions regarding project timeline and capital allocation.`
+I welcome your strategic questions regarding project timeline and capital allocation.`,
+
+      store_remodeling_pitch_b1: `Good afternoon members of the investment committee.
+
+Today's proposal is about modernizing twenty major regional stores into modern omnichannel showrooms.
+
+To put this investment into context, our renovated stores in Prague and Brno increased sales of high-margin home appliances by 18% over the last six months.
+
+In addition, live stock screens allow store staff to save lost sales by immediately ordering out-of-stock items for home delivery.
+
+This project pays back its cost within 14 months and strengthens our leading brand position.
+
+I welcome your questions about the project schedule and budget.`
     };
 
     const QUIZ_QUESTIONS = [
@@ -1377,6 +1551,32 @@ I welcome your strategic questions regarding project timeline and capital alloca
     let isFlipped = false;
     let userWordBank = [...VOCAB_DATABASE];
     let currentlyInspectedWord = null;
+    let currentGlobalLevel = 'C1'; // 'C1' = B2-C1 (C-Suite), 'B1' = B1-B2 (Operational)
+
+    function getFilteredWordBank() {
+      if (currentGlobalLevel === 'B1') {
+        const b1Items = userWordBank.filter(item => item.level && (item.level.includes('B1') || item.level === 'B2'));
+        return b1Items.length ? b1Items : userWordBank;
+      }
+      return userWordBank;
+    }
+
+    function changeGlobalLevel(level) {
+      currentGlobalLevel = level;
+      currentCardIdx = 0;
+
+      // Refresh every active section immediately
+      updateBankCounts();
+      loadBriefing();
+      restartRoleplay();
+      loadPitchTemplate();
+      renderGrammarModules();
+      renderCurrentFlashcard();
+      filterVocabList();
+
+      const label = level === 'B1' ? 'B1–B2 Operational English' : 'B2–C1 C-Suite English';
+      showToast('Level Adjusted', `All sections adapted to ${label}.`);
+    }
 
     /* ========================================================
        3. SPEECH SYNTHESIS & CORE HELPERS
@@ -1386,12 +1586,12 @@ I welcome your strategic questions regarding project timeline and capital alloca
       window.speechSynthesis.cancel();
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.lang = 'en-GB';
-      utterance.rate = 0.96;
+      utterance.rate = currentGlobalLevel === 'B1' ? 0.88 : 0.96;
       window.speechSynthesis.speak(utterance);
     }
 
     function updateBankCounts() {
-      const count = userWordBank.length;
+      const count = getFilteredWordBank().length;
       const navBankEl = document.getElementById('nav-bank-count');
       const totalVocabEl = document.getElementById('total-vocab-count');
       const statMasteredEl = document.getElementById('stat-mastered');
@@ -1442,42 +1642,49 @@ I welcome your strategic questions regarding project timeline and capital alloca
       const key = selectEl.value;
       const brief = EXECUTIVE_BRIEFINGS[key] || EXECUTIVE_BRIEFINGS.brief_mna;
 
+      const isB1 = currentGlobalLevel === 'B1';
+      const activeText = (isB1 && brief.textB1) ? brief.textB1 : brief.text;
+      const activeGlossary = (isB1 && brief.glossaryB1) ? brief.glossaryB1 : brief.glossary;
+
       document.getElementById('briefing-domain').innerText = brief.domain;
       document.getElementById('briefing-title').innerText = brief.title;
+      const lvlBadge = document.getElementById('briefing-level-badge');
+      if (lvlBadge) lvlBadge.innerText = isB1 ? 'B1–B2' : 'B2–C1';
 
       const container = document.getElementById('interactive-text-container');
       container.innerHTML = '';
 
-      const tokens = brief.text.split(/(\s+)/);
+      const tokens = activeText.split(/(\s+)/);
       tokens.forEach(token => {
         if (/^\s+$/.test(token)) {
           container.appendChild(document.createTextNode(token));
           return;
         }
         const cleanKey = token.toLowerCase().replace(/[^a-z0-9-]/g, '');
-        const isGlossary = brief.glossary && brief.glossary[cleanKey];
+        const isGlossary = activeGlossary && activeGlossary[cleanKey];
         const span = document.createElement('span');
         span.innerText = token;
         span.className = isGlossary
           ? 'cursor-pointer px-1 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border-b border-indigo-400 hover:bg-indigo-500/40 transition font-medium'
           : 'cursor-pointer hover:bg-slate-800 hover:text-amber-300 rounded px-0.5 transition';
-        span.onclick = () => inspectToken(cleanKey, token.replace(/[^a-zA-Z0-9-]/g, ''), brief);
+        span.onclick = () => inspectToken(cleanKey, token.replace(/[^a-zA-Z0-9-]/g, ''), brief, activeGlossary, activeText);
         container.appendChild(span);
       });
 
-      const firstKey = Object.keys(brief.glossary)[0];
-      if (firstKey) inspectToken(firstKey, firstKey, brief);
+      const firstKey = Object.keys(activeGlossary)[0];
+      if (firstKey) inspectToken(firstKey, firstKey, brief, activeGlossary, activeText);
     }
 
-    function inspectToken(cleanKey, rawWord, brief) {
-      const entry = brief.glossary && brief.glossary[cleanKey];
+    function inspectToken(cleanKey, rawWord, brief, activeGlossary, activeText) {
+      const glossarySource = activeGlossary || brief.glossary;
+      const entry = glossarySource && glossarySource[cleanKey];
       currentlyInspectedWord = {
         phrase: rawWord,
         phonetic: entry ? entry.phonetic : `/${cleanKey}/`,
         czech: entry ? entry.czech : 'Klíčový obchodní výraz z kontextu (klikněte pro uložení)',
-        trap: entry ? entry.trap : 'Avoid translating word-for-word from Czech; keep the executive collocation intact.',
-        example: entry ? entry.example : brief.text,
-        level: 'B2–C1',
+        trap: entry ? entry.trap : 'Avoid translating word-for-word from Czech; keep the business collocation intact.',
+        example: entry ? entry.example : (activeText || brief.text),
+        level: currentGlobalLevel === 'B1' ? 'B1–B2' : 'B2–C1',
         category: brief.domain
       };
 
@@ -1585,13 +1792,14 @@ I welcome your strategic questions regarding project timeline and capital alloca
     }
 
     function renderCurrentFlashcard() {
-      if (!userWordBank.length) return;
-      if (currentCardIdx >= userWordBank.length) currentCardIdx = 0;
-      if (currentCardIdx < 0) currentCardIdx = userWordBank.length - 1;
+      const activeBank = getFilteredWordBank();
+      if (!activeBank.length) return;
+      if (currentCardIdx >= activeBank.length) currentCardIdx = 0;
+      if (currentCardIdx < 0) currentCardIdx = activeBank.length - 1;
 
-      const card = userWordBank[currentCardIdx];
+      const card = activeBank[currentCardIdx];
       document.getElementById('card-current-idx').innerText = currentCardIdx + 1;
-      document.getElementById('card-total-idx').innerText = userWordBank.length;
+      document.getElementById('card-total-idx').innerText = activeBank.length;
       document.getElementById('card-category').innerText = card.category;
       document.getElementById('card-phrase').innerText = card.phrase;
       document.getElementById('card-phonetic').innerText = card.phonetic || '';
@@ -1615,7 +1823,8 @@ I welcome your strategic questions regarding project timeline and capital alloca
     }
 
     function speakCurrentCard() {
-      const card = userWordBank[currentCardIdx];
+      const activeBank = getFilteredWordBank();
+      const card = activeBank[currentCardIdx];
       if (card) speakText(card.phrase);
     }
 
@@ -1662,7 +1871,7 @@ I welcome your strategic questions regarding project timeline and capital alloca
       if (!grid) return;
       grid.innerHTML = '';
 
-      userWordBank
+      getFilteredWordBank()
         .filter(item =>
           item.phrase.toLowerCase().includes(query) ||
           item.czech.toLowerCase().includes(query) ||
@@ -1673,7 +1882,7 @@ I welcome your strategic questions regarding project timeline and capital alloca
           div.className = 'p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-2';
           div.innerHTML = `
             <div class="flex items-center justify-between">
-              <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-400">${item.category}</span>
+              <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-400">${item.category} • ${item.level}</span>
               <button onclick="speakText('${item.phrase.replace(/'/g, "\\'")}')" class="text-slate-400 hover:text-indigo-400"><i data-lucide="volume-2" class="w-4 h-4"></i></button>
             </div>
             <div class="font-bold text-sm text-white">${item.phrase}</div>
@@ -1700,17 +1909,19 @@ I welcome your strategic questions regarding project timeline and capital alloca
     function restartRoleplay() {
       const key = document.getElementById('scenario-select')?.value || 'cfo_budget';
       const sc = SCENARIOS[key] || SCENARIOS.cfo_budget;
+      const isB1 = currentGlobalLevel === 'B1';
       roleplayTurn = 0;
 
       document.getElementById('persona-avatar').innerText = sc.avatar;
       document.getElementById('persona-name').innerText = sc.name;
       document.getElementById('persona-role').innerText = sc.role;
       document.getElementById('persona-mood').innerText = `Mood: ${sc.mood}`;
-      document.getElementById('scenario-tip').innerText = sc.czechTip;
+      document.getElementById('scenario-tip').innerText = (isB1 && sc.czechTipB1) ? sc.czechTipB1 : sc.czechTip;
 
       const chat = document.getElementById('chat-messages');
       chat.innerHTML = '';
-      appendChatBubble('ai', sc.name, sc.initialMessage);
+      const opening = (isB1 && sc.initialMessageB1) ? sc.initialMessageB1 : sc.initialMessage;
+      appendChatBubble('ai', sc.name, opening);
     }
 
     function appendChatBubble(sender, name, text) {
@@ -1749,8 +1960,13 @@ I welcome your strategic questions regarding project timeline and capital alloca
 
       const key = document.getElementById('scenario-select').value;
       const sc = SCENARIOS[key];
+      const isB1 = currentGlobalLevel === 'B1';
 
-      const followUps = [
+      const followUps = isB1 ? [
+        "That is a clear explanation. However, how do we reduce our financial risk if Q4 customer demand slows down in Central Europe?",
+        "Good point about the costs. What clear results will you show the board after 90 days to prove this plan works?",
+        "Understood. If we approve this plan today, what immediate delivery delays do we need to fix next week?"
+      ] : [
         "That is a structured rationale. However, how do we ring-fence downside risk if Q4 demand softens across Central Europe?",
         "Fair point on the unit economics. What specific KPIs will you report to the board at the 90-day milestone to prove traction?",
         "Understood. If we sign off on this proposal today, what immediate operational bottlenecks need to be cleared next week?"
@@ -1800,10 +2016,17 @@ I welcome your strategic questions regarding project timeline and capital alloca
     let audioChunks = [];
 
     function loadPitchTemplate() {
-      const key = document.getElementById('template-select').value;
+      const selectEl = document.getElementById('template-select');
       const editor = document.getElementById('pitch-text-editor');
-      if (editor && PITCH_TEMPLATES[key]) {
-        editor.value = PITCH_TEMPLATES[key];
+      if (!selectEl || !editor) return;
+
+      const baseKey = selectEl.value;
+      const activeKey = (currentGlobalLevel === 'B1' && PITCH_TEMPLATES[`${baseKey}_b1`])
+        ? `${baseKey}_b1`
+        : baseKey;
+
+      if (PITCH_TEMPLATES[activeKey]) {
+        editor.value = PITCH_TEMPLATES[activeKey];
         calculatePrompterMetrics();
         resetPrompterScroll();
       }
@@ -1889,9 +2112,13 @@ I welcome your strategic questions regarding project timeline and capital alloca
       const filter = document.getElementById('grammar-filter').value;
       grid.innerHTML = '';
 
-      const filtered = filter === 'all'
+      let filtered = filter === 'all'
         ? GRAMMAR_MODULES
         : GRAMMAR_MODULES.filter(g => g.category === filter);
+
+      if (currentGlobalLevel === 'B1' && filter === 'all') {
+        filtered = filtered.filter(g => g.level.includes('B1') || g.level === 'B2');
+      }
 
       filtered.forEach(mod => {
         const isSaved = userWordBank.some(item => item.phrase.toLowerCase() === mod.formula.toLowerCase());
