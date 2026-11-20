@@ -65,7 +65,7 @@
 
       <!-- Desktop Navigation Tabs -->
       <nav class="hidden md:flex items-center space-x-1">
-        <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-btn px-3 py-2 rounded-lg text-xs font-semibold transition flex items-center space-x-1.5 text-teal-800 bg-teal-500/15">
+        <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-btn px-3 py-2 rounded-lg text-xs font-semibold transition flex items-center space-x-1.5 bg-teal-600 text-white shadow-sm">
           <span>Overview</span>
         </button>
         <button onclick="switchTab('reading')" id="nav-reading" class="nav-btn px-3 py-2 rounded-lg text-xs font-medium transition flex items-center space-x-1.5 text-slate-700 hover:text-slate-900 hover:bg-slate-200/70">
@@ -97,6 +97,57 @@
             <option value="B1">B1–B2 (Operational)</option>
           </select>
         </div>
+      </div>
+    </div>
+
+    <!-- Global Audio Playback Controls Bar -->
+    <div class="border-t border-slate-300/80 bg-slate-200/90 px-4 sm:px-6 py-1.5">
+      <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-3 text-xs">
+        <div class="flex items-center space-x-2">
+          <span class="font-semibold text-teal-800 flex items-center space-x-1">
+            <i data-lucide="volume-2" class="w-3.5 h-3.5"></i>
+            <span>Audio Player:</span>
+          </span>
+          <button onclick="togglePauseResumeSpeech()" id="global-audio-pause-btn" class="px-2.5 py-1 rounded bg-slate-100 hover:bg-teal-600 hover:text-white border border-slate-300 text-slate-800 font-medium flex items-center space-x-1 transition">
+            <i data-lucide="pause" class="w-3 h-3"></i>
+            <span id="global-audio-pause-label">Pause</span>
+          </button>
+          <button onclick="stopSpeech()" class="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-300 border border-slate-300 text-slate-700 font-medium flex items-center space-x-1 transition">
+            <i data-lucide="square" class="w-3 h-3"></i>
+            <span>Stop</span>
+          </button>
+        </div>
+
+        <div class="flex items-center space-x-4">
+          <div class="flex items-center space-x-1.5">
+            <label for="audio-speed-select" class="text-slate-600 font-medium">Speed:</label>
+            <select id="audio-speed-select" onchange="updateAudioSettings()" class="bg-slate-100 border border-slate-300 rounded px-2 py-0.5 text-xs font-semibold text-slate-900 focus:outline-none focus:border-teal-600">
+              <option value="0.75">0.75x (Slow)</option>
+              <option value="0.95" selected>1.0x (Normal)</option>
+              <option value="1.15">1.15x (Fast)</option>
+            </select>
+          </div>
+
+          <div class="flex items-center space-x-1.5">
+            <label for="audio-volume-slider" class="text-slate-600 font-medium">Volume:</label>
+            <input type="range" id="audio-volume-slider" min="0" max="1" step="0.1" value="1" oninput="updateAudioSettings()" class="w-20 accent-teal-600 cursor-pointer">
+            <span id="audio-volume-label" class="font-mono text-[11px] text-slate-700 w-8">100%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation Bar -->
+  <div class="md:hidden flex overflow-x-auto bg-slate-100 border-b border-slate-300 px-3 py-2 space-x-1.5 text-xs">
+    <button onclick="switchTab('dashboard')" id="m-nav-dashboard" class="m-nav-btn px-2.5 py-1.5 rounded-md bg-teal-600 text-white font-semibold whitespace-nowrap">Overview</button>
+    <button onclick="switchTab('reading')" id="m-nav-reading" class="m-nav-btn px-2.5 py-1.5 rounded-md text-slate-700 whitespace-nowrap">Briefings</button>
+    <button onclick="switchTab('roleplay')" id="m-nav-roleplay" class="m-nav-btn px-2.5 py-1.5 rounded-md text-slate-700 whitespace-nowrap">Simulator</button>
+    <button onclick="switchTab('teleprompter')" id="m-nav-teleprompter" class="m-nav-btn px-2.5 py-1.5 rounded-md text-slate-700 whitespace-nowrap">Prompter</button>
+    <button onclick="switchTab('grammar')" id="m-nav-grammar" class="m-nav-btn px-2.5 py-1.5 rounded-md text-slate-700 whitespace-nowrap">Grammar</button>
+    <button onclick="switchTab('vocab')" id="m-nav-vocab" class="m-nav-btn px-2.5 py-1.5 rounded-md text-slate-700 whitespace-nowrap">Word Bank</button>
+    <button onclick="switchTab('workshop')" id="m-nav-workshop" class="m-nav-btn px-2.5 py-1.5 rounded-md text-slate-700 whitespace-nowrap">Workshop</button>
+  </div>
       </div>
     </div>
   </header>
@@ -221,6 +272,11 @@
             <option value="brief_tech">3. Tech Scaling & Legacy Modernization</option>
             <option value="brief_omnichannel">4. Omnichannel Retail vs Marketplaces (Datart)</option>
             <option value="brief_consolidation">5. Retail Logistics & SKU Rationalization</option>
+            <option value="brief_private_label">6. Scaling High-Margin Private Labels (ETA)</option>
+            <option value="brief_ai_pricing">7. Dynamic Pricing & AI Demand Forecasting</option>
+            <option value="brief_b2b_accounts">8. Expanding Corporate B2B & Public Tenders</option>
+            <option value="brief_reverse_logistics">9. E-Commerce Returns & Refurbishment Economics</option>
+            <option value="brief_cyber_resilience">10. Peak-Season Cybersecurity & Payment Uptime</option>
           </select>
         </div>
       </div>
@@ -434,6 +490,11 @@
             <option value="pitch_hostile">3. Handling Aggressive Q&A During Strategy Pitch</option>
             <option value="vendor_rebate_dispute">4. Annual Vendor Rebate Negotiation (Supplier)</option>
             <option value="marketplace_expansion">5. Marketplace Channel Strategy (Internal Board)</option>
+            <option value="courier_sla_crisis">6. Black Friday Courier SLA Failure (Logistics Partner)</option>
+            <option value="b2b_fleet_tender">7. Negotiating Enterprise Fleet Terms (B2B Client)</option>
+            <option value="store_lease_renegotiation">8. Shopping Mall Rent Reduction (Landlord)</option>
+            <option value="marketing_roi_audit">9. Defending Brand Campaign Spend (Group CEO)</option>
+            <option value="it_outage_postmortem">10. Checkout Outage Accountability (Head of Engineering)</option>
           </select>
         </div>
       </div>
@@ -508,11 +569,16 @@
         <div class="flex items-center space-x-2">
           <span class="text-xs font-medium text-slate-700">Template:</span>
           <select id="template-select" onchange="loadPitchTemplate()" class="bg-slate-100 border border-slate-300 text-slate-900 text-xs font-medium rounded-lg px-3 py-1.5 focus:outline-none focus:border-teal-600">
-            <option value="board_update">Quarterly Board Performance Review</option>
-            <option value="pitch_deck">Series A / Growth Funding Pitch</option>
-            <option value="bad_news">Delivering Restructuring / Missed Targets</option>
-            <option value="peak_season_pitch">Peak Season Fulfillment & Q4 Defense</option>
-            <option value="store_remodeling_pitch">Omnichannel Flagship Store Modernization</option>
+            <option value="board_update">1. Quarterly Board Performance Review</option>
+            <option value="pitch_deck">2. Series A / Growth Funding Pitch</option>
+            <option value="bad_news">3. Delivering Restructuring / Missed Targets</option>
+            <option value="peak_season_pitch">4. Peak Season Fulfillment & Q4 Defense</option>
+            <option value="store_remodeling_pitch">5. Omnichannel Flagship Store Modernization</option>
+            <option value="loyalty_app_launch">6. Mobile Loyalty App & Retention Rollout</option>
+            <option value="private_label_expansion">7. Private Label Margin Expansion Plan</option>
+            <option value="warehouse_automation">8. Automated Sorting Hub CAPEX Approval</option>
+            <option value="slovak_market_synergy">9. Cross-Border CZ/SK Operations Alignment</option>
+            <option value="supplier_summit_keynote">10. Annual Vendor Partnership Summit Opening</option>
           </select>
         </div>
       </div>
@@ -693,6 +759,19 @@ I will now open the floor for any strategic or operational questions.</textarea>
       <div id="toast-title" class="font-bold">Notification</div>
       <div id="toast-body" class="text-slate-700">Action completed successfully.</div>
     </div>
+  </div>
+
+  <!-- Global Text Selection Floating Action Bar -->
+  <div id="selection-save-popover" class="hidden fixed z-50 bg-slate-900 text-white px-3 py-1.5 rounded-xl shadow-xl border border-teal-500 flex items-center space-x-2 text-xs">
+    <span id="selection-preview-text" class="font-semibold text-teal-300 max-w-[160px] truncate">word</span>
+    <button onclick="speakSelectedGlobalText()" class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-white flex items-center space-x-1 transition" title="Listen">
+      <i data-lucide="volume-2" class="w-3.5 h-3.5 text-teal-400"></i>
+      <span>Listen</span>
+    </button>
+    <button onclick="saveSelectedGlobalTextToBank()" class="px-2.5 py-1 rounded bg-teal-600 hover:bg-teal-500 text-white font-semibold flex items-center space-x-1 transition">
+      <i data-lucide="bookmark-plus" class="w-3.5 h-3.5"></i>
+      <span>Save to Bank</span>
+    </button>
   </div>
 
   <!-- APPLICATION LOGIC SCRIPT -->
@@ -977,6 +1056,76 @@ I will now open the floor for any strategic or operational questions.</textarea>
           prompt: 'Fill in prepositions: "Margin rose ___ 2.5 percentage points, reaching ___ 19.5%."',
           answer: 'Margin rose by 2.5 percentage points, reaching 19.5% (no preposition after reach).'
         }
+      },
+      {
+        id: 'gm_concession',
+        category: 'Negotiation & Conditionals',
+        level: 'B2–C1',
+        title: 'Concession Clauses for Commercial Trade-Offs',
+        formula: 'Provided (that) + [Condition], we are prepared to + [Concession]',
+        czechExplanation: 'Podmínkové spojky "Provided that" nebo "On condition that" znějí v obchodních smlouvách mnohem profesionálněji než opakované "If".',
+        czenglishTrap: 'We give you 3% discount if you will buy 10,000 pieces.',
+        corporateExample: 'Provided that you commit to a minimum quarterly volume of 10,000 units, we are prepared to extend a 3% rebate.',
+        quickDrill: {
+          prompt: 'Upgrade this sentence: "If you deliver before November 15, we will pay the invoice early."',
+          answer: 'Provided that delivery is completed prior to November 15, we are prepared to settle the invoice early.'
+        }
+      },
+      {
+        id: 'gm_contrast',
+        category: 'Diplomatic Softening',
+        level: 'B1–C1',
+        title: 'Executive Contrast: "While / Whereas" vs. "But"',
+        formula: 'While + [Acknowledge Other Side], [Assert Your Strategic Position]',
+        czechExplanation: 'Začátek věty spojkou "While" nebo "Whereas" umožňuje uznat argument protistrany a plynule přejít k vlastnímu závěru bez ostrého "But".',
+        czenglishTrap: 'Online sales are growing fast, but store costs are still very high.',
+        corporateExample: 'While physical store overhead remains significant, our brick-and-mortar network drives 65% of online order pickups.',
+        quickDrill: {
+          prompt: 'Combine diplomatically: "Marketplaces bring high traffic. They erode our gross margins."',
+          answer: 'While third-party marketplaces generate high traffic, they significantly erode our gross margins.'
+        }
+      },
+      {
+        id: 'gm_articles_uncountable',
+        category: 'Czech Grammar Traps',
+        level: 'B1–B2',
+        title: 'Uncountable Business Nouns (No Plural "-s")',
+        formula: 'equipment / feedback / advice / information / progress (Always Singular)',
+        czechExplanation: 'V češtině říkáme "informace" nebo "zpětné vazby" v množném čísle. V angličtině jsou tato slova nepočitatelná a nikdy nemají koncovku -s.',
+        czenglishTrap: 'We received many useful feedbacks and equipments from the supplier.',
+        corporateExample: 'We received valuable customer feedback and upgraded our warehouse equipment ahead of peak season.',
+        quickDrill: {
+          prompt: 'Correct the errors: "Can you send me more informations about the new softwares?"',
+          answer: 'Can you send me more information about the new software?'
+        }
+      },
+      {
+        id: 'gm_future_cert',
+        category: 'Reporting & Trends',
+        level: 'B2–C1',
+        title: 'Modals of Probability for Board Forecasting',
+        formula: 'is projected to / is poised to / is unlikely to + [Base Verb]',
+        czechExplanation: 'Místo nejistého "maybe it will grow" používejte v prezentacích přesné vazby vyjadřující míru pravděpodobnosti ("is projected to", "is poised to").',
+        czenglishTrap: 'Maybe our Q4 revenue will grow by 10%.',
+        corporateExample: 'Our Q4 omnichannel revenue is projected to grow by 10%, while courier delays are unlikely to disrupt core deliveries.',
+        quickDrill: {
+          prompt: 'Make executive: "Maybe the new logistics center will save 2 million euros."',
+          answer: 'The new logistics center is projected to generate 2 million euros in annual savings.'
+        }
+      },
+      {
+        id: 'gm_cleft_emphasis',
+        category: 'Diplomatic Softening',
+        level: 'C1',
+        title: 'Cleft Sentences ("What... is...") for Strategic Focus',
+        formula: 'What + [Clause] + is + [Key Strategic Priority]',
+        czechExplanation: 'Vytýkací věty začínající na "What" okamžitě přitáhnou pozornost posluchačů na klíčovou myšlenku během vyjednávání nebo prezentace.',
+        czenglishTrap: 'We really need better margin protection right now.',
+        corporateExample: 'What differentiates our retail model from pure-play competitors is our nationwide service and installation network.',
+        quickDrill: {
+          prompt: 'Add emphasis: "We need faster warehouse dispatch during Black Friday."',
+          answer: 'What we need most during Black Friday is faster automated warehouse dispatch.'
+        }
       }
     ];
 
@@ -1092,6 +1241,97 @@ I will now open the floor for any strategic or operational questions.</textarea>
           "inventory": { czech: "Skladové zásoby", phonetic: "/ˈɪn.vən.tər.i/", trap: "Saying 'things in warehouse'", example: "High inventory levels tie up working capital." },
           "bonuses": { czech: "Zpětné bonusy / slevy", phonetic: "/ˈbəʊ.nə.sɪz/", trap: "Saying 'extra money back'", example: "We negotiated annual volume bonuses with suppliers." }
         }
+      },
+      brief_private_label: {
+        title: "Scaling High-Margin Private Labels in Consumer Appliances",
+        domain: "Brand & Margin Strategy",
+        text: "When multinational appliance manufacturers squeeze distributor margins, expanding proprietary private labels like ETA becomes a vital lever for profitability. By controlling product specification, direct factory sourcing, and exclusive retail placement, a retail group can capture substantially higher gross margins than when reselling commoditized global brands. Success depends on rigorous quality assurance and cohesive brand storytelling across both digital storefronts and regional showrooms.",
+        textB1: "When global appliance brands lower the profit margins they give to retailers, growing our own private brands like ETA becomes very important for company profit. By controlling product design, factory orders, and exclusive store placement, we can earn much higher profit margins than when selling standard global brands. Success requires strict quality testing and clear brand marketing online and in stores.",
+        glossary: {
+          "proprietary": { czech: "Vlastní / chráněný značkou firmy", phonetic: "/prəˈpraɪ.ə.tər.i/", trap: "Saying 'our own company thing'", example: "Developing proprietary small kitchen appliances." },
+          "lever": { czech: "Nástroj / páka pro růst", phonetic: "/ˈliː.vər/", trap: "Saying 'tool for profit'", example: "Private labels are our strongest margin lever." },
+          "sourcing": { czech: "Zajišťování dodavatelů a výroby", phonetic: "/ˈsɔː.sɪŋ/", trap: "Saying 'finding factories'", example: "Direct factory sourcing improves unit costs." },
+          "commoditized": { czech: "Komoditizovaný (zboží bez unikátní hodnoty)", phonetic: "/kəˈmɒd.ɪ.taɪzd/", trap: "Saying 'same everywhere'", example: "Avoiding price wars in commoditized categories." },
+          "assurance": { czech: "Zajištění kvality (QA)", phonetic: "/əˈʃɔː.rəns/", trap: "Saying 'quality checking'", example: "Strict quality assurance reduces warranty claims." }
+        },
+        glossaryB1: {
+          "manufacturers": { czech: "Výrobci", phonetic: "/ˌmæn.jəˈfæk.tʃər.əz/", trap: "Saying 'making companies'", example: "Global manufacturers set strict retail rules." },
+          "exclusive": { czech: "Exkluzivní / výhradní", phonetic: "/ɪkˈskluː.sɪv/", trap: "Saying 'only in our shop'", example: "We offer exclusive models in our stores." },
+          "placement": { czech: "Umístění zboží v prodejně", phonetic: "/ˈpleɪs.mənt/", trap: "Saying 'putting on shelf'", example: "Prime store placement increases brand visibility." },
+          "quality": { czech: "Kvalita", phonetic: "/ˈkwɒl.ə.ti/", trap: "Saying 'good standard'", example: "High product quality builds customer trust." }
+        }
+      },
+      brief_ai_pricing: {
+        title: "Dynamic Pricing Algorithms & AI Demand Forecasting",
+        domain: "Digital Transformation & BI",
+        text: "In high-velocity online electronics retail, static price lists rapidly erode competitiveness. Deploying automated repricing engines allows commercial teams to adjust tags in real time based on competitor stock levels, price elasticity, and regional demand signals. Simultaneously, machine-learning forecasting models minimize stockouts on hero products during seasonal peaks while preventing costly overstocking on depreciating consumer tech.",
+        textB1: "In fast-moving online electronics sales, fixed price lists quickly lose competitiveness. Using automated pricing tools allows sales teams to update prices in real time based on competitor stock levels and customer demand. At the same time, smart forecasting software prevents running out of popular items during busy seasons while avoiding too much unsold stock of older technology.",
+        glossary: {
+          "velocity": { czech: "Rychlost obratu / dynamika", phonetic: "/vəˈlɒs.ə.ti/", trap: "Saying 'fast speed'", example: "High-velocity e-commerce categories." },
+          "elasticity": { czech: "Cenová elasticita poptávky", phonetic: "/ˌiː.læsˈtɪs.ə.ti/", trap: "Saying 'price sensitivity'", example: "Measuring price elasticity before promotions." },
+          "stockouts": { czech: "Vyprodání zásob / nedostupnost zboží", phonetic: "/ˈstɒk.aʊts/", trap: "Saying 'zero items left'", example: "Preventing stockouts on flagship smartphones." },
+          "depreciating": { czech: "Ztrácející hodnotu v čase", phonetic: "/dɪˈpriː.ʃi.eɪ.tɪŋ/", trap: "Saying 'getting cheaper fast'", example: "Consumer electronics are rapidly depreciating assets." }
+        },
+        glossaryB1: {
+          "automated": { czech: "Automatizovaný", phonetic: "/ˈɔː.tə.meɪ.tɪd/", trap: "Saying 'done by machine'", example: "Automated pricing updates run every hour." },
+          "competitor": { czech: "Konkurent", phonetic: "/kəmˈpet.ɪ.tər/", trap: "Saying 'rival shop'", example: "We monitor competitor prices daily." },
+          "forecasting": { czech: "Předpovídání poptávky", phonetic: "/ˈfɔː.kɑːst.ɪŋ/", trap: "Saying 'guessing future sales'", example: "Better forecasting reduces warehouse waste." },
+          "overstocking": { czech: "Nadměrné zásoby na skladě", phonetic: "/ˌəʊ.vəˈstɒk.ɪŋ/", trap: "Saying 'buying too much'", example: "Overstocking ties up company cash." }
+        }
+      },
+      brief_b2b_accounts: {
+        title: "Capturing Corporate B2B Accounts & Public Sector Tenders",
+        domain: "B2B Commercial Growth",
+        text: "While consumer retail fluctuates with household sentiment, corporate B2B procurement provides predictable, recurring revenue streams. Dedicated account teams targeting enterprise IT rollouts, hospitality equipping, and public sector tenders must tailor service-level agreements around consolidated invoicing, rapid hardware replacement, and volume licensing. Winning institutional contracts requires shifting the pitch from unit price to total lifecycle reliability.",
+        textB1: "While consumer shopping changes with household budgets, business-to-business sales provide steady, repeat income. Dedicated B2B sales teams working with corporate offices, hotels, and government tenders must offer simple combined billing, fast device replacement, and volume discounts. Winning large business contracts requires focusing on long-term reliability rather than just the lowest item price.",
+        glossary: {
+          "fluctuates": { czech: "Kolísá / mění se", phonetic: "/ˈflʌk.tʃu.eɪts/", trap: "Saying 'goes up and down'", example: "Consumer demand fluctuates seasonally." },
+          "recurring": { czech: "Opakující se / pravidelný", phonetic: "/rɪˈkɜː.rɪŋ/", trap: "Saying 'coming again'", example: "Building recurring B2B revenue." },
+          "tenders": { czech: "Veřejné zakázky / výběrová řízení", phonetic: "/ˈten.dəz/", trap: "Saying 'state competitions'", example: "Bidding on municipal IT tenders." },
+          "lifecycle": { czech: "Životní cyklus produktu", phonetic: "/ˈlaɪfˌsaɪ.kəl/", trap: "Saying 'full product time'", example: "Full hardware lifecycle management." }
+        },
+        glossaryB1: {
+          "procurement": { czech: "Firemní nákup", phonetic: "/prəˈkjʊə.mənt/", trap: "Saying 'company buying'", example: "Corporate procurement values reliable delivery." },
+          "recurring": { czech: "Pravidelný / opakovaný", phonetic: "/rɪˈkɜː.rɪŋ/", trap: "Saying 'repeat'", example: "Recurring orders stabilize monthly cash flow." },
+          "billing": { czech: "Fakturace", phonetic: "/ˈbɪl.ɪŋ/", trap: "Saying 'sending invoices'", example: "Consolidated monthly billing saves time." },
+          "reliability": { czech: "Spolehlivost", phonetic: "/rɪˌlaɪ.əˈbɪl.ə.ti/", trap: "Saying 'working well always'", example: "Service reliability wins corporate clients." }
+        }
+      },
+      brief_reverse_logistics: {
+        title: "E-Commerce Returns & Refurbishment Unit Economics",
+        domain: "Operations & Sustainability",
+        text: "Statutory 14-day return rights across the European Union represent a major cost center for online electronics merchants. Every unboxed appliance returned by a customer incurs inspection, repackaging, and markdown expenses. By establishing an in-house refurbishment center and reselling certified open-box items with full warranties, retailers can recover up to 85% of retail value while meeting circular-economy targets.",
+        textB1: "The 14-day return rule in the European Union creates high costs for online electronics shops. Every opened appliance that a customer sends back needs testing, new packaging, and a price discount. By creating an internal repair and testing center and reselling checked open-box products with full warranties, retailers can recover up to 85% of the original price.",
+        glossary: {
+          "statutory": { czech: "Zákonný / daný zákonem", phonetic: "/ˈstætʃ.ə.tər.i/", trap: "Saying 'by law rule'", example: "Statutory 14-day cooling-off period." },
+          "incurs": { czech: "Vzniká (náklad) / nese s sebou", phonetic: "/ɪnˈkɜːz/", trap: "Saying 'makes cost'", example: "Every return incurs handling fees." },
+          "markdown": { czech: "Snížení prodejní ceny / sleva", phonetic: "/ˈmɑːk.daʊn/", trap: "Saying 'price down'", example: "Minimizing open-box markdown losses." },
+          "refurbishment": { czech: "Repasování / uvedení do perfektního stavu", phonetic: "/ˌriːˈfɜː.bɪʃ.mənt/", trap: "Saying 'fixing old goods'", example: "Certified in-house refurbishment program." }
+        },
+        glossaryB1: {
+          "return": { czech: "Vrácení zboží", phonetic: "/rɪˈtɜːn/", trap: "Saying 'giving back'", example: "Easy store returns improve customer trust." },
+          "inspection": { czech: "Kontrola / testování", phonetic: "/ɪnˈspek.ʃən/", trap: "Saying 'looking at item'", example: "Technical inspection takes 24 hours." },
+          "warranties": { czech: "Záruky", phonetic: "/ˈwɒr.ən.tiz/", trap: "Saying 'guarantees'", example: "We provide two-year warranties on all items." },
+          "recover": { czech: "Získat zpět (hodnotu / náklady)", phonetic: "/rɪˈkʌv.ər/", trap: "Saying 'get back'", example: "Reselling open-box items helps recover value." }
+        }
+      },
+      brief_cyber_resilience: {
+        title: "Peak-Season Cybersecurity & Payment Gateway Uptime",
+        domain: "IT Governance & Risk",
+        text: "During high-traffic retail events such as Black Friday, even a thirty-minute checkout outage translates into millions of crowns in lost revenue and reputational damage. IT leadership must enforce strict failover redundancy across payment gateways, shield customer portals against DDoS traffic spikes, and maintain rigorous GDPR compliance across loyalty databases.",
+        textB1: "During busy shopping days like Black Friday, even a thirty-minute website crash means millions of crowns in lost sales and unhappy customers. IT managers must prepare backup systems for online payments, protect the website against heavy traffic attacks, and keep customer loyalty data safe under GDPR rules.",
+        glossary: {
+          "outage": { czech: "Výpadek systému / provozu", phonetic: "/ˈaʊ.tɪdʒ/", trap: "Saying 'system stop'", example: "Zero checkout outage during peak hours." },
+          "failover": { czech: "Automatické přepnutí na záložní systém", phonetic: "/ˈfeɪlˌəʊ.vər/", trap: "Saying 'backup switch'", example: "Instant payment gateway failover." },
+          "redundancy": { czech: "Zálohování / zdvojení kritických prvků", phonetic: "/rɪˈdʌn.dən.si/", trap: "Saying 'having two systems'", example: "Cloud server redundancy ensures 99.99% uptime." },
+          "spikes": { czech: "Prudké nárůsty / špičky", phonetic: "/spaɪks/", trap: "Saying 'big jumps'", example: "Handling midnight Black Friday traffic spikes." }
+        },
+        glossaryB1: {
+          "checkout": { czech: "Pokladna / dokončení objednávky na webu", phonetic: "/ˈtʃek.aʊt/", trap: "Saying 'paying page'", example: "Fast online checkout increases conversion." },
+          "backup": { czech: "Záložní", phonetic: "/ˈbæk.ʌp/", trap: "Saying 'second system'", example: "Backup servers activate automatically." },
+          "protect": { czech: "Chránit", phonetic: "/prəˈtekt/", trap: "Saying 'keep safe'", example: "We protect customer payment details." },
+          "compliance": { czech: "Soulad s předpisy / pravidly", phonetic: "/kəmˈplaɪ.əns/", trap: "Saying 'following rules'", example: "Full GDPR compliance is mandatory." }
+        }
       }
     };
 
@@ -1140,6 +1380,51 @@ I will now open the floor for any strategic or operational questions.</textarea>
         initialMessageB1: "Our board wants us to open an official shop on online marketplaces like Allegro and Amazon. I am worried we will steal customers from our own e-shop and hurt our premium service brand. How can we sell on marketplaces without starting a price war with our own website?",
         czechTip: "Acknowledge the cannibalization risk immediately ('That is a valid apprehension...'). Suggest listing only high-turnover refurbished items or specific private-label SKUs (e.g., ETA products) while ring-fencing core premium lines for your own domain.",
         czechTipB1: "Agree with her concern first ('I understand that risk completely...'). Suggest selling only selected products or private brands (like ETA) on marketplaces while keeping premium models on our own website."
+      },
+      courier_sla_crisis: {
+        name: 'Tomáš Novotný',
+        role: 'Regional Director - Parcel Logistics',
+        avatar: 'TN',
+        initialMessage: "Look, parcel volumes jumped 45% this week and our sorting hubs are overloaded. We are running 48 hours behind on your home appliance deliveries, and we cannot add extra trucks until next Tuesday. What do you expect us to do?",
+        initialMessageB1: "Look, package numbers jumped 45% this week and our warehouses are full. Our deliveries of your large appliances are 48 hours late, and we cannot add more trucks until next Tuesday. What do you expect us to do?",
+        czechTip: "Stay calm and firm. Reference your contractual SLA penalties, then propose a constructive solution: rerouting urgent orders to your own store Click & Collect network or splitting freight capacity.",
+        czechTipB1: "Stay calm and professional. Remind him of the delivery agreement, then suggest moving urgent orders to store pickup or prioritizing large appliances first."
+      },
+      b2b_fleet_tender: {
+        name: 'Petra Malá',
+        role: 'Head of Corporate Procurement (Banking Group)',
+        avatar: 'PM',
+        initialMessage: "We are equipping 400 new workstations across Prague and Brno. Another distributor offered us a 6% lower unit price on laptops and monitors. Why should we award this tender to your B2B division?",
+        initialMessageB1: "We are buying equipment for 400 new office desks in Prague and Brno. Another seller offered us a 6% lower price on laptops and monitors. Why should we choose your company for this order?",
+        czechTip: "Never match a race-to-the-bottom price immediately. Pivot to Total Cost of Ownership (TCO): next-day swap warranty, pre-configured IT imaging, and dedicated account support.",
+        czechTipB1: "Do not drop the price right away. Explain the extra value you include: next-day device replacement, free setup, and a dedicated B2B manager."
+      },
+      store_lease_renegotiation: {
+        name: 'Richard Sterling',
+        role: 'Portfolio Manager - Commercial Real Estate',
+        avatar: 'RS',
+        initialMessage: "Footfall in our shopping center has recovered, and inflation indexing pushes your base rent up 7% next year. We have strong demand for ground-floor retail space. Why should we agree to a rent cap for your store?",
+        initialMessageB1: "Customer visits in our shopping mall are back up, and inflation increases your base rent by 7% next year. Other brands want ground-floor space. Why should we agree to freeze your rent?",
+        czechTip: "Frame your electronics store as an 'anchor tenant' that drives high-intent footfall into their mall via Click & Collect pickups, and offer a turnover-linked rent structure.",
+        czechTipB1: "Explain that your store brings thousands of online pickup customers into their shopping mall every month, which helps all the other shops."
+      },
+      marketing_roi_audit: {
+        name: 'Jan Kovář',
+        role: 'Group CEO',
+        avatar: 'JK',
+        initialMessage: "Performance marketing costs on Google and price-comparison engines rose 22% this quarter, yet our blended conversion rate stayed flat. Should we cut brand awareness TV spots and move everything into direct performance ads?",
+        initialMessageB1: "Online advertising costs on Google and price comparison sites went up 22% this quarter, while our sales conversion stayed flat. Should we stop TV brand ads and put all the money into direct online ads?",
+        czechTip: "Explain that cutting brand awareness increases long-term customer acquisition cost (CAC). Defend a balanced funnel that drives direct branded searches to your website.",
+        czechTipB1: "Explain that stopping brand ads makes online clicks even more expensive later. Recommend keeping a smart mix so customers search for your brand directly."
+      },
+      it_outage_postmortem: {
+        name: 'Lukáš Procházka',
+        role: 'VP of E-Commerce Engineering',
+        avatar: 'LP',
+        initialMessage: "Last night's database migration caused a 40-minute payment gateway timeout during our evening promo campaign. The commercial team is furious. How do we explain this to executive leadership and prevent a repeat?",
+        initialMessageB1: "Last night's system update caused a 40-minute payment error during our evening sale. The sales team is very angry. How do we explain this to top management and stop it from happening again?",
+        czechTip: "Take clear ownership without blaming individuals. Present concrete technical safeguards: automated rollback triggers, off-peak deployment windows, and load testing.",
+        czechTipB1: "Take responsibility calmly without blaming staff. Present clear prevention steps: updating systems only after midnight and testing payment backups first."
       }
     };
 
@@ -1246,7 +1531,107 @@ In addition, live stock screens allow store staff to save lost sales by immediat
 
 This project pays back its cost within 14 months and strengthens our leading brand position.
 
-I welcome your questions about the project schedule and budget.`
+I welcome your questions about the project schedule and budget.`,
+
+      loyalty_app_launch: `Good morning everyone. Today I am presenting the Q2 rollout of our upgraded mobile loyalty application.
+
+To put our customer retention opportunity into perspective, app users purchase 2.4 times more frequently than guest web visitors and generate a 19% higher average order value.
+
+If you direct your attention to our onboarding roadmap, integrating instant digital receipts, one-click warranty claims, and personalized accessory bundles will convert store shoppers into active app members.
+
+We project acquiring 350,000 active users within six months while lowering our reliance on paid search traffic.
+
+I will now open the floor for your feedback on our rollout milestones.`,
+
+      loyalty_app_launch_b1: `Good morning everyone. Today I am presenting the Q2 launch of our new mobile loyalty app.
+
+To show why customer loyalty matters, app users shop 2.4 times more often than regular website visitors and spend 19% more per order.
+
+If you look at our launch plan, adding digital receipts, easy warranty claims, and special bundle offers will encourage store customers to download the app.
+
+We expect to reach 350,000 active users within six months while spending less money on paid online ads.
+
+I am now happy to answer your questions about our launch schedule.`,
+
+      private_label_expansion: `The objective of today's commercial review is to outline our expansion strategy for proprietary private-label appliances.
+
+While third-party global brands face intense price transparency across comparison portals, our private-label portfolio consistently delivers 14 percentage points higher gross margin.
+
+By expanding into smart home appliances and kitchen essentials under our own trusted brand, we insulate group profitability from external supplier price hikes.
+
+Our procurement and quality teams have already secured factory capacity for Q3 and Q4 deliveries.
+
+I welcome your questions regarding category targets and marketing support.`,
+
+      private_label_expansion_b1: `The goal of today's sales meeting is to share our growth plan for our own private-label home appliances.
+
+While global brands face heavy price competition on comparison websites, our own brand products earn 14 percentage points higher profit margin.
+
+By adding new smart home and kitchen products under our trusted brand, we protect company profits from supplier price increases.
+
+Our buying and quality teams have already booked factory production for Q3 and Q4.
+
+I welcome your questions about our sales targets and marketing plan.`,
+
+      warehouse_automation: `Good afternoon members of the board. We are requesting capital approval for Phase 2 automation at our central fulfillment hub.
+
+To put our operational bottleneck into perspective, manual sorting limits our peak dispatch capacity and inflates temporary seasonal labor expenses.
+
+Deploying automated conveyor lines and robotic picking systems will increase hourly throughput by 45% while cutting order-processing errors by half.
+
+The projected internal rate of return exceeds 22%, with full capital payback achieved within 26 months.
+
+I will now open the floor for any questions on implementation timelines or CAPEX phasing.`,
+
+      warehouse_automation_b1: `Good afternoon members of the board. We are asking for budget approval for Phase 2 automation in our main logistics center.
+
+To explain the current problem, manual sorting limits how many orders we can ship during busy weeks and increases temporary staff costs.
+
+Installing automated sorting lines and modern picking tools will increase hourly speed by 45% while cutting packing mistakes in half.
+
+This investment pays back its full cost within 26 months and saves millions in labor expenses.
+
+I am now ready to answer your questions about the schedule and budget.`,
+
+      slovak_market_synergy: `The purpose of today's alignment session is to unify our commercial and logistics operations across the Czech and Slovak markets.
+
+Previously, duplicate catalog management and separate promotional calendars created unnecessary administrative overhead.
+
+By synchronizing regional procurement, shared central inventory, and unified digital campaigns, we can accelerate time-to-market for new product launches across both countries.
+
+This cross-border operating model will reduce back-office duplication by 15% while strengthening our regional negotiating leverage with global vendors.
+
+I welcome your perspectives on regional team alignment.`,
+
+      slovak_market_synergy_b1: `The goal of today's meeting is to connect our sales and logistics operations across the Czech and Slovak markets.
+
+In the past, managing separate product catalogs and different marketing calendars created extra administrative work.
+
+By combining regional buying, shared warehouse stock, and joint online campaigns, we can launch new products faster in both countries.
+
+This shared approach will reduce office duplication by 15% and give us stronger negotiating power with global suppliers.
+
+I welcome your thoughts on how our regional teams will work together.`,
+
+      supplier_summit_keynote: `Good morning and welcome to our annual strategic vendor summit.
+
+Over the past year, despite shifting consumer spending patterns across Central Europe, our omnichannel retail network has consistently outperformed the broader electronics market.
+
+What sets our partnership apart is our ability to showcase your flagship innovations through trained store specialists, rapid nationwide delivery, and trusted after-sales care.
+
+As we plan for the upcoming fiscal year, we are committed to deepening joint marketing initiatives and data-driven inventory planning with our core brand partners.
+
+Thank you for your continued collaboration, and I look forward to a productive summit.` ,
+
+      supplier_summit_keynote_b1: `Good morning and welcome to our annual partner summit.
+
+Over the past year, even with changing customer budgets in Central Europe, our online and physical stores performed better than the overall electronics market.
+
+Our key strength is presenting your best products through trained store staff, fast nationwide delivery, and reliable customer service.
+
+As we plan for next year, we want to build stronger joint marketing campaigns and smarter stock planning with our top brand partners.
+
+Thank you for your cooperation, and I look forward to a successful meeting.`
     };
 
     const QUIZ_QUESTIONS = [
@@ -1370,15 +1755,148 @@ I welcome your questions about the project schedule and budget.`
     }
 
     /* ========================================================
-       3. SPEECH SYNTHESIS & CORE HELPERS
+       3. SPEECH SYNTHESIS, AUDIO CONTROLS & GLOBAL WORD CAPTURE
        ======================================================== */
+    let audioRate = 0.95;
+    let audioVolume = 1.0;
+    let selectedGlobalPhrase = '';
+    let selectedGlobalContext = '';
+
+    function updateAudioSettings() {
+      const speedEl = document.getElementById('audio-speed-select');
+      const volEl = document.getElementById('audio-volume-slider');
+      const volLabel = document.getElementById('audio-volume-label');
+      if (speedEl) audioRate = parseFloat(speedEl.value) || 0.95;
+      if (volEl) {
+        audioVolume = parseFloat(volEl.value);
+        if (volLabel) volLabel.innerText = `${Math.round(audioVolume * 100)}%`;
+      }
+    }
+
     function speakText(text) {
       if (!text || !('speechSynthesis' in window)) return;
       window.speechSynthesis.cancel();
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.lang = 'en-GB';
-      utterance.rate = currentGlobalLevel === 'B1' ? 0.88 : 0.96;
+      utterance.rate = audioRate;
+      utterance.volume = audioVolume;
+
+      const pauseLabel = document.getElementById('global-audio-pause-label');
+      if (pauseLabel) pauseLabel.innerText = 'Pause';
+
+      utterance.onend = () => {
+        if (pauseLabel) pauseLabel.innerText = 'Pause';
+      };
+
       window.speechSynthesis.speak(utterance);
+    }
+
+    function togglePauseResumeSpeech() {
+      if (!('speechSynthesis' in window)) return;
+      const pauseLabel = document.getElementById('global-audio-pause-label');
+      if (window.speechSynthesis.paused) {
+        window.speechSynthesis.resume();
+        if (pauseLabel) pauseLabel.innerText = 'Pause';
+      } else if (window.speechSynthesis.speaking) {
+        window.speechSynthesis.pause();
+        if (pauseLabel) pauseLabel.innerText = 'Resume';
+      }
+    }
+
+    function stopSpeech() {
+      if (!('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      const pauseLabel = document.getElementById('global-audio-pause-label');
+      if (pauseLabel) pauseLabel.innerText = 'Pause';
+    }
+
+    // Global word/phrase selection across the entire website
+    document.addEventListener('mouseup', (e) => {
+      const popover = document.getElementById('selection-save-popover');
+      if (!popover) return;
+      if (popover.contains(e.target)) return;
+
+      setTimeout(() => {
+        const selection = window.getSelection();
+        const rawText = selection ? selection.toString().trim() : '';
+
+        if (!rawText || rawText.length < 2 || rawText.length > 80) {
+          popover.classList.add('hidden');
+          return;
+        }
+
+        const range = selection.getRangeAt(0);
+        const rect = range.getBoundingClientRect();
+        if (rect.width === 0 && rect.height === 0) {
+          popover.classList.add('hidden');
+          return;
+        }
+
+        selectedGlobalPhrase = rawText.replace(/^[^a-zA-Z0-9]+|[^a-zA-Z0-9]+$/g, '');
+        if (!selectedGlobalPhrase) {
+          popover.classList.add('hidden');
+          return;
+        }
+
+        const parentText = range.startContainer.parentElement ? range.startContainer.parentElement.innerText : rawText;
+        selectedGlobalContext = parentText.slice(0, 180).trim();
+
+        document.getElementById('selection-preview-text').innerText = selectedGlobalPhrase;
+        popover.classList.remove('hidden');
+
+        const topPos = Math.max(12, rect.top - 46);
+        const leftPos = Math.min(window.innerWidth - 290, Math.max(12, rect.left));
+        popover.style.top = `${topPos}px`;
+        popover.style.left = `${leftPos}px`;
+      }, 10);
+    });
+
+    function speakSelectedGlobalText() {
+      if (selectedGlobalPhrase) speakText(selectedGlobalPhrase);
+    }
+
+    function saveSelectedGlobalTextToBank() {
+      if (!selectedGlobalPhrase) return;
+      const exists = userWordBank.some(w => w.phrase.toLowerCase() === selectedGlobalPhrase.toLowerCase());
+      const popover = document.getElementById('selection-save-popover');
+      if (popover) popover.classList.add('hidden');
+
+      if (exists) {
+        showToast('Already Saved', `"${selectedGlobalPhrase}" is already in your Word Bank.`);
+        return;
+      }
+
+      // Check if any briefing glossary already has a Czech definition for this word
+      let matchedCzech = 'Výraz uložený z textu (doplňte vlastní poznámku)';
+      let matchedPhonetic = `/${selectedGlobalPhrase.toLowerCase()}/`;
+      let matchedTrap = 'Keep the English collocation intact instead of translating word-for-word.';
+      const lowerKey = selectedGlobalPhrase.toLowerCase();
+
+      Object.values(EXECUTIVE_BRIEFINGS).forEach(b => {
+        if (b.glossary && b.glossary[lowerKey]) {
+          matchedCzech = b.glossary[lowerKey].czech;
+          matchedPhonetic = b.glossary[lowerKey].phonetic;
+          matchedTrap = b.glossary[lowerKey].trap;
+        } else if (b.glossaryB1 && b.glossaryB1[lowerKey]) {
+          matchedCzech = b.glossaryB1[lowerKey].czech;
+          matchedPhonetic = b.glossaryB1[lowerKey].phonetic;
+          matchedTrap = b.glossaryB1[lowerKey].trap;
+        }
+      });
+
+      userWordBank.unshift({
+        id: 'sel_' + Date.now(),
+        phrase: selectedGlobalPhrase,
+        phonetic: matchedPhonetic,
+        category: 'Saved Selection',
+        level: currentGlobalLevel === 'B1' ? 'B1–B2' : 'B2–C1',
+        czech: matchedCzech,
+        czenglishTrap: matchedTrap,
+        example: selectedGlobalContext || selectedGlobalPhrase
+      });
+
+      updateBankCounts();
+      showToast('Saved to Word Bank', `"${selectedGlobalPhrase}" is now available in your flashcards.`);
     }
 
     function updateBankCounts() {
@@ -1397,19 +1915,29 @@ I welcome your questions about the project schedule and budget.`
       tabs.forEach(t => {
         const page = document.getElementById(`tab-${t}`);
         const navBtn = document.getElementById(`nav-${t}`);
+        const mNavBtn = document.getElementById(`m-nav-${t}`);
         if (page) page.classList.add('hidden');
         if (navBtn) {
-          navBtn.classList.remove('text-teal-800', 'bg-teal-500/15', 'font-semibold');
+          navBtn.classList.remove('bg-teal-600', 'text-white', 'font-semibold', 'shadow-sm');
           navBtn.classList.add('text-slate-700', 'font-medium');
+        }
+        if (mNavBtn) {
+          mNavBtn.classList.remove('bg-teal-600', 'text-white', 'font-semibold');
+          mNavBtn.classList.add('text-slate-700');
         }
       });
 
       const activePage = document.getElementById(`tab-${tabId}`);
       const activeBtn = document.getElementById(`nav-${tabId}`);
+      const activeMobileBtn = document.getElementById(`m-nav-${tabId}`);
       if (activePage) activePage.classList.remove('hidden');
       if (activeBtn) {
-        activeBtn.classList.add('text-teal-800', 'bg-teal-500/15', 'font-semibold');
+        activeBtn.classList.add('bg-teal-600', 'text-white', 'font-semibold', 'shadow-sm');
         activeBtn.classList.remove('text-slate-700', 'font-medium');
+      }
+      if (activeMobileBtn) {
+        activeMobileBtn.classList.add('bg-teal-600', 'text-white', 'font-semibold');
+        activeMobileBtn.classList.remove('text-slate-700');
       }
 
       if (tabId === 'reading') loadBriefing();
