@@ -226,69 +226,6 @@
         </div>
       </div>
 
-      <!-- Focused Module Directory -->
-      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        <div onclick="switchTab('reading')" class="group cursor-pointer bg-slate-100 border border-slate-300 hover:border-teal-600 p-5 rounded-xl transition">
-          <div class="flex items-center justify-between mb-2">
-            <span class="font-bold text-slate-900 group-hover:text-teal-700 transition">1. Executive Briefings (10 / track)</span>
-            <i data-lucide="arrow-right" class="w-4 h-4 text-slate-500 group-hover:text-teal-700 transition"></i>
-          </div>
-          <p class="text-xs text-slate-700 leading-relaxed">
-            Read 10 sector-specific dossiers per track and click any highlighted term to inspect Czech meaning and save it.
-          </p>
-        </div>
-
-        <div onclick="switchTab('roleplay')" class="group cursor-pointer bg-slate-100 border border-slate-300 hover:border-teal-600 p-5 rounded-xl transition">
-          <div class="flex items-center justify-between mb-2">
-            <span class="font-bold text-slate-900 group-hover:text-teal-700 transition">2. Speaking Simulator (10 / track)</span>
-            <i data-lucide="arrow-right" class="w-4 h-4 text-slate-500 group-hover:text-teal-700 transition"></i>
-          </div>
-          <p class="text-xs text-slate-700 leading-relaxed">
-            Respond aloud to 10 realistic pushback scenarios per sector from buyers, CFOs, plant directors, and partners.
-          </p>
-        </div>
-
-        <div onclick="switchTab('teleprompter')" class="group cursor-pointer bg-slate-100 border border-slate-300 hover:border-teal-600 p-5 rounded-xl transition">
-          <div class="flex items-center justify-between mb-2">
-            <span class="font-bold text-slate-900 group-hover:text-teal-700 transition">3. Pitch Prompter (10 / track)</span>
-            <i data-lucide="arrow-right" class="w-4 h-4 text-slate-500 group-hover:text-teal-700 transition"></i>
-          </div>
-          <p class="text-xs text-slate-700 leading-relaxed">
-            Rehearse 10 structured executive presentations per sector with scrolling text, signposting, and voice playback.
-          </p>
-        </div>
-
-        <div onclick="switchTab('grammar')" class="group cursor-pointer bg-slate-100 border border-slate-300 hover:border-teal-600 p-5 rounded-xl transition">
-          <div class="flex items-center justify-between mb-2">
-            <span class="font-bold text-slate-900 group-hover:text-teal-700 transition">4. Business Grammar (10 Modules)</span>
-            <i data-lucide="arrow-right" class="w-4 h-4 text-slate-500 group-hover:text-teal-700 transition"></i>
-          </div>
-          <p class="text-xs text-slate-700 leading-relaxed">
-            Eliminate 10 common Czech-to-English traps and master diplomatic phrasing for negotiations.
-          </p>
-        </div>
-
-        <div onclick="switchTab('vocab')" class="group cursor-pointer bg-slate-100 border border-slate-300 hover:border-teal-600 p-5 rounded-xl transition">
-          <div class="flex items-center justify-between mb-2">
-            <span class="font-bold text-slate-900 group-hover:text-teal-700 transition">5. Word & Grammar Bank</span>
-            <i data-lucide="arrow-right" class="w-4 h-4 text-slate-500 group-hover:text-teal-700 transition"></i>
-          </div>
-          <p class="text-xs text-slate-700 leading-relaxed">
-            Study <span id="stat-mastered" class="font-semibold text-teal-700">0</span> track-filtered terms and structures with interactive flashcards and recall tests.
-          </p>
-        </div>
-
-        <div onclick="switchTab('workshop')" class="group cursor-pointer bg-slate-100 border border-slate-300 hover:border-teal-600 p-5 rounded-xl transition">
-          <div class="flex items-center justify-between mb-2">
-            <span class="font-bold text-slate-900 group-hover:text-teal-700 transition">6. In-Class Workshop (10 + 10)</span>
-            <i data-lucide="arrow-right" class="w-4 h-4 text-slate-500 group-hover:text-teal-700 transition"></i>
-          </div>
-          <p class="text-xs text-slate-700 leading-relaxed">
-            10 timed 5-minute sector debates and 10 rapid Czech-to-English translation drills per track.
-          </p>
-        </div>
-      </div>
-
       <!-- B2B Corporate Demo & Custom Edition CTA Banner -->
       <div class="rounded-2xl bg-slate-100 border border-teal-600/35 p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm">
         <div class="space-y-1">
@@ -438,10 +375,18 @@
             <button id="vocab-view-flashcards" onclick="setVocabMode('flashcards')" class="px-3 py-1.5 rounded-md text-xs font-semibold text-white bg-teal-600 transition">Flashcards</button>
             <button id="vocab-view-quiz" onclick="setVocabMode('quiz')" class="px-3 py-1.5 rounded-md text-xs font-medium text-slate-700 hover:text-slate-900 transition">Recall Test</button>
             <button id="vocab-view-list" onclick="setVocabMode('list')" class="px-3 py-1.5 rounded-md text-xs font-medium text-slate-700 hover:text-slate-900 transition">All Items (<span id="total-vocab-count">0</span>)</button>
+            <button id="vocab-view-add" onclick="setVocabMode('add')" class="px-3 py-1.5 rounded-md text-xs font-semibold text-teal-800 hover:bg-teal-500/15 transition">+ Add Word</button>
           </div>
           <button onclick="resetCustomWordBank()" class="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-300/70 border border-slate-300 text-[11px] font-medium text-slate-600 transition" title="Restore default vocabulary list">
-            Reset Custom Words
+            Reset Default
           </button>
+          <button onclick="exportProgressBackup()" class="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-teal-500/15 border border-slate-300 text-[11px] font-semibold text-teal-800 transition" title="Download backup of your saved words & custom scenarios">
+            Export Backup
+          </button>
+          <label class="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-teal-500/15 border border-slate-300 text-[11px] font-semibold text-teal-800 cursor-pointer transition" title="Restore backup file on another device">
+            Import Backup
+            <input type="file" accept=".json" onchange="importProgressBackup(event)" class="hidden">
+          </label>
         </div>
       </div>
 
@@ -546,6 +491,54 @@
         </div>
 
         <div class="grid md:grid-cols-2 gap-3" id="vocab-terms-grid"></div>
+      </div>
+
+      <!-- Add Custom Word / Phrase View -->
+      <div id="vocab-add-subview" class="hidden max-w-xl mx-auto">
+        <div class="bg-slate-100 border border-slate-300 rounded-2xl p-6 space-y-4 shadow-sm">
+          <div class="flex items-center justify-between border-b border-slate-200 pb-3">
+            <span class="text-xs font-bold uppercase tracking-wider text-teal-700">Add Your Own Word or Phrase</span>
+            <span class="text-[11px] text-slate-500">Saved to Flashcards & List</span>
+          </div>
+
+          <div class="space-y-3 text-xs">
+            <div>
+              <label class="block font-semibold text-slate-800 mb-1">1. English Word, Collocation, or Phrase *</label>
+              <input type="text" id="custom-word-english" placeholder="e.g., Renegotiate payment terms" class="w-full bg-slate-200/75 border border-slate-300 rounded-lg px-3 py-2 text-slate-900 focus:outline-none focus:border-teal-600">
+            </div>
+
+            <div>
+              <label class="block font-semibold text-slate-800 mb-1">2. Czech Meaning / Translation *</label>
+              <input type="text" id="custom-word-czech" placeholder="e.g., Znovu vyjednat platební podmínky" class="w-full bg-slate-200/75 border border-slate-300 rounded-lg px-3 py-2 text-slate-900 focus:outline-none focus:border-teal-600">
+            </div>
+
+            <div class="grid sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block font-semibold text-slate-800 mb-1">3. Category / Topic (Optional)</label>
+                <input type="text" id="custom-word-category" placeholder="e.g., Vendor Negotiation" class="w-full bg-slate-200/75 border border-slate-300 rounded-lg px-3 py-2 text-slate-900 focus:outline-none focus:border-teal-600">
+              </div>
+              <div>
+                <label class="block font-semibold text-slate-800 mb-1">4. Common Mistake / Trap (Optional)</label>
+                <input type="text" id="custom-word-trap" placeholder="e.g., Saying 'make new pay rules'" class="w-full bg-slate-200/75 border border-slate-300 rounded-lg px-3 py-2 text-slate-900 focus:outline-none focus:border-teal-600">
+              </div>
+            </div>
+
+            <div>
+              <label class="block font-semibold text-slate-800 mb-1">5. Example Sentence in Context (Optional)</label>
+              <textarea id="custom-word-example" rows="2" placeholder="e.g., We plan to renegotiate payment terms from 30 to 60 days with our top suppliers." class="w-full bg-slate-200/75 border border-slate-300 rounded-lg p-3 text-slate-900 focus:outline-none focus:border-teal-600"></textarea>
+            </div>
+          </div>
+
+          <div class="pt-2 flex flex-wrap gap-2">
+            <button onclick="addUserCustomWord(true)" class="flex-1 py-2.5 px-4 rounded-lg bg-teal-600 hover:bg-teal-700 text-white font-semibold text-xs flex items-center justify-center space-x-1.5 transition">
+              <i data-lucide="bookmark-plus" class="w-3.5 h-3.5"></i>
+              <span>Save & Practice in Flashcards</span>
+            </button>
+            <button onclick="addUserCustomWord(false)" class="py-2.5 px-4 rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-900 font-semibold text-xs transition">
+              Save & Add Another
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -969,7 +962,7 @@
         label: 'E-Commerce & Retail',
         badge: 'Active Track: E-Commerce & Omnichannel Retail',
         title: 'Lead omnichannel retail, marketplace strategy, and peak logistics in English.',
-        desc: 'Tailored for Czech retail and e-commerce leaders (HP TRONIC / Datart ecosystem). Features 10 briefings, 10 roleplays, 10 pitch templates, 10 grammar modules, and 10 workshop challenges.'
+        desc: 'Tailored for Czech retail and e-commerce leaders (HP TRONIC / Datart ecosystem). Features 10 briefings, 10 speaking drills, 10 pitch templates, 10 grammar modules, and 10 workshop challenges.'
       },
       finance: {
         label: 'Finance & M&A',
@@ -1354,7 +1347,7 @@
         category: 'Reporting & Trends',
         level: 'B2–C1',
         formula: 'is projected to / is poised to / is likely to + [infinitive]',
-        czech: 'Přesné vyjádření finančního výhledu a pravděpodobnosti pro investory a představenstvo.',
+        czech: 'Přesné vyjádření finančního výhledu a pravděpodobnosti pro investory a představenstvem.',
         trap: 'Overusing "maybe we will" or "probably it will go up" in formal forecasts.',
         example: 'Automated sorting is projected to lift warehouse throughput by 25% ahead of Q4.',
         drillQuestion: 'Which phrasing sounds best in an earnings briefing?',
@@ -3242,8 +3235,74 @@ I welcome your questions about training budgets.`
        ======================================================== */
     const STORAGE_KEY = 'execuspeak_custom_words_v3';
     const CUSTOM_SCENARIOS_KEY = 'execuspeak_custom_scenarios_v1';
+    const PREFS_STORAGE_KEY = 'execuspeak_user_prefs_v1';
     let currentCardIdx = 0;
     let isFlipped = false;
+
+    function loadUserPrefs() {
+      try {
+        const raw = localStorage.getItem(PREFS_STORAGE_KEY);
+        if (raw) return JSON.parse(raw);
+      } catch (e) {}
+      return { level: 'C1', track: 'ecommerce' };
+    }
+
+    function saveUserPrefs() {
+      try {
+        localStorage.setItem(PREFS_STORAGE_KEY, JSON.stringify({
+          level: currentGlobalLevel,
+          track: currentIndustryTrack
+        }));
+      } catch (e) {}
+    }
+
+    function exportProgressBackup() {
+      const payload = {
+        exportedAt: new Date().toISOString(),
+        prefs: { level: currentGlobalLevel, track: currentIndustryTrack },
+        wordBank: userWordBank,
+        customScenarios
+      };
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `execuspeak-backup-${new Date().toISOString().slice(0, 10)}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('Backup Downloaded', 'Your words and custom scenarios are saved to a JSON file.');
+    }
+
+    function importProgressBackup(event) {
+      const file = event.target.files?.[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const data = JSON.parse(e.target.result);
+          if (Array.isArray(data.wordBank)) {
+            userWordBank = data.wordBank;
+            persistCustomWords();
+          }
+          if (Array.isArray(data.customScenarios)) {
+            customScenarios = data.customScenarios;
+            persistCustomScenarios();
+          }
+          if (data.prefs?.level) currentGlobalLevel = data.prefs.level;
+          if (data.prefs?.track) currentIndustryTrack = data.prefs.track;
+          saveUserPrefs();
+          const lvlSel = document.getElementById('global-level-select');
+          if (lvlSel) lvlSel.value = currentGlobalLevel;
+          changeIndustryTrack(currentIndustryTrack);
+          renderCustomScenariosList();
+          showToast('Backup Restored', 'All saved words, custom scenarios, and preferences loaded.');
+        } catch (err) {
+          showToast('Invalid File', 'Please select a valid ExecuSpeak backup JSON file.');
+        }
+      };
+      reader.readAsText(file);
+      event.target.value = '';
+    }
 
     function loadPersistedWordBank() {
       try {
@@ -3268,9 +3327,10 @@ I welcome your questions about training budgets.`
 
     let userWordBank = loadPersistedWordBank();
     let customScenarios = loadPersistedCustomScenarios();
+    const initialPrefs = loadUserPrefs();
     let currentlyInspectedWord = null;
-    let currentGlobalLevel = 'C1';
-    let currentIndustryTrack = 'ecommerce'; // 'ecommerce' | 'finance' | 'industry'
+    let currentGlobalLevel = initialPrefs.level || 'C1';
+    let currentIndustryTrack = initialPrefs.track || 'ecommerce';
 
     function loadPersistedCustomScenarios() {
       try {
@@ -3306,6 +3366,7 @@ I welcome your questions about training budgets.`
 
     function changeIndustryTrack(track) {
       currentIndustryTrack = track;
+      saveUserPrefs();
       currentCardIdx = 0;
       currentDebateIdx = 0;
       currentShootoutIdx = 0;
@@ -3386,7 +3447,6 @@ I welcome your questions about training budgets.`
       }
     }
 
-    /* Keep Briefings (1–10), Simulator (1–10), and Prompter (1–10) synchronized 1-to-1 */
     function syncLinkedTopicByIndex(index) {
       if (index < 0) return;
       const briefSel = document.getElementById('briefing-select');
@@ -3425,6 +3485,7 @@ I welcome your questions about training budgets.`
 
     function changeGlobalLevel(level) {
       currentGlobalLevel = level;
+      saveUserPrefs();
       currentCardIdx = 0;
 
       updateBankCounts();
@@ -3796,20 +3857,73 @@ I welcome your questions about training budgets.`
        5. WORD & GRAMMAR BANK
        ======================================================== */
     function setVocabMode(mode) {
-      ['flashcards', 'quiz', 'list'].forEach(m => {
-        document.getElementById(`vocab-${m}-subview`).classList.add('hidden');
+      ['flashcards', 'quiz', 'list', 'add'].forEach(m => {
+        const view = document.getElementById(`vocab-${m}-subview`);
+        if (view) view.classList.add('hidden');
         const btn = document.getElementById(`vocab-view-${m}`);
-        btn.classList.remove('bg-teal-600', 'text-white', 'font-semibold');
-        btn.classList.add('text-slate-700', 'font-medium');
+        if (btn) {
+          btn.classList.remove('bg-teal-600', 'text-white', 'font-semibold');
+          btn.classList.add(m === 'add' ? 'text-teal-800' : 'text-slate-700', m === 'add' ? 'font-semibold' : 'font-medium');
+        }
       });
-      document.getElementById(`vocab-${mode}-subview`).classList.remove('hidden');
+      const targetView = document.getElementById(`vocab-${mode}-subview`);
+      if (targetView) targetView.classList.remove('hidden');
       const active = document.getElementById(`vocab-view-${mode}`);
-      active.classList.add('bg-teal-600', 'text-white', 'font-semibold');
-      active.classList.remove('text-slate-700', 'font-medium');
+      if (active) {
+        active.classList.add('bg-teal-600', 'text-white', 'font-semibold');
+        active.classList.remove('text-slate-700', 'text-teal-800', 'font-medium');
+      }
 
       if (mode === 'flashcards') renderCurrentFlashcard();
       if (mode === 'quiz') renderQuizQuestion();
       if (mode === 'list') filterVocabList();
+    }
+
+    function addUserCustomWord(openFlashcards) {
+      const english = (document.getElementById('custom-word-english')?.value || '').trim();
+      const czech = (document.getElementById('custom-word-czech')?.value || '').trim();
+      const category = (document.getElementById('custom-word-category')?.value || '').trim() || 'My Custom Vocabulary';
+      const trap = (document.getElementById('custom-word-trap')?.value || '').trim() || 'Keep the natural English collocation rather than translating word-for-word.';
+      const example = (document.getElementById('custom-word-example')?.value || '').trim() || english;
+
+      if (!english || !czech) {
+        showToast('Missing Fields', 'Please enter both the English word/phrase and its Czech meaning.');
+        return;
+      }
+
+      const exists = userWordBank.some(w => w.phrase.toLowerCase() === english.toLowerCase());
+      if (exists) {
+        showToast('Already Exists', `"${english}" is already in your Word Bank.`);
+        return;
+      }
+
+      userWordBank.unshift({
+        id: 'custom_word_' + Date.now(),
+        track: 'all',
+        phrase: english,
+        phonetic: `/${english.toLowerCase()}/`,
+        category,
+        level: currentGlobalLevel === 'B1' ? 'B1–B2' : 'B2–C1',
+        czech,
+        czenglishTrap: trap,
+        example
+      });
+
+      persistCustomWords();
+      updateBankCounts();
+
+      ['custom-word-english', 'custom-word-czech', 'custom-word-category', 'custom-word-trap', 'custom-word-example'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = '';
+      });
+
+      if (openFlashcards) {
+        currentCardIdx = 0;
+        setVocabMode('flashcards');
+        showToast('Saved to Deck', `"${english}" added to your flashcards.`);
+      } else {
+        showToast('Word Added', `"${english}" saved. Ready to add another.`);
+      }
     }
 
     function renderCurrentFlashcard() {
@@ -4525,14 +4639,10 @@ I welcome your questions about training budgets.`
        9. INITIALIZATION
        ======================================================== */
     window.addEventListener('DOMContentLoaded', () => {
-      populateTrackDropdowns();
-      updateBankCounts();
-      loadBriefing();
+      const lvlSel = document.getElementById('global-level-select');
+      if (lvlSel) lvlSel.value = currentGlobalLevel;
+      changeIndustryTrack(currentIndustryTrack);
       renderGrammarModules();
-      renderCurrentFlashcard();
-      restartRoleplay();
-      loadPitchTemplate();
-      renderWorkshopForTrack();
       renderCustomScenariosList();
 
       const pitchEditor = document.getElementById('pitch-text-editor');
